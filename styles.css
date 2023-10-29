@@ -443,7 +443,6 @@ form{
     width: 350px;
     background-color: var(--white);
     border: 1px solid var(--gray);
-    /* margin: 20px; */
     border-radius: 15px;
     overflow: hidden;
 }
@@ -488,4 +487,74 @@ form{
 
 .suggested-blog-content{
     margin-bottom: 30px;
+}
+
+footer{
+    background: var(--cyan);
+    padding: 20px;
+    color: var(--white);
+}
+
+footer div{
+    display: block;
+}
+
+footer h4{
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+footer .basic-info :not(.logo){
+    line-height: 40px;
+}
+
+footer .logo{
+    margin-top: -50px;
+    margin-bottom: 10px;
+}
+
+footer .basic-info .slogan{
+    font-style: italic;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+footer .hotline a{
+    text-decoration: none;
+    color: var(--white);
+}
+
+footer .address span, .hotline span{
+    font-weight: 500;
+}
+
+footer .about-us :not(.about-us-title){
+    line-height: 40px;
+}
+
+footer .about-us-title{
+    border-color: solid 0 1px 0 0 var(--white);
+    margin-top: -75px;
+    margin-bottom: 40px;
+}
+
+footer .introduction{
+    margin-top: -20px;
+}
+
+footer .page-support :not(.page-support-title){
+    line-height: 40px;
+}
+
+footer .copyright{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+footer a{
+    text-decoration: none;
+    color: var(--white);
 }
