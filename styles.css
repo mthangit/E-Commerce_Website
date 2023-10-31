@@ -3,6 +3,7 @@
     --light-cyan: #c2ecff;
     --orange: #FFA841;
     --darker-orange: #f99a25;
+    --light-orange: #f8dfa4;
     --black: #000000;
     --white: #fff;
     --dark-blue: #0a1930;
@@ -347,7 +348,7 @@ form{
 }
 
 #flash-sale{
-    background: var(--orange);
+    background: linear-gradient(to right, var(--darker-orange), var(--orange), var(--light-orange));
     border-radius: 30px;
     padding: 5px 30px 25px 30px;
     margin: 40px 60px;
@@ -835,4 +836,74 @@ input[type=number]::-webkit-outer-spin-button {
 
 .review-detail .review-date{
     color: var(--dark-gray);
+}
+
+.product-variant .selected{
+    border: 2px solid var(--darker-orange) !important;
+    background: var(--light-orange);
+}
+
+.page-txt-title{
+    font-size: 28px;
+    color: var(--cyan);
+}
+
+ol {
+    list-style-type: none;
+    counter-reset: item;
+    margin: 0;
+    padding: 0;
+}
+  
+ol > li {
+    display: table;
+    counter-increment: item;
+    margin-bottom: 0.6em;
+}
+  
+ol > li:before {
+    content: counters(item, ".") ". ";
+    display: table-cell;
+    padding-right: 0.6em;    
+}
+  
+li ol > li {
+    margin: 0;
+}
+  
+li ol > li:before {
+    content: counters(item, ".") " ";
+}
+
+.privacy-policy-cover{
+    text-align: center; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.privacy-policy-container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.privacy-policy-content{
+    border: 1px solid var(--gray);
+    margin: 20px 0;
+    padding: 0 20px 20px 20px;
+    border-radius: 10px;
+}
+
+.privacy-policy-content .privacy-policy-title{
+    text-align: center;
+}
+
+.privacy-policy-content .privacy-policy-title hr{
+    border: 1px solid var(--gray);
+    width: 90%;
+}
+
+.privacy-policy-content .privacy-policy-body{
+    text-align: justify;
+    line-height: 30px;
 }
