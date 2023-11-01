@@ -926,10 +926,10 @@ li ol > li:before {
     color: var(--black);
     font-weight: 500;
 }
-.most-asked-questions-body{
+.most-asked-questions-body, .terms-of-use-body{
     padding: 0 40px;
 }
 
-.most-asked-questions-container{
+.most-asked-questions-container, .terms-of-use-container{
     margin-bottom: 50px;
 }
