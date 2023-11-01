@@ -875,35 +875,61 @@ li ol > li:before {
     content: counters(item, ".") " ";
 }
 
-.privacy-policy-cover{
+.other-cover{
     text-align: center; 
     display: flex;
     justify-content: center; 
     align-items: center; 
 }
 
-.privacy-policy-container{
+.other-container{
     width: 80%;
     margin: 0 auto;
 }
 
-.privacy-policy-content{
+.other-content{
     border: 1px solid var(--gray);
     margin: 20px 0;
     padding: 0 20px 20px 20px;
     border-radius: 10px;
 }
 
-.privacy-policy-content .privacy-policy-title{
+.other-content .other-title{
     text-align: center;
 }
 
-.privacy-policy-content .privacy-policy-title hr{
+.other-content .other-title hr{
     border: 1px solid var(--gray);
     width: 90%;
 }
 
-.privacy-policy-content .privacy-policy-body{
+.other-content .other-body{
     text-align: justify;
     line-height: 30px;
+}
+
+.question{
+    padding: 15px;
+}
+
+.question-title{
+    cursor: pointer;
+}
+
+.question-answer{
+    text-align: justify;
+    display: none;
+}
+
+.question a{
+    text-decoration: none;
+    color: var(--black);
+    font-weight: 500;
+}
+.most-asked-questions-body{
+    padding: 0 40px;
+}
+
+.most-asked-questions-container{
+    margin-bottom: 50px;
 }

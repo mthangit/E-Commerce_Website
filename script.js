@@ -1,4 +1,3 @@
-
 // Chọn variant nào thì sẽ hiển thị giá của variant đó và mô tả của variant
 const variant = document.querySelectorAll('.variant')
 const variantDescription = document.querySelectorAll('.variant-description')
@@ -44,6 +43,7 @@ function addDotsToNumber(number) {
     return formattedNumber;
 }
 
+// Hover ảnh cover của home thì sẽ đổi ảnh khác
 function changeImage(x, image){
     if (x == 1){
         image.src = 'https://otherplanet.photo/wp-content/uploads/2020/04/product-photography-professional-cosmetics-advertising.jpg'
@@ -55,3 +55,17 @@ function changeImage(x, image){
         image.height = "400"
     }
 }
+
+// Khi nhấn vào câu hỏi thì mới hiện ra câu trả lời
+function toggleAnswer(x){
+    var answer = document.querySelector('.question-'+x+'-answer')
+    var questionIcon = document.querySelector('.question-'+x+'-title i')
+    if (answer.style.display === "block") {
+        answer.style.display = "none"; 
+        questionIcon.className = "fa-solid fa-angle-down right"
+    } else {
+        answer.style.display = "block";
+        questionIcon.className = "fa-solid fa-angle-up right"
+    }
+}
+
