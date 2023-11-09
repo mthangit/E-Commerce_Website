@@ -107,7 +107,7 @@ form{
 }
 
 .login-register{
-    margin-left: 40px !important;
+    margin-left: 20px !important;
 }
 
 .support{
@@ -803,7 +803,6 @@ input[type=number]::-webkit-outer-spin-button {
     color: white;
 }
   
-  /* Individual bars */
 .bar-5 {width: 60%; height: 18px; background-color: var(--darker-orange);}
 .bar-4 {width: 30%; height: 18px; background-color: var(--darker-orange);}
 .bar-3 {width: 10%; height: 18px; background-color: var(--darker-orange);}
@@ -933,3 +932,121 @@ li ol > li:before {
 .most-asked-questions-container, .terms-of-use-container{
     margin-bottom: 50px;
 }
+
+.grid-6-col{
+    display: grid;
+    grid-template-areas: 'sidebar product-list product-list product-list product-list product-list';
+    gap: 10px;
+}
+
+.sidebar{
+    grid-area: sidebar;
+    border-right: 1px solid var(--gray);
+    padding: 0 20px 0 30px;
+}
+
+.product-list{
+    grid-area: product-list;
+}
+
+.product-list .pr-name{
+    font-size: 14px;
+}
+
+.product-list-filter{
+    width: 100%;
+    background-color: var(--gray);
+    height: 40px;
+    margin-bottom: 30px;
+    margin-top: -10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 40px;
+}
+
+.product-list-header{
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.product-list-filter .product-list-filter-content select{
+    height: 30px;
+    border: none;
+    padding: 0 10px;
+}
+
+.filter-product{
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filter-product input{
+    width: 90px;
+    height: 28px;
+    border-radius: 5px;
+    border: solid 1px var(--dark-gray);
+}
+
+.btn-apply{
+    color: var(--white);
+    background-color: var(--darker-orange);
+    width: 196px;
+    border: none;
+    height: 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.product-list-header .product-list-title{
+    margin-left: 40px;
+}
+
+.main-container{
+    margin-bottom: 30px;
+}
+
+.main-container a{
+    text-decoration: none;
+    color: var(--black);
+}
+
+.main-container h2{
+    font-size: 20px;
+    color: var(--cyan);
+}
+
+.main-container h3{
+    font-size: 17px;
+    line-height: 0;
+}
+
+
+.pagination-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0 40px 0;
+}
+
+.pagination {
+    display: inline-block;
+}
+  
+.pagination a {
+    color: var(--black);
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid var(--gray);
+}
+  
+.pagination a.active {
+    background-color: var(--darker-orange);
+    color: var(--white);
+    border: 1px solid var(--darker-orange);
+    font-weight: 500;
+}
+  
+.pagination a:hover:not(.active) {background-color: #ddd;}

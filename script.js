@@ -1,3 +1,5 @@
+const currencySymbol = "₫";
+
 // Chọn variant nào thì sẽ hiển thị giá của variant đó và mô tả của variant
 const variant = document.querySelectorAll('.variant')
 const variantDescription = document.querySelectorAll('.variant-description')
@@ -6,8 +8,8 @@ const discountedPrice = document.querySelectorAll('.discounted-price')
 
 // Mặc định để thông tin của variant có mức giá cao nhất
 variantDescription[0].innerHTML = "60ml"
-discountedPrice[0].textContent = "350.000 đ"
-originalPrice[0].textContent = "700.000 đ"
+discountedPrice[0].textContent = "350.000 " + currencySymbol
+originalPrice[0].textContent = "700.000 " + currencySymbol
 
 variant.forEach(item => {
     item.addEventListener('click', () => {
@@ -20,8 +22,8 @@ variant.forEach(item => {
         var newPrice = addDotsToNumber(item.getAttribute('data-new-price'))
         var oldPrice = addDotsToNumber(item.getAttribute('data-old-price'))
         variantDescription[0].innerHTML = item.innerHTML
-        discountedPrice[0].textContent = newPrice + " đ"
-        originalPrice[0].textContent = oldPrice + " đ"
+        discountedPrice[0].textContent = newPrice + " " + currencySymbol
+        originalPrice[0].textContent = oldPrice + " " + currencySymbol
     });
 });
 
