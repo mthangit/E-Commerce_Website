@@ -1050,3 +1050,170 @@ li ol > li:before {
 }
   
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+.m-20{
+    margin: 30px;
+}
+
+.grid-cart{
+    display: grid;
+    grid-template-columns: 75% 25%;
+    gap: 10px;
+}
+
+.cart-container{
+    margin-top: 0;
+    margin-bottom: 100px;
+}
+
+.cart-title{
+    display: flex;
+}
+
+.number-of-products{
+    margin-top: 28px;
+    margin-left: 10px;
+}
+
+.cart-table th, td{
+    border: none;
+    text-align: center;
+}
+
+.cart-table th{
+    background: var(--gray);
+}
+
+.cart-table{
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 100%;
+}
+
+.txt-uppercase{
+    text-transform: uppercase;
+}
+
+.cart-table a{
+    text-decoration: none;
+    color: var(--black);
+}
+
+.product-cart-info{
+    display: flex;
+}
+
+.cart-table .brand-info{
+    font-size: 15px;
+}
+
+.cart-product-detail{
+    line-height: 30px;
+}
+
+.gift-info{
+    color: var(--darker-orange);
+    font-weight: 400;
+}
+
+.product-name-cart{
+    font-size: 14px;
+}
+
+.cart-table .quantity-cart{
+    width: 50px;
+    height: 30px;
+}
+
+.cart-table .price-1{
+    line-height: 20px;
+}
+
+.cart-table .price-1 .old-price{
+    text-decoration: line-through;
+    font-size: 12px;
+}
+
+.cart-table td:nth-child(2){
+    text-align: left !important;
+}
+
+.product-cart-img img{
+    width: 100px;
+    height: 100px;
+}
+
+.cart-table .remove-product-cart button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.cart-table .product-name-cart{
+    font-size: 13px;
+}
+
+#cart-info tr{
+    border-bottom: 1px solid var(--gray);
+}
+
+.cart-right{
+    border: 1px solid var(--cyan);
+    border-radius: 10px;
+    height: fit-content;
+    padding: 20px;
+    line-height: 40px;
+    margin-left: 15px;
+}
+
+.cart-right .bill-title-container{
+    margin-top: -40px;
+    font-size: 16px;
+}
+
+.bill-header, .bill-content{
+    font-size: 14px;
+}
+
+.bill-content{
+    font-weight: bold;
+}
+
+.bill-description{
+    font-size: 12px;
+    font-style: italic;
+    color: var(--dark-gray);
+}
+
+.bill-header-money{
+    font-weight: bold;
+}
+
+.bill-money{
+    font-weight: bold;
+    color: var(--darker-orange);
+}
+
+.order{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--darker-orange);
+    color: var(--white);
+    padding: 10px;
+    font-weight: bold;
+}
+
+.cart-right button{
+    width: 100%;
+}
+
+.continue a{
+    text-decoration: none;
+    color: black;
+}
+
+.cart-container button{
+    cursor: pointer;
+}
