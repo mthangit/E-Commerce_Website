@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán | PING Cosmetics</title>
+    <link rel="icon" type="image/x-icon" href="assets/colored-logo.png">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="header-wrapper cyan fixed" >
+        <div class="header-container flex">
+            <div class="logo-site">
+                <a href="/" class="logo">
+                    <img src="assets/logo.svg" alt="logo">
+                </a>
+            </div>
+            <div class="page-header">
+                <h2 class="section-txt-title" style="color: white;">Thanh toán</h2>
+            </div>
+        </div>
+    </div>
+    
+    <div class="delivery-info payment-block" style="margin-top: 130px;">
+        <div class="delivery-info-header payment-block-header">
+            <div class="left">
+                <h4 class="txt-cyan txt-18">Thông tin nhận hàng</h4>
+            </div>
+            <div class="right">
+                <a href="" class="cyan-link" style="color: gray;">Chỉnh sửa</a>
+            </div>
+        </div>
+        <div class="delivery-content" style="margin-top: -20px;">
+            <p><span class="txt-bold">Nguyễn Nguyễn Nguyễn</span> - <span>0123456789</span></p>
+            <p>Số 159 Xa Lộ Hà Nội, Phường Thảo Điền, Quận 2, TP. Thủ Đức</p>
+            <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label><br>
+            <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
+        </div>
+    </div>
+
+    <div class="product-delivery-info payment-block">
+        <div class="product-delivery-header payment-block-header">
+            <h4 class="txt-cyan txt-18">Đơn hàng</h4>
+        </div>
+        <div class="product-delivery-content">
+            <table class="tb-payment-product">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody class="tb-product">
+                    <tr>
+                        <td style="text-align: left;">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</td>
+                        <td>350.000 &#8363;</td>
+                        <td>2</td>
+                        <td style="font-weight: bold;">700.000 &#8363;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</td>
+                        <td>350.000 &#8363;</td>
+                        <td>2</td>
+                        <td style="font-weight: bold;">700.000 &#8363;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="discount-info payment-block"">
+        <div class="discount-info-header payment-block-header">
+            <h4 class="txt-cyan txt-18">Mã giảm giá</h4>
+        </div>
+        <div class="discount-pick" style="margin-top: -20px;">
+            <form action="" id="form-voucher">
+                <input type="text" name="discount-voucher" id="discount-voucher" placeholder="Nhập mã giảm giá">
+                <button class="txt-uppercase order" id="btn-apply-voucher">Áp dụng</button>
+                <br>
+                <span style="font-style: italic; color: gray; font-size: 13px; margin-left: 695px;"><span style="text-decoration: underline;">Lưu ý:</span> Chỉ được áp dụng <strong>tối đa</strong> 1 mã giảm giá.</span>
+            </form>
+        </div>
+        <div class="discount-detail">
+            <strong>Thông tin mã giảm giá</strong><br>
+            <table id="discount-detail-info">
+                <tr>
+                    <th>Tên mã giảm giá</th>
+                    <td>Giảm 10.000&#8363; Đơn Tối Thiểu 0&#8363;</td>
+                </tr>
+                <tr>
+                    <th>Code mã giảm giá</th>
+                    <td>DTT0</td>
+                </tr>
+                <tr>
+                    <th>Thời hạn sử dụng</th>
+                    <td>13/112023 00:00 - 15/11/2023 23:58</td>
+                </tr>
+                <tr>
+                    <th>Điều kiện sử dụng</th>
+                    <td>
+                        <ul>
+                            <li>
+                                Sử dụng mã giảm phí vận chuyển (tối đa 10.000 &#8363;) cho đơn hàng từ 0Đ khi mua hàng trên PING Cosmetics.
+                            </li>
+                            <li>
+                                Áp dụng tất cả các hình thức thanh toán.
+                            </li>
+                            <li>
+                                Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước. 
+                            </li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="payment-total-info payment-block">
+        <div class="payment-total-header payment-block-header">
+            <h4 class="txt-cyan txt-18">Thành tiền</h4>
+        </div>
+        <div class="payment-total-detail grid-2-col">
+            <div class="payment-left">
+                <div class="payment-method">
+                    <strong>Lựa chọn phương thức thanh toán: </strong>
+                    <select name="payment" id="payment">
+                        <option value="" selected>Chọn phương thức</option>
+                        <option value="banking">Chuyển khoản</option>
+                        <option value="cash">Tiền mặt</option>
+                    </select>
+                </div>
+                <div class="payment-note">
+                    <strong>Lưu ý:</strong><br>
+                    <ul>
+                        <li>Thành tiền đã bao gồm VAT, phí đóng gói, phí vận chuyển và các chi phí khác vui lòng xem <a href="" class="cyan-link txt-bold">chính sách vận chuyển</a>.</li>
+                        <li>Nếu có nhu cầu đổi trả hàng, vui lòng xem <a href="" class="cyan-link txt-bold">chính sách đổi trả hàng</a> hoặc liên hệ hotline để được hướng dẫn chi tiết.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="payment-right">
+                <div class="payment-summary">
+                    <div class="first-summary">
+                        <span class="left">Tạm tính</span>
+                        <span class="right">1.400.000 &#8363;</span>
+                    </div><br>
+                    <div class="shipping-cost">
+                        <span class="left">Phí vận chuyển</span>
+                        <span class="right">20.000 &#8363;</span>
+                    </div><br>
+                    <div class="discount-money">
+                        <span class="left">Giảm giá</span>
+                        <span class="right">0 &#8363;</span>
+                    </div><br>
+                    <hr>
+                    <div class="final-total-money">
+                        <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
+                        <span class="txt-orange txt-bold txt-18 right">1.420.000 &#8363;</span>
+                    </div><br>
+                    <button type="submit" class="order txt-uppercase" id="btn-finish">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="return">
+        <a href="" class="cyan-link txt-14">Quay lại</a>
+        <hr style="color: var(--gray);">
+    </div>
+
+    <footer>
+        <div class="footer-wrapper grid-3-col">
+            <div class="basic-info">
+                <div class="logo">
+                    <a href=""><img src="assets/logo.svg" alt=""></a>
+                </div>
+                <div class="slogan">"All Ages, All Races, All Genders"</div>
+                <div class="address">Based in Ho Chi Minh City</div>
+                <div class="hotline"><span>Hotline:</span> <a href="tel:+0123456789">0123-456-789</a></div>
+            </div>
+            <div class="about-us">
+                <div class="about-us-title">
+                    <h4>VỀ CHÚNG TÔI</h4>
+                </div>
+                <div class="introduction"><a href="" class="heavy-link">Giới thiệu</a></div>
+                <div class="privacy-policy"><a href="" class="heavy-link">Chính sách bảo mật</a></div>
+                <div class="terms-of-use"><a href="" class="heavy-link">Điều khoản sử dụng</a></div>
+            </div>
+            <div class="page-support">
+                <div class="page-support-title">
+                    <h4>HỖ TRỢ</h4>
+                </div>
+                <div class="most-asked-questions"><a href="" class="heavy-link">Các câu hỏi thường gặp</a></div>
+                <div class="contact-info"><a href="" class="heavy-link">Thông tin liên hệ</a></div>
+                <div class="delivery-policy"><a href="" class="heavy-link">Chính sách vận chuyển</a></div>
+                <div class="return-policy"><a href="" class="heavy-link">Chính sách đổi trả</a></div>
+                <div class="send-support"><a href="" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div>Chịu trách nhiệm quản lý nội dung: PING Cosmetics - Số điện thoại: 0123-456-789</div>
+            <div>&copy; 2023 - Bản quyền thuộc về PING Cosmetics</div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
+    <script src="js/signup-script.js"></script>
+</body>
+</html>
