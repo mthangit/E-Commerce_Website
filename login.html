@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập | PING Cosmetics</title>
+    <link rel="icon" type="image/x-icon" href="assets/colored-logo.png">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="header-wrapper white fixed" >
+        <div class="header-container flex">
+            <div class="logo-site">
+                <a href="/" class="logo">
+                    <img src="assets/color-logo.svg" alt="logo">
+                </a>
+            </div>
+            <div class="page-header">
+                <h2 class="section-txt-title">Đăng nhập</h2>
+            </div>
+        </div>
+    </div>
+    
+    <div class="login-wrapper">
+        <div class="login">
+            <div class="txt-divider">Đăng nhập</div>
+            <br>
+            <form class="login-form" action="">
+                <label for="email-user" style="font-weight: 400;">Email</label><br>
+                <input type="email" id="email-user" placeholder="Nhập email"><br><br>
+                <label for="password-user" style="font-weight: 400;">Mật khẩu</label><br>
+                <input type="password" id="password-user" placeholder="Nhập mật khẩu" class="password-hide-3"><i class="fa-regular fa-eye txt-cyan reveal-pass-3" onclick="togglePassword(3)"></i><br><br>
+                <button class="btn-login txt-uppercase" type="submit">Đăng nhập</button>
+            </form>
+            <br>
+            <a href="" class="txt-cyan txt-14 right" id="forget-password">Quên mật khẩu</a><br>  
+            <hr style="width: 70%; height: 1px; background-color: var(--black); border: none; margin: 20px auto;">
+            <div class="create-acc txt-center">
+                <span>Bạn chưa có tài khoản? <a href="" class="txt-cyan orange-link">Tạo tài khoản</a></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
