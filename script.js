@@ -1,15 +1,15 @@
 const currencySymbol = "₫";
 
 // Chọn variant nào thì sẽ hiển thị giá của variant đó và mô tả của variant
-const variant = document.querySelectorAll('.variant')
-const variantDescription = document.querySelectorAll('.variant-description')
-const originalPrice = document.querySelectorAll('.real-price')
-const discountedPrice = document.querySelectorAll('.discounted-price')
+const variant = document.querySelectorAll('.variant');
+const variantDescription = document.querySelectorAll('.variant-description');
+const originalPrice = document.querySelectorAll('.real-price');
+const discountedPrice = document.querySelectorAll('.discounted-price');
 
 // Mặc định để thông tin của variant có mức giá cao nhất
-variantDescription[0].innerHTML = "60ml"
-discountedPrice[0].textContent = "350.000 " + currencySymbol
-originalPrice[0].textContent = "700.000 " + currencySymbol
+variantDescription[0].innerHTML = "60ml";
+discountedPrice[0].textContent = "350.000 " + currencySymbol;
+originalPrice[0].textContent = "700.000 " + currencySymbol;
 
 variant.forEach(item => {
     item.addEventListener('click', () => {
@@ -45,18 +45,6 @@ function addDotsToNumber(number) {
     return formattedNumber;
 }
 
-// Hover ảnh cover của home thì sẽ đổi ảnh khác
-function changeImage(x, image){
-    if (x == 1){
-        image.src = 'https://otherplanet.photo/wp-content/uploads/2020/04/product-photography-professional-cosmetics-advertising.jpg'
-        image.width = "600"
-        image.height = "400"
-    } else if (x == 2){
-        image.src = 'assets/home-cover.jpg'
-        image.width = "600"
-        image.height = "400"
-    }
-}
 
 // Khi nhấn vào câu hỏi thì mới hiện ra câu trả lời
 function toggleAnswer(x){
@@ -68,6 +56,18 @@ function toggleAnswer(x){
     } else {
         answer.style.display = "block";
         questionIcon.className = "fa-solid fa-angle-up right"
+    }
+}
+
+function togglePassword(num) {
+    var x = document.querySelector(".password-hide-"+num);
+    var eyeIcon = document.querySelector(".reveal-pass-"+num);
+    if (x.type === "password") {
+        x.type = "text";
+        eyeIcon.className = "fa-regular fa-eye-slash txt-cyan reveal-pass"
+    } else {
+        x.type = "password";
+        eyeIcon.className = "fa-regular fa-eye txt-cyan reveal-pass"
     }
 }
 
