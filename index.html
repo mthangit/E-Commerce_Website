@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PING Cosmetics Shop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+    crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="assets/colored-logo.png">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -63,7 +66,7 @@
     <div class="top-bar">
         <a href="" class="category-fixed" style="font-weight: 600; background: #fff;">DANH MỤC</a>
         <div class="sub-nav">
-            <button class="btn-sub-nav">Trang &#8363;iểm <i class="fa fa-caret-down"></i></button>
+            <button class="btn-sub-nav">Trang điểm <i class="fa fa-caret-down"></i></button>
             <div class="sub-nav-content">
                 <a href="" class="heavy-link">Kem nền</a>
                 <a href="" class="heavy-link">Kem lót</a>
@@ -106,64 +109,71 @@
         <div class="sub-nav">
             <button class="btn-sub-nav">Thực phẩm chức năng <i class="fa fa-caret-down"></i></button>
             <div class="sub-nav-content">
-                <a href="" class="heavy-link">Hỗ trợ làm &#8363;ẹp</a>
+                <a href="" class="heavy-link">Hỗ trợ làm đẹp</a>
                 <a href="" class="heavy-link">Hỗ trợ sức khỏe</a>
             </div>
         </div>
     </div>
 
-    <div class="home-cover">
-        <img class="home-cover-img" src="assets/home-cover.jpg" alt="" width="600" height="400" onmouseover="changeImage(1, this)" onmouseout="changeImage(2, this)">
-        <div class="side-cover">
-            <img src="https://media.hcdn.vn/hsk/1695368002nowfree-3-846x250.jpg" alt="">
-            <img src="https://media.hcdn.vn/hsk/1695368002nowfree-3-846x250.jpg" alt="">
-            <img src="https://media.hcdn.vn/hsk/1695368002nowfree-3-846x250.jpg" alt="">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="assets/home-cover-1.jpg" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="assets/home-cover-2.jpg" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="assets/home-cover-3.jpg" alt="Third slide">
+            </div>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 
-    <div class="icons-display">
-        <div class="container">
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-high-end.png" alt="">
-                    <div class="icon-title heavy-link" >High End</div>
-                </a>
+    <div class="container">
+        <h4 class="mt-5 ms-lg-16 mb-6 text-muted small" data-config-id="logos-header">THƯƠNG HIỆU NỔI TIẾNG</h4>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-2 mb-6 mb-lg-0">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://vinabeauty.vn/wp-content/uploads/2021/10/my-pham-loreal-paris-1.jpg" alt="" data-config-id="logo1">
+                </div>
             </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-nowfree.png" alt="">
-                    <div class="icon-title heavy-link">Giao 2h</div>
-                </a>
+            <div class="col-12 col-md-6 col-lg-2 mb-6 mb-lg-0">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://images.krisshop.com/mdp/4pKijNsQlpVrulfi-ZlTlKa-_x0uGVj318l6oxBxEwA/0x0/bWRwLzE3OTQvQW5lc3NhX0hvcml6b250YWxfQmx1ZS5wbmc" alt="" data-config-id="logo2">
+                </div>
             </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-number-1.png" alt="">
-                    <div class="icon-title heavy-link">Mua 1 tặng 1</div>
-                </a>
+            <div class="col-12 col-md-6 col-lg-2 mb-6 mb-lg-0">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://cdn.shopify.com/s/files/1/0529/3106/8079/files/la_roche-posay_logo.png?v=1619938514" alt="" data-config-id="logo3">
+                </div>
             </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-bang-gia.png" alt="">
-                    <div class="icon-title heavy-link">Bảng giá</div>
-                </a>
+            <div class="col-12 col-md-6 col-lg-2 mb-6 mb-lg-0">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Maybelline-Logo.svg/1280px-Maybelline-Logo.svg.png" alt="" data-config-id="logo4">
+                </div>
             </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-deal-22h-24h.png" alt="">
-                    <div class="icon-title heavy-link">Deal 22h - 24h</div>
-                </a>
+            <div class="col-12 col-md-6 col-lg-2 mb-6 mb-md-0">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://1000logos.net/wp-content/uploads/2021/04/MAC-Cosmetics-logo.png" alt="" data-config-id="logo5">
+                </div>
             </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-dat-hen.png" alt="">
-                    <div class="icon-title heavy-link">Đặt hẹn</div>
-                </a>
-            </div>
-            <div class="item-icon">
-                <a href="" class="white-anchor icon-zoom">
-                    <img src="https://hasaki.vn/img/hsk/icon/hasaki-cam-nang.png" alt="">
-                    <div class="icon-title heavy-link">Cẩm nang</div>
-                </a>
+            <div class="col-12 col-md-6 col-lg-2">
+                <div class="d-flex align-items-center bg-white shadow-lg" style="height: 128px;">
+                    <img class="mx-auto d-block img-fluid" src="https://senkavietnam.com.vn/public/uploads/1652706890_Logo-Senka-2021_4.png" alt="" data-config-id="logo6">
+                </div>
             </div>
         </div>
     </div>
@@ -172,7 +182,7 @@
         <div id="flash-sale">
             <div class="flash-sale-content">
                 <div class="flash-sale-title">
-                    <h2 class="txt-title-box"><i class="fa-solid fa-fire-flame-curved"></i> GIẢM GIÁ SÂU</h2>
+                    <h2 class="txt-title-bo"><i class="fa-solid fa-fire-flame-curved"></i> GIẢM GIÁ SÂU</h2>
                 </div>
                 <div class="flash-sale-product-wrapper">
                     <div class="flash-sale-product">
@@ -825,13 +835,13 @@
                             </div>
                             <div class="width-common blog-content">
                                 <div class="blog-title">
-                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan &#8363;ược yêu thích?</h3>
+                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan được yêu thích?</h3>
                                 </div>
                                 <div class="blog-preview-content width-common">
                                     Sữa tắm của Thái thường mang mùi hương của sữa hoặc hương nước hoa quyến rũ
-                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có &#8363;ặc trưng thơm dai, thơm lâu
-                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận &#8363;ược da dẻ thơm tho như vừa xịt nước
-                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ &#8363;ồng hồ.
+                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có đặc trưng thơm dai, thơm lâu
+                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận được da dẻ thơm tho như vừa xịt nước
+                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ đồng hồ.
                                 </div>
                                 <div class="read-more width-common">
                                     <span class="right">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></span>
@@ -846,13 +856,13 @@
                             </div>
                             <div class="width-common blog-content">
                                 <div class="blog-title">
-                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan &#8363;ược yêu thích?</h3>
+                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan được yêu thích?</h3>
                                 </div>
                                 <div class="blog-preview-content width-common">
                                     Sữa tắm của Thái thường mang mùi hương của sữa hoặc hương nước hoa quyến rũ
-                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có &#8363;ặc trưng thơm dai, thơm lâu
-                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận &#8363;ược da dẻ thơm tho như vừa xịt nước
-                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ &#8363;ồng hồ.
+                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có đặc trưng thơm dai, thơm lâu
+                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận được da dẻ thơm tho như vừa xịt nước
+                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ đồng hồ.
                                 </div>
                                 <div class="read-more width-common">
                                     <span class="right">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></span>
@@ -867,13 +877,13 @@
                             </div>
                             <div class="width-common blog-content">
                                 <div class="blog-title">
-                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan &#8363;ược yêu thích?</h3>
+                                    <h3 class="title-preview">Tại sao sữa tắm Thái Lan được yêu thích?</h3>
                                 </div>
                                 <div class="blog-preview-content width-common">
                                     Sữa tắm của Thái thường mang mùi hương của sữa hoặc hương nước hoa quyến rũ
-                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có &#8363;ặc trưng thơm dai, thơm lâu
-                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận &#8363;ược da dẻ thơm tho như vừa xịt nước
-                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ &#8363;ồng hồ.
+                                    từ các loài hoa và trái cây. Sữa tắm Thái Lan có đặc trưng thơm dai, thơm lâu
+                                    nên sau khi vừa tắm xong, bạn sẽ cảm nhận được da dẻ thơm tho như vừa xịt nước
+                                    hoa và mùi hương này sẽ duy trì suốt nhiều giờ đồng hồ.
                                 </div>
                                 <div class="read-more width-common">
                                     <span class="right">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></span>
@@ -912,16 +922,19 @@
                 <div class="most-asked-questions"><a href="" class="heavy-link">Các câu hỏi thường gặp</a></div>
                 <div class="contact-info"><a href="" class="heavy-link">Thông tin liên hệ</a></div>
                 <div class="delivery-policy"><a href="" class="heavy-link">Chính sách vận chuyển</a></div>
-                <div class="return-policy"><a href="" class="heavy-link">Chính sách &#8363;ổi trả</a></div>
+                <div class="return-policy"><a href="" class="heavy-link">Chính sách đổi trả</a></div>
                 <div class="send-support"><a href="" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
             </div>
         </div>
         <div class="copyright">
-            <div>Chịu trách nhiệm quản lý nội dung: PING Cosmetics - Số &#8363;iện thoại: 0123-456-789</div>
+            <div>Chịu trách nhiệm quản lý nội dung: PING Cosmetics - Số điện thoại: 0123-456-789</div>
             <div>&copy; 2023 - Bản quyền thuộc về PING Cosmetics</div>
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>

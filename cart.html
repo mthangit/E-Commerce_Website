@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng | PING Cosmetics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+    crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="assets/colored-logo.png">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -119,172 +122,154 @@
         </ul>
     </div>
 
-    <div class="cart-container m-20">
-        <div class="cart-title">
-            <h2 class="section-txt-title">Giỏ hàng</h2>
-            <span class="number-of-products">(2 sản phẩm)</span>
-        </div>
-        <div class="main-cart-container grid-cart">
-            <div class="cart-left">
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Hình ảnh</th>
-                            <th>Sản phẩm</th>
-                            <th>Đơn giá</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                            <th>Tùy chọn</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cart-info">
-                        <tr>
-                            <td class="product-cart-img">
-                                <a href="">
-                                    <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg">
-                                </a>
-                            </td>
-                            <td class="product-cart-info">
-                                <div class="cart-product-detail">
-                                    <a href="" class="brand-info txt-uppercase">
-                                        <strong>Anessa</strong>
-                                    </a>
-                                    <div class="title-product-cart">
-                                        <a href="" class="product-name-cart cyan-link">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu 20ml</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-1">
-                                <b>350.000 &#8363;</b>
-                                <div class="old-price">700.000 &#8363;</div>
-                            </td>
-                            <td class="product-quantity">
-                                <input type="number" name="quantity-cart" class="quantity-cart" min="1" value="1">
-                            </td>
-                            <td class="total-money-product">
-                                <b class="price-subtotal">350.000 &#8363;</b>
-                            </td>
-                            <td class="remove-product-cart">
-                                <button class="remove-div">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="product-cart-img">
-                                <a href="">
-                                    <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg">
-                                </a>
-                            </td>
-                            <td class="product-cart-info">
-                                <div class="cart-product-detail">
-                                    <a href="" class="brand-info txt-uppercase">
-                                        <strong>Anessa</strong>
-                                    </a>
-                                    <div class="title-product-cart">
-                                        <a href="" class="product-name-cart cyan-link">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu 20ml</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-1">
-                                <b>350.000 &#8363;</b>
-                                <div class="old-price">700.000 &#8363;</div>
-                            </td>
-                            <td class="product-quantity">
-                                <input type="number" name="quantity-cart" class="quantity-cart" min="1" value="1">
-                            </td>
-                            <td class="total-money-product">
-                                <b class="price-subtotal">350.000 &#8363;</b>
-                            </td>
-                            <td class="remove-product-cart">
-                                <button class="remove-div">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="product-cart-img">
-                                <a href="">
-                                    <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg">
-                                </a>
-                            </td>
-                            <td class="product-cart-info">
-                                <div class="cart-product-detail">
-                                    <a href="" class="brand-info txt-uppercase">
-                                        <strong>Anessa</strong>
-                                    </a>
-                                    <div class="title-product-cart">
-                                        <a href="" class="product-name-cart cyan-link">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu 20ml</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-1">
-                                <b>350.000 &#8363;</b>
-                                <div class="old-price">700.000 &#8363;</div>
-                            </td>
-                            <td class="product-quantity">
-                                <input type="number" name="quantity-cart" class="quantity-cart" min="1" value="1">
-                            </td>
-                            <td class="total-money-product">
-                                <b class="price-subtotal">350.000 &#8363;</b>
-                            </td>
-                            <td class="remove-product-cart">
-                                <button class="remove-div">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="cart-right-footer">
-                    <div class="cart-estimated right">
-                        <span class="bill-header left">Tạm tính:</span>
-                        <span class="bill-content estimate-price right">350.000 &#8363;</span>
-                        <br>
-                        <span class="bill-description right">(Đã bao gồm VAT)</span>
-                        <br>
-                        <button class="order smaller-order txt-uppercase right">Tiến hành đặt hàng</button>
-                        <br>
-                    </div>
-                    <div class="continue">
-                        <br><br><br><br>
-                        <a href="" class="cyan-link"><i class="fa-solid fa-caret-left"></i> Tiếp tục mua hàng</a>
-                        <br>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-right">
-                <div class="bill-title-container">
-                    <h4 class="bill-title">Hóa đơn của bạn</h3>
-                    <hr>
-                </div>
-                <div class="bill-detail">
-                    <div class="bill-first-price">
-                        <span class="bill-header left">Tạm tính</span>
-                        <span class="bill-content estimate-price right">350.000 &#8363;</span>
-                    </div>
-                    <br>
-                    <div class="bill-discount">
-                        <span class="bill-header left">Giảm giá</span>
-                        <span class="bill-content discount-amount right">-10.000 &#8363;</span>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="bill-final">
-                        <div class="bill-money-header left">
-                            <span class="bill-header bill-header-money">Tổng tiền</span>
-                            <br>
-                            <span class="bill-description">(Đã bao gồm VAT)</span>
+    <section class="h-100">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0 txt-cyan hard">Giỏ hàng</h3>
+                        <div>
+                            <p class="mb-0"><span class="text-muted">3 sản phẩm</span></p>
                         </div>
-                        <span class="bill-money bill-total right">350.000 &#8363;</span>
                     </div>
-                    <br><br>
-                    <button class="order txt-uppercase">Tiến hành đặt hàng</button>
+                    <div class="card rounded-3 mb-4 bg-table">
+                        <div class="card-body p-2">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="txt-center col-lg-2 col-xl-2">
+                                    <span class="tb-header">Hình ảnh</span>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <span class="tb-header">Thông tin sản phẩm</span>
+                                </div>
+                                <div class="col-lg-3 col-xl-2 d-flex">
+                                    <span class="ml-md-4 tb-header">Số lượng</span>
+                                </div>
+                                <div class="col-lg-2 col-xl-2 offset-lg-1">
+                                    <span class="ml-lg-5 tb-header">Giá</span>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <span class="tb-header"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <img
+                                        src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg"
+                                        class="img-fluid rounded-3" alt="">
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <p class="fw-normal mb-2">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</p>
+                                    <p><span class="text-muted">Loại: </span>60ml</p>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input id="form1" min="0" name="quantity" value="1" type="number"
+                                        class="form-control form-control-sm" />
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h5 class="mb-0 txt-16">350.000 &#8363;</h5>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <img
+                                        src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg"
+                                        class="img-fluid rounded-3" alt="">
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <p class="fw-normal mb-2">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</p>
+                                    <p><span class="text-muted">Loại: </span>60ml</p>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input id="form1" min="0" name="quantity" value="1" type="number"
+                                        class="form-control form-control-sm" />
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h5 class="mb-0 txt-16">350.000 &#8363;</h5>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <img
+                                        src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg"
+                                        class="img-fluid rounded-3" alt="">
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <p class="fw-normal mb-2">Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</p>
+                                    <p><span class="text-muted">Loại: </span>60ml</p>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input id="form1" min="0" name="quantity" value="1" type="number"
+                                        class="form-control form-control-sm" />
+                                    <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h5 class="mb-0 txt-16">350.000 &#8363;</h5>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="total mb-lg-5">
+                                <span class="tb-header left">Tạm tính</span>
+                                <span class="tb-header right txt-18 txt-orange">1.050.000 &#8363;</span>
+                            </div>
+                            <button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="continue-shopping-container">
+            <a href="" class="continue cyan-link text-white"><i class="fa-solid fa-caret-left"></i> Tiếp tục mua hàng</a>
+            <hr>
+        </div>
+    </section>
 
     <footer>
         <div class="footer-wrapper grid-3-col">
@@ -300,19 +285,19 @@
                 <div class="about-us-title">
                     <h4>VỀ CHÚNG TÔI</h4>
                 </div>
-                <div class="introduction"><a href="" class="heavy-link">Giới thiệu</a></div>
-                <div class="privacy-policy"><a href="" class="heavy-link">Chính sách bảo mật</a></div>
-                <div class="terms-of-use"><a href="" class="heavy-link">Điều khoản sử dụng</a></div>
+                <div class="introduction"><a href="" class="heavy-link white-anchor">Giới thiệu</a></div>
+                <div class="privacy-policy"><a href="" class="heavy-link white-anchor">Chính sách bảo mật</a></div>
+                <div class="terms-of-use"><a href="" class="heavy-link white-anchor">Điều khoản sử dụng</a></div>
             </div>
             <div class="page-support">
                 <div class="page-support-title">
                     <h4>HỖ TRỢ</h4>
                 </div>
-                <div class="most-asked-questions"><a href="" class="heavy-link">Các câu hỏi thường gặp</a></div>
-                <div class="contact-info"><a href="" class="heavy-link">Thông tin liên hệ</a></div>
-                <div class="delivery-policy"><a href="" class="heavy-link">Chính sách vận chuyển</a></div>
-                <div class="return-policy"><a href="" class="heavy-link">Chính sách đổi trả</a></div>
-                <div class="send-support"><a href="" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
+                <div class="most-asked-questions"><a href="" class="heavy-link white-anchor">Các câu hỏi thường gặp</a></div>
+                <div class="contact-info"><a href="" class="heavy-link white-anchor">Thông tin liên hệ</a></div>
+                <div class="delivery-policy"><a href="" class="heavy-link white-anchor">Chính sách vận chuyển</a></div>
+                <div class="return-policy"><a href="" class="heavy-link white-anchor">Chính sách đổi trả</a></div>
+                <div class="send-support"><a href="" class="heavy-link white-anchor">Gửi yêu cầu hỗ trợ</a></div>
             </div>
         </div>
         <div class="copyright">
@@ -321,6 +306,9 @@
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
