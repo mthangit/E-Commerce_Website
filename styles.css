@@ -262,7 +262,7 @@ body{
     margin-top: 0;
 }
 
-.pr-name .product-name{
+.pr-name .product-name, .preview-product .product-name{
     overflow: hidden;
     line-height: 18px;
     color: var(--black);
@@ -1243,7 +1243,7 @@ a:hover{
     align-items: center;
     background-image: url("assets/background.png");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: center;
     height: 700px;
     margin: auto;
@@ -1476,4 +1476,21 @@ a{
 
 .return a{
     color: var(--black);
+}
+
+.form-contact-container{
+    width: 70%;
+    margin: 20px auto;
+    line-height: 30px;
+}
+
+.btn-submit-contact{
+    width: 100%;
+    border: none;
+    background: var(--cyan);
+    color: var(--white);
+    margin: 30px 0;
+    height: 35px;
+    font-weight: 500;
+    border-radius: 5px;
 }
