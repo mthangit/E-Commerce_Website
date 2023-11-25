@@ -1494,3 +1494,27 @@ a{
     font-weight: 500;
     border-radius: 5px;
 }
+
+.about-container{
+    width: 80%;
+    margin: 30px auto;
+    text-align: justify;
+    line-height: 30px;
+}
+
+.about-1, .about-2{
+    margin: auto;
+}
+
+.about-1{
+    background: #E0F4FF;
+    padding: 20px 20px 10px 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.txt-slogan{
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--cyan);
+}
