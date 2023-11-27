@@ -1518,3 +1518,14 @@ a{
     font-weight: bold;
     color: var(--cyan);
 }
+
+.tb-return, .tb-return th, .tb-return td{
+    border: 1px solid black;
+}
+
+.tb-return{
+    width: 80%;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 20px auto;
+}
