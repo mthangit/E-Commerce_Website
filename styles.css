@@ -1519,11 +1519,12 @@ a{
     color: var(--cyan);
 }
 
-.tb-return, .tb-return th, .tb-return td{
+.tb-return, .tb-return th, .tb-return td,
+.tb-delivery, .tb-delivery th, .tb-delivery td{
     border: 1px solid black;
 }
 
-.tb-return{
+.tb-return, .tb-delivery{
     width: 80%;
     border-collapse: collapse;
     text-align: center;
