@@ -112,7 +112,7 @@
                         <a href="#">3</a>
                         <a href="#">4</a>
                         <a href="#">5</a>
-                        <a href="#">199</a>
+                        <a href="#">6</a>
                         <a href="#">&raquo;</a>
                     </div>
                 </nav>
