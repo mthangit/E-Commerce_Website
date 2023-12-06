@@ -14,76 +14,26 @@ PING - Add Discount
         <small class="text-muted float-end">Nhập thông tin</small>
       </div>
       <div class="card-body">
-        <form action="{{route('storediscount')}}" method="POST">
+        <form action="{{route('storeshipping')}}" method="POST">
           @csrf
           <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập tên mã giảm giá</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn tỉnh thành</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="discountName" name="discountName" placeholder="Mã giảm lễ tết" />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập Code</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="discountCode" name="discountCode" placeholder="TET30" />
-            </div>
-          </div>
-
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập mô tả mã giảm giá</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="discountDescription" name="discountDescription" placeholder="thông tin" />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Loại mã giảm giá</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="discountType" name="discountType">
-                <option value="percent">Phần trăm</option>
-                <option value="fixed">Trừ tiền</option>
+              <select class="form-control" id="provinceID" name="provinceID" aria-label="Default select example">
+                <option>Lựa chọn danh mục cha</option>
+                @foreach ($provinces as $province )
+                <option value="{{$province->provinceID}}">{{$province->provinceName}}</option>
+                @endforeach
               </select>
             </div>
           </div>
 
           <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">giá trị giảm</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập giá</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control" id="discountAmount" name="discountAmount" placeholder="% OR VND" />
+              <input type="text" class="form-control" id="shippingExpense" name="shippingExpense" placeholder="50000VND" />
             </div>
           </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Số lượng ban đầu</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" id="discountQuantity" name="discountQuantity" placeholder="50" />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày bắt đầu</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="date" value="2023-01-11" id="discountStart" name="discountStart" />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày hết hạn</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="date" value="2023-12-30" id="discountEnd" name="discountEnd" />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái mã giảm giá</label>
-            <div class="switch m-r-10">
-              <input type="checkbox" id="isActive" name="isActive" checked="">
-              <label for="isActive"></label>
-            </div>
-          </div>
-
 
           <div class="row justify-content-end">
             <div class="col-sm-10">
