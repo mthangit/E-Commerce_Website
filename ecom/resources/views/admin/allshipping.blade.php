@@ -19,16 +19,7 @@ PING - discount
         <button class="btn btn-outline-secondary" type="button" id="searchButton">Tìm kiếm</button>
         <button class="btn btn-outline-secondary" type="button" id="resetButton">Reset</button>
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Lọc theo Trạng thái
-          </button>
-          <div class="dropdown-menu" aria-labelledby="filterDropdown">
-            <a class="dropdown-item" href="{{ route('alldiscount', ['status' => 'all']) }}">Hiển thị Tất cả</a>
-            <a class="dropdown-item" href="{{ route('alldiscount', ['status' => 'available']) }}">Chỉ hiển thị Available</a>
-            <a class="dropdown-item" href="{{ route('alldiscount', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
-          </div>
-        </div>
-        <button class="btn btn-outline-secondary" type="button" id="addDiscount">Thêm mã giảm giá</button>
+        <button class="btn btn-outline-secondary" type="button" id="addDiscount">Thêm thị trường</button>
       </div>
       <table class="table">
         <thead>
@@ -36,46 +27,27 @@ PING - discount
             <th>ID</th>
             <th>Tỉnh thành</th>
             <th>GIÁ</th>
-            <th>Loại mã giảm giá</th>
-            <th>Giá trị</th>
-            <th>Số lượng ban đầu</th>
-            <th>Đã sử dụng</th>
-            <th>Trạng thái</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">
-          @foreach ($discounts as $discount )
-          <tr @if($discount->isActive == 0) class="text-muted" @endif >
-            <td>{{$discount->discountID}}</td>
-            <td>{{$discount->discountName}}</td>
-            <td>{{$discount->discountCode}} </td>
-            <td>{{$discount->discountType}}</td>
-            <td>{{$discount->discountAmount}}</td>
-            <td>{{$discount->discountQuantity}}</td>
-            <td>{{$discount->discountUsed}}</td>
-            <td>@if($discount->isActive == 1)
-              <div class="d-flex align-items-center">
-                <div class="badge badge-success badge-dot m-r-10"></div>
-                <div>Available</div>
-              </div>
-              @else
-              <div class="d-flex align-items-center">
-                <div class="badge badge-danger badge-dot m-r-10"></div>
-                <div style="color: #999; font-style: italic;">Unavailable</div>
-              </div>
-              @endif
-            </td>
+          @foreach ($shippings as $shipping )
+          <tr>
+            <td>{{$shipping->shippingID}}</td>
             <td>
-              <a href="{{route('editdiscount', $discount->discountID)}}" class="btn btn-primary">Sửa</a>
-              @if($discount->isActive == 1)
-              <a href="{{route('deletediscount', $discount->discountID)}}" class="btn btn-danger">Xóa</a>
-              @else
-              <button class="btn btn-warning" disabled>Xóa</button>
-              @endif
+                @foreach ($provinces as $province)
+                    @if ($province->provinceID == $shipping->provinceID)
+                        {{$province->provinceName}}
+                    @endif
+                @endforeach
+            </td>
+            <td>{{$shipping->shippingExpense}} </td>
+            <td>
+              <a href="{{route('editshipping', $shipping->shippingID)}}" class="btn btn-primary">Sửa</a>
+              <a href="{{route('deleteshipping', $shipping->shippingID)}}" class="btn btn-danger">Xóa</a>
             </td>
           </tr>
           @endforeach
-          {{ $discounts->links() }}
         </tbody>
       </table>
     </div>
@@ -88,19 +60,19 @@ PING - discount
   $(document).ready(function() {
     $("#searchButton").click(function() {
       var searchValue = $("#searchInput").val();
-      window.location.href = "{{ route('searchdiscount') }}?q=" + searchValue;
+      window.location.href = "{{ route('searchshipping') }}?q=" + searchValue;
     });
 
     $("#resetButton").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
       $("#searchInput").val('');
-      window.location.href = 'http://localhost:8000/admin/search-discount';
+      window.location.href = 'http://localhost:8000/admin/search-shipping';
     });
 
     $("#addDiscount").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
       $("#addDiscount").val('');
-      window.location.href = 'http://localhost:8000/admin/add-discount';
+      window.location.href = 'http://localhost:8000/admin/add-shipping';
     });
 
     
