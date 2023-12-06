@@ -75,7 +75,7 @@ PING - discount
       window.location.href = "{{ route('addShipping') }}";
     })
 
-    
+
   });
 </script>
 @endsection

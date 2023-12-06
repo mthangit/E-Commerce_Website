@@ -43,10 +43,10 @@
 {{--                </div>--}}
                 <div class="product-amount">
                     <h5>Số lượng: </h5>
-                    <input type="number" min="1" value="1">
+                    <input type="number" id="quantityPick" min="1" value="1">
                 </div>
                 <div class="btn-product">
-                    <button class="btn-add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
+                    <button class="btn-add-to-cart" id="addToCartBtn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
                     <button class="btn-buy-now">Mua ngay</button>
                 </div>
             </div>
@@ -334,4 +334,33 @@
         </div>
     </div>
 
+
 @include('user.layouts.template_footer')
+
+<script>
+    $('#addToCartBtn').click(function () {
+        var quantity = document.getElementById('quantityPick').value;
+        addToCart({{$product->productID}}, quantity);
+    });
+    function addToCart(productID, quantity) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{route('add to cart')}}",
+            type: "POST",
+            data: {
+                "productID": productID,
+                "quantity": quantity
+            },
+            datatype: "JSON",
+            success: function (response) {
+                if (response.status == 200) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    }
+</script>
