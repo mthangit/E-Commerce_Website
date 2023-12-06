@@ -301,7 +301,7 @@
                                 <span class="icon-holder">
                                     <i class="anticon anticon-form"></i>
                                 </span>
-                                <span class="title">Quản lý mã giảm giá</span>
+                                <span class="title">Quản lý khác</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
@@ -309,6 +309,11 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{ route('alldiscount') }}">Mã giảm giá</a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('allshipping') }}">Chi phí ship</a>
                                 </li>
                             </ul>
                         </li>
