@@ -19,7 +19,7 @@ PING - discount
         <button class="btn btn-outline-secondary" type="button" id="searchButton">Tìm kiếm</button>
         <button class="btn btn-outline-secondary" type="button" id="resetButton">Reset</button>
         <div class="dropdown">
-        <button class="btn btn-outline-secondary" type="button" id="addDiscount">Thêm thị trường</button>
+        <button class="btn btn-outline-secondary" type="button" id="addShipping">Thêm thị trường</button>
       </div>
       <table class="table">
         <thead>
@@ -69,11 +69,11 @@ PING - discount
       window.location.href = 'http://localhost:8000/admin/search-shipping';
     });
 
-    $("#addDiscount").click(function() {
+    $("#addShipping").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
-      $("#addDiscount").val('');
-      window.location.href = 'http://localhost:8000/admin/add-shipping';
-    });
+      $("#addShipping").val('');
+      window.location.href = "{{ route('addShipping') }}";
+    })
 
     
   });

@@ -217,7 +217,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('allproducts') }}">Sản phẩm</a>
+                                    <a href="{{ route('allproduct') }}">Sản phẩm</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('addproduct') }}">Thêm sản phẩm</a>
