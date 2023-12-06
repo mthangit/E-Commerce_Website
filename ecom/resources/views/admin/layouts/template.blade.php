@@ -33,7 +33,7 @@
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
-                    <a href="{{route('homepage')}}" style="margin-top: 18px; margin-right: 18px;">
+                    <a href="index.html" style="margin-top: 18px; margin-right: 18px;">
                         <img src="{{ asset('dashboard/assets/images/logo/color-logo.svg') }}" alt="Logo">
                         <img class="logo-fold" src="{{ asset('dashboard/assets/images/logo/logo-fold.svg') }}" alt="Logo" style="width: 41px; margin-left: 20px; margin-top: -5px;">
                     </a>
@@ -641,7 +641,7 @@
      Core JS
     <script src=" {{ asset('dashboard/assets/js/app.min.js')}}"></script> -->
     <!-- Content Wrapper END KẾT THÚC TRANG PRODUCT Ở ĐÂY -->
-
+    
 </body>
 
 </html>
