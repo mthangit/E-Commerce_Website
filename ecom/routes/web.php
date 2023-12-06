@@ -47,7 +47,7 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 });
 
 Route::controller(UserProductController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/{productSlug}', 'Index')->name('product detail_user');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);

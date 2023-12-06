@@ -4,7 +4,7 @@
         <ul class="breadcrumb">
             <li><a href="">Trang chủ</a></li>
             <li><a href="">Kem chống nắng</a></li>
-            <li>Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</li>
+            <li>{{$product->productName}}</li>
         </ul>
     </div>
 
@@ -12,7 +12,7 @@
         <div class="product-img-container grid-image">
             <div class="small-image-container">
                 <div class="small-image">
-                    <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" width="150" height="150">
+                    <img src="{{asset($product->productImage)}}" alt="" width="150" height="150">
                 </div>
                 <div class="small-image">
                     <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" width="150" height="150">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="large-image">
-                <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" width="450" height="450">
+                <img src="{{asset($product->productImage)}}" alt="" width="450" height="450">
             </div>
         </div>
         <div class="product-info-container">
@@ -30,22 +30,17 @@
                 <h3>Anessa</h3>
             </div>
             <div class="product-name">
-                <h1>Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu</h1>
+                <h1>{{$product->productName}}</h1>
             </div>
             <div class="product-price">
-                <strong class="left discounted-price">350000</strong>
-                <span class="right real-price">700000</span>
+                <strong class="left discounted-price">{{$product->productDiscountPrice}}</strong>
+                <span class="right real-price">{{$product->productOriginalPrice}}</span>
             </div>
             <br><br>
             <div class="product-variant">
-                <div class="product-variant-title">
-                    <h5>Loại sản phẩm: </h5>
-                    <div class="variant-description"></div>
-                </div>
-                <div class="product-variant-chooser">
-                    <div class="variant" data-new-price="160000" data-old-price="320000">20ml</div>
-                    <div class="variant selected" data-new-price="350000" data-old-price="700000">60ml</div>
-                </div>
+{{--                <div class="product-variant-title">--}}
+{{--                    <div class="variant-description"></div>--}}
+{{--                </div>--}}
                 <div class="product-amount">
                     <h5>Số lượng: </h5>
                     <input type="number" min="1" value="1">
