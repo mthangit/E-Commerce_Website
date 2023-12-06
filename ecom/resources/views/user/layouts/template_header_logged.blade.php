@@ -9,6 +9,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/colored-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
                         </button>
                     </form>
                     <div class="item-header cart">
-                        <a href="" class="white-anchor">
+                        <a href="{{route('cart')}}" class="white-anchor">
                             <img src="{{ asset('assets/cart-icon.svg')}}" alt="">
                         </a>
                     </div>

@@ -10,11 +10,13 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Iluminate\Http\Request;
 
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
+use App\Http\Controllers\User\CartController;
 
 
 /*
@@ -48,6 +50,11 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 
 Route::controller(UserProductController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
+});
+
+Route::controller(CartController::class)->group(function () {
+   Route::get('/cart', 'Index')->name('cart');
+   Route::post('add-to-cart', 'AddToCart')->name('add to cart');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);

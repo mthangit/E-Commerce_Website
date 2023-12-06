@@ -31,7 +31,6 @@ class DiscountController extends Controller
         return view('admin.alldiscount', compact('discounts'));
     }
 
-
     public function AddDiscount()
     {
         return view('admin.adddiscount');
@@ -42,7 +41,7 @@ class DiscountController extends Controller
         $request->validate([
             'discountName' => 'required|unique:discounts',
            // 'discountCode' => 'required|unique:discounts',
-         
+
         ]);
 
         $isActive = $request->has('isActive') ? 1 : 0;
@@ -91,10 +90,10 @@ class DiscountController extends Controller
     public function DeleteDiscount($discountID)
     {
         $discount = discount::findOrFail($discountID);
-    
+
         // Thay đổi trạng thái isActive về 0
         $discount->update(['isActive' => 0]);
-    
+
         return redirect()->route('alldiscount')->with('message', 'Đã thực hiện thành công');;
     }
 }
