@@ -12,7 +12,6 @@ class Shipping extends Model
     protected $fillable = [
         'shippingID',
         'provinceID',
-        'shippingExpense',
-        
+        'shippingExpense'
     ];
 }

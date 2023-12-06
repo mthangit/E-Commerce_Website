@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('provinceCode',200);
             $table->timestamps();
 
-
-            
         });
     }
 
