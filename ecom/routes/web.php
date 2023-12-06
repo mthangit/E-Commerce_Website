@@ -52,10 +52,9 @@ Route::controller(UserProductController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
 });
 
-Route::post('/add-to-cart', [CartController::class, 'AddToCart'])->name('add to cart');
-
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');
+   Route::post('add-to-cart', 'AddToCart')->name('add to cart');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
