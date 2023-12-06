@@ -10,6 +10,7 @@
             @endguest
             <li><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}">{{$category->categoryName}}</a></li>
                 <li><a href="">{{$subCategory->subCategoryName}}</a></li>
+            <li>Tesst </li>
         </ul>
     </div>
 
@@ -78,9 +79,9 @@
                 @foreach($list_products as $product)
                 <div class="preview-product">
                     <div class="product-ping width-common relative">
-                        <a href="{{route('product detail_user',['categorySlug'=>$category->categorySlug, 'subCategorySlug'=>$subCategory->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
+                        <a href="{{route('detail product',['categorySlug'=>$category->categorySlug, 'subCategorySlug'=>$subCategory->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
                             <div class="product-img sale">
-                                <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" height="200" width="200">
+                                <img src="{{asset($product->productImage)}}" alt="" height="200" width="200">
                                 <span class="sale-percent">50%</span>
                             </div>
                             <div class="product-info">
@@ -90,7 +91,7 @@
                                 </div>
                                 <div class="product-name-block">
                                     <h3 class="width-common pr-name sp-bottom-5">
-                                        <div class="product-name cyan-link">{{$product->productName.' '.$product->productID.'-'.$product->productCategoryID}}</div>
+                                        <div class="product-name cyan-link">{{$product->productName}}</div>
                                     </h3>
                                 </div>
                                 <div class="rate-block">
