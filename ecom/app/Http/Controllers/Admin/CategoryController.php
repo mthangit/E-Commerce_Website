@@ -11,8 +11,6 @@ class CategoryController extends Controller
 {
     public function Index(Request $request)
     {
-        $categories = Category::latest()->get(); // $categories là một collection trong Laravel, nó chứa các đối tượng CategoryController (các bản ghi từ bảng categories)
-        $categories = Category::latest()->paginate(2); // $categories là một collection trong Laravel, nó chứa các đối tượng Category (các bản ghi từ bảng categories)
         $status = $request->input('status', 'available');
 
         if ($status === 'available') {

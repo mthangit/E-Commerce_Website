@@ -13,11 +13,10 @@ class SubCategoryController extends Controller
 {
     public function Index(Request $request)
     {
-
         $products = Product::where('isActive', 1)->where('productInStock', '>', 0);
         $category = Category::where('categorySlug', $request->categorySlug)->first();
         $subCategory = SubCategory::where('subCategorySlug', $request->subCategorySlug)->first();
-        $products = $products->where('productSubCategoryID', $subCategory->subCategoryID)->where('productCategoryID', $category->categoryID)->paginate(2);
+        $products = $products->where('productSubCategoryID', $subCategory->subCategoryID)->where('productCategoryID', $category->categoryID)->get();
         return view('user.product_list_subcategory', ['subCategory' => $subCategory,'list_products' => $products, 'category' => $category]);
     }
     public function Index2(Request $request)

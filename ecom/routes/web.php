@@ -6,15 +6,17 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Iluminate\Http\Request;
 
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
-use App\Http\Controllers\User\DashboardController as UserDashBoardController;
+use App\Http\Controllers\User\CartController;
 
 
 /*
@@ -30,20 +32,8 @@ use App\Http\Controllers\User\DashboardController as UserDashBoardController;
 
 Route::get('/', function () {
    return view('user.dashboard_user');
-})->name('homepage');
-
-Route::get('/userprofile', [DashboardController::class, 'Index']);
-
-Route::group([], function () {
-    Route::get('/term-of-use', [UserDashBoardController::class, 'TermOfUse'])->name('term of use');
-    Route::get('/privacy-policy', [UserDashBoardController::class, 'PrivacyPolicy'])->name('privacy policy');
-    Route::get('/most-asked-questions', [UserDashBoardController::class, 'MostAskedQuestions'])->name('most asked questions');
-    Route::get('/return-policy', [UserDashBoardController::class, 'ReturnPolicy'])->name('return policy');
-    Route::get('/delivery-policy', [UserDashBoardController::class, 'DeliveryPolicy'])->name('delivery policy');
-    Route::get('/contact', [UserDashBoardController::class, 'Contact'])->name('contact');
-    Route::get('/about', [UserDashBoardController::class, 'About'])->name('about');
-    Route::get('/blog', [UserDashBoardController::class, 'Blog'])->name('blog');
 });
+
 
 Route::get('/userprofile', [DashboardController::class, 'Index']);
 
@@ -59,7 +49,12 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 });
 
 Route::controller(UserProductController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/{productSlug}', 'Index')->name('product detail_user');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
+});
+
+Route::controller(CartController::class)->group(function () {
+   Route::get('/cart', 'Index')->name('cart');
+   Route::post('add-to-cart', 'AddToCart')->name('add to cart');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
@@ -106,12 +101,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
    Route::controller(DiscountController::class)->group(function () {
       Route::get('/admin/all-discount', 'Index')->name('alldiscount');
-      Route::get('/admin/add-discount', 'AddDiscount')->name('addpdiscount');
+      Route::get('/admin/add-discount', 'AddDiscount')->name('adddiscount');
       Route::post('/admin/store-discount', 'StoreDiscount')->name('storediscount');
       Route::get('/admin/edit-discount/{discountID}', 'EditDiscount')->name('editdiscount');
       Route::get('/admin/delete-discount/{discountID}', 'DeleteDiscount')->name('deletediscount');
       Route::get('/admin/search-discount',  'SearchDiscount')->name('searchdiscount');
       Route::post('/admin/update-discount', 'UpdateDiscount')->name('updatediscount');
+   });
+
+   Route::controller(ShippingController::class)->group(function () {
+      Route::get('/admin/all-shipping', 'Index')->name('allshipping');
+      Route::get('/admin/add-shipping', 'AddShipping')->name('addshipping');
+      Route::post('/admin/store-shipping', 'StoreShipping')->name('storeshipping');
+      Route::get('/admin/edit-shipping/{shippingID}', 'EditShipping')->name('editshipping');
+      Route::get('/admin/delete-shipping/{shippingID}', 'DeleteShipping')->name('deleteshipping');
+      Route::get('/admin/search-shipping',  'SearchShipping')->name('searchshipping');
+      Route::post('/admin/update-shipping', 'UpdateShipping')->name('updateshipping');
    });
 
    Route::controller(OrderController::class)->group(function () {
