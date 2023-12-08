@@ -5,7 +5,7 @@ PING - discount
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Quản lý chi phí ship</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục con sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -72,7 +72,7 @@ PING - discount
     $("#addShipping").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
       $("#addShipping").val('');
-      window.location.href = "{{ route('addShipping') }}";
+      window.location.href = "{{ route('addshipping') }}";
     })
 
 

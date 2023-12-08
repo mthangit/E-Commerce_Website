@@ -127,7 +127,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
    });
 
    Route::controller(OrderController::class)->group(function () {
-      Route::get('/admin/pending-order', 'Index')->name('pendingorder');
+      Route::get('/admin/all-order', 'Index')->name('allorder');
+      Route::get('/admin/detail-order/{orderID}', 'DetailOrder')->name('detailorder');
+      Route::post('/admin/update-order-status', 'UpdateOrderStatus')->name('updateorderstatus');
    });
 });
 

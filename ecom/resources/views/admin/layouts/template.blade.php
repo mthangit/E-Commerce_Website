@@ -248,7 +248,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('pendingorder') }}">pending Order</a>
+                                    <a href="{{ route('allorder') }}">Quản lý đơn hàng</a>
                                 </li>
                             </ul>
                         </li>
