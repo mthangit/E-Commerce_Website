@@ -29,6 +29,9 @@ use App\Http\Controllers\User\CartController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/test',function(){
+   orderEmail(1);
+});
 
 Route::get('/', function () {
    return view('user.dashboard_user');
@@ -139,6 +142,8 @@ Route::middleware('auth')->group(function () {
    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 
 require __DIR__ . '/auth.php';
