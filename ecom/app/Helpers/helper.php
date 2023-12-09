@@ -35,6 +35,10 @@ function getProductsBySubCategoryID($subCategoryID)
     return Product::where('subCategoryID', $subCategoryID)->where('isActive', 1)->where('productInStock', '>', 0)->get();
 }
 
+function getImageProductByProductID($productID)
+{
+    return Product::where('productID', $productID)->first();
+}
 function orderEmail($orderID)
 {
     $order = Order::where('orderID', $orderID)->with('items')->first();
@@ -46,7 +50,6 @@ function orderEmail($orderID)
             'order' => $order,
             'discount' => $discount,
         ];
-
         // Make sure the 'customerEmail' property exists in the CustomerInfo model
         if (!empty($customerinfo->customerEmail)) {
             Mail::to($customerinfo->customerEmail)->send(new OrderEmail($mailData));

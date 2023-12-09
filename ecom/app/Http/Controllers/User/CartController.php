@@ -29,7 +29,6 @@ class CartController extends Controller
                     } else {
                         $price = $product->productOriginalPrice;
                     }
-                    $price = $price * $quantityItem;
                     Cart::update($item->rowId, ['qty' => $quantityItem, 'price' => $price]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -45,7 +44,7 @@ class CartController extends Controller
                         'id' => $product->productID,
                         'name' => $product->productName,
                         'qty' => $quantity,
-                        'price' => $price * $quantity,
+                        'price' => $price,
                     ]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -62,7 +61,7 @@ class CartController extends Controller
                 'id' => $product->productID,
                 'name' => $product->productName,
                 'qty' => $quantity,
-                'price' => $price * $quantity,
+                'price' => $price,
             ]);
             $status = true;
             $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -80,11 +79,10 @@ class CartController extends Controller
         foreach($data as $item){
             $product = Product::find($item->id);
             $product->qty = $item->qty;
-            $product->TotalPrice = $item->price;
+            $product->TotalPrice = $item->price * $item->qty;
             $product->rowId = $item->rowId;
             array_push($products, $product);
         }
         return view('user.cart', ['products' => $products]);
     }
-
 }

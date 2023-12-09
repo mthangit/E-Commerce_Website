@@ -17,6 +17,7 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
 
 
 /*
@@ -58,6 +59,12 @@ Route::controller(UserProductController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
+});
+
+Route::controller(UserOrderController::class)->group(function () {
+   Route::get('/payment', 'Index')->name('payment');
+//   Route::post('/payment', 'StoreOrder')->name('store order');
+//   Route::get('/order-success', 'OrderSuccess')->name('order success');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);

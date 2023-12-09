@@ -16,7 +16,13 @@
                         <p class="mb-0"><span class="text-muted">{{count($products)}} sản phẩm</span></p>
                     </div>
                 </div>
+                <?php
+                    $totalPrice = 0;
+                    ?>
                 @foreach($products as $product)
+                    <?php
+                        $totalPrice += $product->TotalPrice
+                        ?>
                     <div class="card rounded-3 mb-4">
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
@@ -55,9 +61,9 @@
                     <div class="card-body">
                         <div class="total mb-lg-5">
                             <span class="tb-header left">Tạm tính</span>
-                            <span class="tb-header right txt-18 txt-orange">1.050.000 &#8363;</span>
+                            <span class="tb-header right txt-18 txt-orange">{{$totalPrice}} &#8363;</span>
                         </div>
-                        <button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button>
+                        <a href="{{route('payment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>
                     </div>
                 </div>
             </div>
