@@ -22,7 +22,7 @@
                 </div>
                 <div class="side-bar-category">
                     @foreach($categories as $category)
-                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName.' - '.$category->categorySlug}}</a></div>
+                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName}}</a></div>
                     @endforeach
                 </div>
             </div>

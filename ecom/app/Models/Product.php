@@ -33,4 +33,6 @@ class Product extends Model
         'isFlashSale',
         'isActive',
     ];
+
+
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
 
 
 /*
@@ -43,7 +44,7 @@ Route::get('/userprofile', [DashboardController::class, 'Index']);
 /////////////////////////
 Route::get('/logout', function () {
    Auth::logout();
-   return redirect('/login');
+   return redirect('/');
 });
 
 Route::controller(UserSubCategoryController::class)->group(function () {
@@ -60,6 +61,12 @@ Route::controller(CartController::class)->group(function () {
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
 });
 
+Route::controller(UserOrderController::class)->group(function () {
+   Route::get('/payment', 'Index')->name('payment');
+//   Route::post('/payment', 'StoreOrder')->name('store order');
+//   Route::get('/order-success', 'OrderSuccess')->name('order success');
+});
+
 Route::get('/user-profile', [DashboardController::class, 'Index']);
 Route::get('/product-detail', [ProductController::class, 'Index'])->name('productdetail');
 
@@ -72,7 +79,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
    Route::controller(DashboardController::class)->group(function () {
       Route::get('/admin/dashboard', 'DashboardAdmin')->name('admindashboard');
-      Route::get('/admin/shop-dashboard', 'ProfileAdmin')->name('adminshopdashboard');
+      Route::get('/admin/shop-dashboard', 'ShopDashboard')->name('adminshopdashboard');
    });
 
    Route::controller(CategoryController::class)->group(function () {
