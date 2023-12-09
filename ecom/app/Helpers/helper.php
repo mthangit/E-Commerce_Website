@@ -28,4 +28,8 @@ function getProductsBySubCategoryID($subCategoryID)
     return Product::where('subCategoryID', $subCategoryID)->where('isActive', 1)->where('productInStock', '>', 0)->get();
 }
 
+function getImageProductByProductID($productID)
+{
+    return Product::where('productID', $productID)->first();
+}
 
