@@ -44,7 +44,7 @@ Route::get('/userprofile', [DashboardController::class, 'Index']);
 /////////////////////////
 Route::get('/logout', function () {
    Auth::logout();
-   return redirect('/login');
+   return redirect('/');
 });
 
 Route::controller(UserSubCategoryController::class)->group(function () {
@@ -79,7 +79,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
    Route::controller(DashboardController::class)->group(function () {
       Route::get('/admin/dashboard', 'DashboardAdmin')->name('admindashboard');
-      Route::get('/admin/shop-dashboard', 'ProfileAdmin')->name('adminshopdashboard');
+      Route::get('/admin/shop-dashboard', 'ShopDashboard')->name('adminshopdashboard');
    });
 
    Route::controller(CategoryController::class)->group(function () {

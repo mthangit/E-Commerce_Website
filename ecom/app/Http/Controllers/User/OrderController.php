@@ -43,12 +43,14 @@ class OrderController extends Controller
         }
         return $order_list;
     }
-
     public function Index()
     {
-
         $order = $this->createOder();
         $order_list = $this->createOderDetail();
         return view('user.payment', ['order_list'=>$order_list, 'order'=>$order]);
+    }
+
+    public function storeOder(){
+
     }
 }
