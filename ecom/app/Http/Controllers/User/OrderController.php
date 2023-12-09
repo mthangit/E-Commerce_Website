@@ -8,21 +8,23 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class OrderController extends Controller
 {
 
-    protected function createOder($totalPrice){
+    protected function createOder($totalPrice, $paymentMethod){
         $order = new Order();
+        $order->orderCustomerName = 'Nguyễn Văn A';
         $order->shippingFee = 20000;
         $order->grandPrice = $totalPrice;
         $order->totalPrice = $totalPrice;
-        $order->paymentMethod = 'COD';
+        $order->paymentMethod = $paymentMethod;
         $order->orderCreatedDate = date('Y-m-d H:i:s');
         $order->orderAddress = 'Hà Nội';
         $order->orderPhone = '0123456789';
         return $order;
     }
-
     protected function createOderDetail(){
         $list_products = Cart::content();
         $order_list = [];
@@ -39,13 +41,17 @@ class OrderController extends Controller
     }
     public function Index()
     {
+        If(!Auth::check()){
+            return redirect()->route('redirectToPayment');
+        }
         $data = Cart::content();
         return view('user.payment', ['order_list'=>$data]);
     }
 
     public function StoreOrder(Request $request){
         $totalPrice = $request->input('totalPrice');
-        $order = $this->createOder($totalPrice);
+        $paymentMethod = $request->input('paymentMethod');
+        $order = $this->createOder($totalPrice, $paymentMethod);
         $order->save();
         $order_list = $this->createOderDetail();
         foreach($order_list as $item){
@@ -53,10 +59,10 @@ class OrderController extends Controller
             $item->save();
         }
         Cart::destroy();
-        return view('user.dashboard_user');
+        return redirect()->route('order Success');
     }
 
-public function OrderSuccess(){
-        return view('user.dashboard_user');
+    public function OrderSuccess(){
+        return view('user.OrderSuccess');
     }
 }

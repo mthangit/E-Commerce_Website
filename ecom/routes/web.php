@@ -64,7 +64,7 @@ Route::controller(CartController::class)->group(function () {
 Route::controller(UserOrderController::class)->group(function () {
    Route::get('/payment', 'Index')->name('payment');
    Route::post('store-order', 'StoreOrder')->name('store.order');
-   Route::get('/order-success', 'OrderSuccess')->name('order success');
+   Route::get('/order-success', 'OrderSuccess')->name('order Success');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
@@ -149,8 +149,5 @@ Route::middleware('auth')->group(function () {
    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-
 
 require __DIR__ . '/auth.php';

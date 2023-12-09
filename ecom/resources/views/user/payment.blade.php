@@ -168,8 +168,10 @@
 <script>
     document.getElementById('btn-finish').addEventListener('click', function() {
         var totalPrice = document.getElementById('totalPrice').innerText;
+        var payment = document.getElementById('payment').value;
         var requestData = {
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            paymentMethod: payment
         };
         storeOrder(requestData);
     });
@@ -182,9 +184,9 @@
                 url: '{{ route("store.order") }}',
                 type: 'POST',
                 data: requestData,
-                success: function(response) {
+                success: function() {
                     // Xử lý phản hồi thành công
-                    console.log('Request thành công:', response);
+                    window.href.location = '{{route('order Success')}}';
                 },
                 error: function(error) {
                     // Xử lý lỗi

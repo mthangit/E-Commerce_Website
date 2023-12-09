@@ -63,7 +63,12 @@
                             <span class="tb-header left">Tạm tính</span>
                             <span class="tb-header right txt-18 txt-orange">{{$totalPrice}} &#8363;</span>
                         </div>
+{{--                        @auth--}}
                         <a href="{{route('payment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>
+{{--                        @endauth--}}
+{{--                        @guest--}}
+{{--                            <a href="{{route('loginAndRedirectToPayment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>--}}
+{{--                        @endguest--}}
                     </div>
                 </div>
             </div>
