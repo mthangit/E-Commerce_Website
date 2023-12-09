@@ -30,6 +30,9 @@ use App\Http\Controllers\User\OrderController as UserOrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/test',function(){
+   orderEmail(1);
+});
 
 Route::get('/', function () {
    return view('user.dashboard_user');
@@ -101,9 +104,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
    });
 
    Route::controller(ProductController::class)->group(function () {
-      Route::get('/admin/all-product', 'Index')->name('allproducts');
+      Route::get('/admin/all-product', 'Index')->name('allproduct');
       Route::get('/admin/add-product', 'AddProduct')->name('addproduct');
       Route::post('/admin/store-product', 'StoreProduct')->name('storeproduct');
+      Route::get('/admin/edit-product/{productID}', 'EditProduct')->name('editproduct');
+      Route::post('/admin/update-product', 'UpdateProduct')->name('updateproduct');
+      Route::get('/admin/delete-product/{productID}', 'DeleteCategory')->name('deleteproduct');
+      Route::get('/admin/search-product',  'SearchCategory')->name('searchproduct');
+
+      Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
+      Route::get('/admin/edit-product-img/{productID}', 'EditProductImg')->name('editproductimg');
    });
 
    Route::controller(DiscountController::class)->group(function () {
@@ -127,7 +137,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
    });
 
    Route::controller(OrderController::class)->group(function () {
-      Route::get('/admin/pending-order', 'Index')->name('pendingorder');
+      Route::get('/admin/all-order', 'Index')->name('allorder');
+      Route::get('/admin/detail-order/{orderID}', 'DetailOrder')->name('detailorder');
+      Route::post('/admin/update-order-status', 'UpdateOrderStatus')->name('updateorderstatus');
    });
 });
 
@@ -137,6 +149,8 @@ Route::middleware('auth')->group(function () {
    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 
 require __DIR__ . '/auth.php';

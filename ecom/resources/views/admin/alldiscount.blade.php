@@ -5,7 +5,7 @@ PING - discount
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Quản lý mã giảm giá</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục con sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -50,7 +50,13 @@ PING - discount
             <td>{{$discount->discountName}}</td>
             <td>{{$discount->discountCode}} </td>
             <td>{{$discount->discountType}}</td>
-            <td>{{$discount->discountAmount}}</td>
+            <td>
+              @if($discount->discountType == 'percent')
+              {{$discount->discountAmount}}%
+              @else
+              {{$discount->discountAmount}}VND
+              @endif
+            </td>
             <td>{{$discount->discountQuantity}}</td>
             <td>{{$discount->discountUsed}}</td>
             <td>@if($discount->isActive == 1)
