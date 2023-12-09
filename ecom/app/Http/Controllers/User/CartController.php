@@ -75,14 +75,6 @@ class CartController extends Controller
     public function Index()
     {
         $data = Cart::content();
-        $products = [];
-        foreach($data as $item){
-            $product = Product::find($item->id);
-            $product->qty = $item->qty;
-            $product->TotalPrice = $item->price * $item->qty;
-            $product->rowId = $item->rowId;
-            array_push($products, $product);
-        }
-        return view('user.cart', ['products' => $products]);
+        return view('user.cart', ['products' => $data]);
     }
 }

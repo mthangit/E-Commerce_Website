@@ -11,21 +11,15 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
 
-    protected function createOder(){
+    protected function createOder($totalPrice){
         $order = new Order();
-        $order->totalPrice = Cart::subtotal();
         $order->shippingFee = 20000;
-        $order->discountID = 0;
-        $order->discountCode = '';
-        $order->discountPrice = 0;
-        $order->grandPrice = Cart::subtotal();
+        $order->grandPrice = $totalPrice;
+        $order->totalPrice = $totalPrice;
         $order->paymentMethod = 'COD';
         $order->orderCreatedDate = date('Y-m-d H:i:s');
-        $order->orderCompletedDate = date('Y-m-d H:i:s');
         $order->orderAddress = 'Hà Nội';
         $order->orderPhone = '0123456789';
-        $order->paymentStatus = "unpaid";
-        $order->orderStatus = 0;
         return $order;
     }
 
@@ -45,12 +39,24 @@ class OrderController extends Controller
     }
     public function Index()
     {
-        $order = $this->createOder();
-        $order_list = $this->createOderDetail();
-        return view('user.payment', ['order_list'=>$order_list, 'order'=>$order]);
+        $data = Cart::content();
+        return view('user.payment', ['order_list'=>$data]);
     }
 
-    public function storeOder(){
+    public function StoreOrder(Request $request){
+        $totalPrice = $request->input('totalPrice');
+        $order = $this->createOder($totalPrice);
+        $order->save();
+        $order_list = $this->createOderDetail();
+        foreach($order_list as $item){
+            $item->orderID = $order->orderID;
+            $item->save();
+        }
+        Cart::destroy();
+        return view('user.dashboard_user');
+    }
 
+public function OrderSuccess(){
+        return view('user.dashboard_user');
     }
 }
