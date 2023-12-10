@@ -44,7 +44,7 @@ Route::get('/userprofile', [DashboardController::class, 'Index']);
 /////////////////////////
 Route::get('/logout', function () {
    Auth::logout();
-   return redirect('/login');
+   return redirect('/');
 });
 
 Route::controller(UserSubCategoryController::class)->group(function () {
@@ -53,7 +53,7 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 });
 
 Route::controller(UserProductController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
 });
 
 Route::controller(CartController::class)->group(function () {
@@ -63,8 +63,8 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(UserOrderController::class)->group(function () {
    Route::get('/payment', 'Index')->name('payment');
-//   Route::post('/payment', 'StoreOrder')->name('store order');
-//   Route::get('/order-success', 'OrderSuccess')->name('order success');
+   Route::post('store-order', 'StoreOrder')->name('store.order');
+   Route::get('/order-success/{orderID}', 'OrderSuccess')->name('order.success');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
@@ -79,7 +79,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
    Route::controller(DashboardController::class)->group(function () {
       Route::get('/admin/dashboard', 'DashboardAdmin')->name('admindashboard');
-      Route::get('/admin/shop-dashboard', 'ProfileAdmin')->name('adminshopdashboard');
+      Route::get('/admin/shop-dashboard', 'ShopDashboard')->name('adminshopdashboard');
    });
 
    Route::controller(CategoryController::class)->group(function () {
@@ -149,8 +149,5 @@ Route::middleware('auth')->group(function () {
    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-
 
 require __DIR__ . '/auth.php';

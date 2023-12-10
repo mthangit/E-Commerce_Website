@@ -21,18 +21,18 @@
                     ?>
                 @foreach($products as $product)
                     <?php
-                        $totalPrice += $product->TotalPrice
+                        $totalPrice += ($product->price * $product->qty)
                         ?>
                     <div class="card rounded-3 mb-4">
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     <img
-                                        src="{{asset($product->productImage)}}"
+                                        src="{{asset(getImageProductByProductID($product->id)->productImage)}}"
                                         class="img-fluid rounded-3" alt="">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="fw-normal mb-2">{{$product->productName}}</p>
+                                    <p class="fw-normal mb-2">{{$product->name}}</p>
 {{--                                    <p><span class="text-muted">Loại: </span>60ml</p>--}}
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -48,7 +48,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0 txt-16">{{$product->TotalPrice}} &#8363;</h5>
+                                    <h5 class="mb-0 txt-16">{{$product->price * $product->qty}} &#8363;</h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                     <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
@@ -63,7 +63,12 @@
                             <span class="tb-header left">Tạm tính</span>
                             <span class="tb-header right txt-18 txt-orange">{{$totalPrice}} &#8363;</span>
                         </div>
+{{--                        @auth--}}
                         <a href="{{route('payment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>
+{{--                        @endauth--}}
+{{--                        @guest--}}
+{{--                            <a href="{{route('loginAndRedirectToPayment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>--}}
+{{--                        @endguest--}}
                     </div>
                 </div>
             </div>

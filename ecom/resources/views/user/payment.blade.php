@@ -12,8 +12,6 @@
 {{--    </div>--}}
 {{--</div>--}}
 
-<form>
-
 <div class="delivery-info payment-block" style="margin-top: 30px;">
     <div class="delivery-info-header payment-block-header">
         <div class="left">
@@ -45,16 +43,22 @@
                 <th style="text-align: center;">Thành tiền</th>
             </tr>
             </thead>
+            <?php
+            $totalPrice = 0;
+            ?>
             @foreach($order_list as $order_detail)
+                <?php
+                $totalPrice += ($order_detail->price * $order_detail->qty)
+                    ?>
                 <tbody class="tb-product">
                 <tr>
                     <td style="text-align: left;">
-                        <img src="{{asset(getImageProductByProductID($order_detail->productID)->productImage)}}" alt="" style="width: 100px; height: 50px; margin-right: 10px;">
-                        {{$order_detail->productName}}
+                        <img src="{{asset(getImageProductByProductID($order_detail->id)->productImage)}}" alt="" style="width: 100px; height: 50px; margin-right: 10px;">
+                        {{$order_detail->name}}
                     </td>
-                    <td style="text-align: center;">{{$order_detail->productPrice}} &#8363;</td>
-                    <td style="text-align: center;">{{$order_detail->productQuantity}}</td>
-                    <td style="font-weight: bold;text-align: center;">{{$order_detail->productTotalPrice }}&#8363;</td>
+                    <td style="text-align: center;">{{$order_detail->price}} &#8363;</td>
+                    <td style="text-align: center;">{{$order_detail->qty}}</td>
+                    <td style="font-weight: bold;text-align: center;">{{$order_detail->price * $order_detail->qty }}&#8363;</td>
                 </tr>
                 </tbody>
             @endforeach
@@ -136,29 +140,59 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
-                    <span class="right">{{$order->totalPrice}} &#8363;</span>
+                    <span class="right">{{$totalPrice}} &#8363;</span>
                 </div><br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
-                    <span class="right">{{$order->shippingFee}} &#8363;</span>
+                    <span class="right">20000 &#8363;</span>
                 </div><br>
                 <div class="discount-money">
                     <span class="left">Giảm giá</span>
-                    <span class="right">0 &#8363;</span>
+                    <span class="right">0&#8363;</span>
                 </div><br>
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right">{{$order->grandPrice}}&#8363;</span>
+                    <span class="txt-orange txt-bold txt-18 right" id="totalPrice" name="totalPrice">{{$totalPrice + 20000}}</span>
                 </div><br>
-                <button type="submit" class="order txt-uppercase" id="btn-finish">Đặt hàng</button>
+                <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
             </div>
         </div>
     </div>
 </div>
-</form>
 <div class="return">
     <a href="" class="cyan-link txt-14">Quay lại</a>
     <hr style="color: var(--gray);">
 </div>
+
+<script>
+    document.getElementById('btn-finish').addEventListener('click', function() {
+        var totalPrice = document.getElementById('totalPrice').innerText;
+        var payment = document.getElementById('payment').value;
+        var requestData = {
+            totalPrice: totalPrice,
+            paymentMethod: payment
+        };
+        storeOrder(requestData);
+    });
+    function storeOrder(requestData){
+            // Gửi AJAX request
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route("store.order") }}',
+                type: 'POST',
+                data: requestData,
+                success: function(response) {
+                    window.location.href = /order-success/ + response.orderID;
+                },
+                error: function(error) {
+                    // Xử lý lỗi
+                    console.error('Lỗi request:', error);
+                }
+            });
+        }
+</script>
+
 @include('user.layouts.template_footer')
