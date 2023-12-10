@@ -78,4 +78,20 @@ class CartController extends Controller
         $data = Cart::content();
         return view('user.cart', ['products' => $data]);
     }
+
+    public function DeleteCart($rowID)
+    {
+        Cart::remove($rowID);
+        return redirect()->back();
+    }
+
+    public function UpdateCart(Request $request)
+    {
+        $rowID = $request->rowID;
+        $quantity = $request->qty;
+        Cart::update($rowID, $quantity);
+        return response()->json([
+            'status' => true,
+        ]);
+    }
 }
