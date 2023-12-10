@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Mail\OrderEmail;
 use App\Models\Product;
 use App\Models\Order;
@@ -15,11 +16,21 @@ function getAllCategory()
     return Category::all();
 }
 
-function getSubCategoryByCategoryID($categoryID)
+//function getSubCategoryByCategoryID($categoryID)
+//{
+//    return Category::where('categoryID', $categoryID)->first();
+//}
+function getSubCategoryByProductID($productID)
 {
-    return Category::where('categoryID', $categoryID)->first();
+    $product = Product::where('productID', $productID)->first();
+    return SubCategory::where('subCategoryID', $product->productSubCategoryID)->first();
 }
-
+function getCategoryByProductID($productID)
+{
+    $product = Product::where('productID', $productID)->first();
+    $subCategory = SubCategory::where('subCategoryID', $product->productSubCategoryID)->first();
+    return Category::where('categoryID', $subCategory->categoryID)->first();
+}
 function getCategoryByCategoryID($categoryID)
 {
     return Category::where('categoryID', $categoryID)->first();

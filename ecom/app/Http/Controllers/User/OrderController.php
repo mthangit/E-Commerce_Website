@@ -59,10 +59,13 @@ class OrderController extends Controller
             $item->save();
         }
         Cart::destroy();
-        return redirect()->route('order Success');
+        return response()->json(['orderID' => $order->orderID]);
     }
 
-    public function OrderSuccess(){
-        return view('user.OrderSuccess');
+    public function OrderSuccess(Request $request){
+        $orderID = $request->orderID;
+        $order = Order::find($orderID);
+        $order_list = OrderDetail::where('orderID', $orderID)->get();
+        return view('user.OrderSuccess', ['order'=>$order, 'order_list'=>$order_list]);
     }
 }
