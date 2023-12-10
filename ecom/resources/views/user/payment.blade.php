@@ -184,9 +184,8 @@
                 url: '{{ route("store.order") }}',
                 type: 'POST',
                 data: requestData,
-                success: function() {
-                    // Xử lý phản hồi thành công
-                    window.href.location = '{{route('order Success')}}';
+                success: function(response) {
+                    window.location.href = /order-success/ + response.orderID;
                 },
                 error: function(error) {
                     // Xử lý lỗi

@@ -53,7 +53,7 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 });
 
 Route::controller(UserProductController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
 });
 
 Route::controller(CartController::class)->group(function () {
@@ -64,7 +64,7 @@ Route::controller(CartController::class)->group(function () {
 Route::controller(UserOrderController::class)->group(function () {
    Route::get('/payment', 'Index')->name('payment');
    Route::post('store-order', 'StoreOrder')->name('store.order');
-   Route::get('/order-success', 'OrderSuccess')->name('order Success');
+   Route::get('/order-success/{orderID}', 'OrderSuccess')->name('order.success');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
