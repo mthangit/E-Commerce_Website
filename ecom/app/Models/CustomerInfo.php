@@ -23,4 +23,5 @@ class CustomerInfo extends Model
         'customerBankAccount',
         'customerBankName',
     ];
+
 }
