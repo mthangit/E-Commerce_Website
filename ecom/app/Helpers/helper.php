@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\CustomerInfo;
 use App\Models\Discount;
+use App\Models\Province;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -70,4 +71,8 @@ function orderEmail($orderID)
     } else {
         Log::error('Customer info not found for order: ' . $orderID);
     }
+}
+function getProvinceByProvinceID($provinceID)
+{
+    return Province::where('provinceID', $provinceID)->first();
 }
