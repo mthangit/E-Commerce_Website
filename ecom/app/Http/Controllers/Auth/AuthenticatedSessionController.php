@@ -31,12 +31,15 @@ class AuthenticatedSessionController extends Controller
 
         $account = Auth::user();
         if ($account->hasRole('user')) {
+            if ($request->session()->get('redirectToPayment')) {
+                // Redirect to the payment page
+                return redirect()->route('payment');
+            }
             return redirect()->intended(RouteServiceProvider::USER_DASHBOARD)->with('name',$account->name);
         }
 
         return redirect()->intended(RouteServiceProvider::ADMIN_DASHBOARD)->with('name',$account->name);
     }
-
     /**
      * Destroy an authenticated session.
      */
@@ -46,8 +49,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->invalidate();
 
+        $request->session()->put('redirectToPayment', false);
+
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    // function that redirect to login and redirect to payment page
+    public function redirectToPayment(Request $request): RedirectResponse
+    {
+        $request->session()->put('redirectToPayment', true);
+        return redirect()->route('login');
     }
 }

@@ -46,7 +46,7 @@
                 <br><br>
                 <!-- Password -->
                 @error('password')
-                <span class="text-red-500">{{ $message }}</span>
+                <span class="text-red-500">Sai mật khẩu</span>
                 @enderror
                 <!-- <label for="password-user" style="font-weight: 400;">Mật khẩu</label><br>
                 <x-text-input id="password-user" type="password" name="password" placeholder="Nhập mật khẩu"

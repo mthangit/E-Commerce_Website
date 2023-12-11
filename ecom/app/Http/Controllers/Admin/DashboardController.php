@@ -11,5 +11,8 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard');
     }
-
+    public function ShopDashboard()
+    {
+        return view('user.dashboard_user');
+    }
 }

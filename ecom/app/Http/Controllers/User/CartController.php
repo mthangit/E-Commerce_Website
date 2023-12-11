@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -29,7 +30,6 @@ class CartController extends Controller
                     } else {
                         $price = $product->productOriginalPrice;
                     }
-                    $price = $price * $quantityItem;
                     Cart::update($item->rowId, ['qty' => $quantityItem, 'price' => $price]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -45,7 +45,7 @@ class CartController extends Controller
                         'id' => $product->productID,
                         'name' => $product->productName,
                         'qty' => $quantity,
-                        'price' => $price * $quantity,
+                        'price' => $price,
                     ]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -62,7 +62,7 @@ class CartController extends Controller
                 'id' => $product->productID,
                 'name' => $product->productName,
                 'qty' => $quantity,
-                'price' => $price * $quantity,
+                'price' => $price,
             ]);
             $status = true;
             $message = 'Thêm sản phẩm vào giỏ hàng thành công';
@@ -76,15 +76,22 @@ class CartController extends Controller
     public function Index()
     {
         $data = Cart::content();
-        $products = [];
-        foreach($data as $item){
-            $product = Product::find($item->id);
-            $product->qty = $item->qty;
-            $product->TotalPrice = $item->price;
-            $product->rowId = $item->rowId;
-            array_push($products, $product);
-        }
-        return view('user.cart', ['products' => $products]);
+        return view('user.cart', ['products' => $data]);
     }
 
+    public function DeleteCart($rowID)
+    {
+        Cart::remove($rowID);
+        return redirect()->back();
+    }
+
+    public function UpdateCart(Request $request)
+    {
+        $rowID = $request->rowID;
+        $quantity = $request->qty;
+        Cart::update($rowID, $quantity);
+        return response()->json([
+            'status' => true,
+        ]);
+    }
 }
