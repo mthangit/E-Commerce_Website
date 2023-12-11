@@ -23,9 +23,9 @@
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
         <p><span class="txt-bold">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
-        <p id="orderProvince">{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName)}}</p>
-        <p id="orderAddress">{{$info->customerAddress}}</p>
-        <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label><br>
+        <p id="orderProvince" hidden>{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName)}} </p>
+        <p id="orderAddress">{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName).', '.$info->customerAddress}}</p>
+        <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label>
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
     </div>
     <div class="edit-delivery-content">
@@ -168,7 +168,7 @@
                 </div><br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
-                    <span class="right">0 &#8363;</span>
+                    <span class="right"> &#8363;</span>
                 </div><br>
                 <div class="discount-money">
                     <span class="left">Giảm giá</span>
@@ -308,6 +308,8 @@
     var deliveryContent = document.querySelector('.delivery-content');
     var editLink = document.querySelector('.cyan-link');
     var saveButton = document.createElement('button');
+    var provinceName = document.getElementById("orderProvince").innerText;
+    var provinceID = 0;
 
     // Ẩn phần tử chỉnh sửa khi trang được tải
     editDeliveryContent.style.display = 'none';
@@ -324,6 +326,10 @@
         saveButton.className = 'btn-save';
         saveButton.addEventListener('click', luuThayDoi);
         editDeliveryContent.appendChild(saveButton);
+        provinceName = document.getElementById("orderProvince").innerText;
+        
+       // provinceID = 
+
     });
 
     // Đoạn mã JavaScript để tạo các phần tử select và lấy dữ liệu
@@ -374,6 +380,8 @@
         };
     }
 
+    
+
     // Đoạn mã JavaScript để xử lý sự kiện khi bấm nút "Lưu lại"
     function luuThayDoi() {
         // Lấy giá trị từ các phần tử select
@@ -386,7 +394,7 @@
 
         // Cập nhật giá trị trong các phần tử HTML tương ứng
         document.getElementById("orderProvince").innerText = selectedCity;
-        document.getElementById("orderAddress").innerText = selectedDistrict + ", " + selectedWard;
+        document.getElementById("orderAddress").innerText =selectedCity + ', ' + selectedDistrict + ", " + selectedWard;
 
         // Ẩn phần tử chỉnh sửa
         editDeliveryContent.style.display = 'none';
