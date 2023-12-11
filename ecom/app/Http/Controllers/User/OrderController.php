@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerInfo;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-
     protected function createOder($totalPrice, $paymentMethod){
         $order = new Order();
         $order->orderCustomerName = 'Nguyễn Văn A';
@@ -44,8 +44,16 @@ class OrderController extends Controller
         If(!Auth::check()){
             return redirect()->route('redirectToPayment');
         }
+        $info = CustomerInfo::where('userID', Auth::user()->id)->first();
+        if($info->customerPhone == null){
+            $info->customerPhone = '0123456789';
+        }
+        if($info->customerAddress == null){
+            $info->customerAddress = 'Thủ Đức, TPHCM';
+        }
+
         $data = Cart::content();
-        return view('user.payment', ['order_list'=>$data]);
+        return view('user.payment', ['order_list'=>$data, 'info'=>$info]);
     }
 
     public function StoreOrder(Request $request){

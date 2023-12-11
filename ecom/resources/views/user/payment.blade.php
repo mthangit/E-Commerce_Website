@@ -22,8 +22,8 @@
         </div>
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
-        <p><span class="txt-bold">Nguyễn Nguyễn Nguyễn</span> - <span>0123456789</span></p>
-        <p>Số 159 Xa Lộ Hà Nội, Phường Thảo Điền, Quận 2, TP. Thủ Đức</p>
+        <p><span class="txt-bold">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
+        <p id="orderAddress">{{$info->customerAddress}}</p>
         <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label><br>
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
     </div>
@@ -164,8 +164,13 @@
     <a href="" class="cyan-link txt-14">Quay lại</a>
     <hr style="color: var(--gray);">
 </div>
+@include('user.layouts.template_footer')
 
 <script>
+    $(document).ready(function(){
+        $('.discount-detail').hide();
+    })
+
     document.getElementById('btn-finish').addEventListener('click', function() {
         var totalPrice = document.getElementById('totalPrice').innerText;
         var payment = document.getElementById('payment').value;
@@ -195,4 +200,3 @@
         }
 </script>
 
-@include('user.layouts.template_footer')
