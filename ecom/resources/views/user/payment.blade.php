@@ -215,8 +215,11 @@
                         if(response.isValid){
                             var discount_valid = response.discount;
                             var discountType = discount_valid.discountType;
-
-                            discountPrice = discount_valid.discountAmount;
+                            if(discountType == 'percent'){
+                                discountPrice = totalPrice * discount_valid.discountAmount / 100;
+                            } else {
+                                discountPrice = discount_valid.discountAmount;
+                            }
                             discountValidCode = discount_valid.discountCode;
                             // Assuming you have a response from the server after validating the discount code
                             var response = {
