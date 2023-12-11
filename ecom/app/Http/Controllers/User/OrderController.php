@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomerInfo;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Discount;
 use App\Models\OrderDetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -13,11 +14,22 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    protected function createOder($totalPrice, $paymentMethod){
+    protected function createOder($totalPrice, $paymentMethod, $discountValidCode){
         $order = new Order();
+        $discount = Discount::where('discountCode', $discountValidCode)->first();
+        $discountPrice = 0;
+        if($discount){
+            $discount->discountQuantity = $discount->discountQuantity - 1;
+            $discount->discountUsed = $discount->discountUsed + 1;
+            $order->discountID = $discount->discountID;
+            $order->discountCode = $discount->discountCode;
+            $order->discountPrice = $discount->discountAmount;
+            $discountPrice = $discount->discountAmount;
+            $discount->save();
+        }
         $order->orderCustomerName = 'Nguyễn Văn A';
         $order->shippingFee = 20000;
-        $order->grandPrice = $totalPrice;
+        $order->grandPrice = $totalPrice - $discountPrice;
         $order->totalPrice = $totalPrice;
         $order->paymentMethod = $paymentMethod;
         $order->orderCreatedDate = date('Y-m-d H:i:s');
@@ -51,15 +63,14 @@ class OrderController extends Controller
         if($info->customerAddress == null){
             $info->customerAddress = 'Thủ Đức, TPHCM';
         }
-
         $data = Cart::content();
         return view('user.payment', ['order_list'=>$data, 'info'=>$info]);
     }
-
     public function StoreOrder(Request $request){
-        $totalPrice = $request->input('totalPrice');
+        $totalPrice = intval($request->input('totalPrice'));
         $paymentMethod = $request->input('paymentMethod');
-        $order = $this->createOder($totalPrice, $paymentMethod);
+        $discountValidCode = $request->input('discountValidCode');
+        $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode);
         $order->save();
         $order_list = $this->createOderDetail();
         foreach($order_list as $item){

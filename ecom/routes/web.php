@@ -18,6 +18,8 @@ use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
+use App\Http\Controllers\User\DiscountController as UserDiscountController;
+
 
 
 /*
@@ -67,6 +69,10 @@ Route::controller(UserOrderController::class)->group(function () {
    Route::get('/payment', 'Index')->name('payment');
    Route::post('store-order', 'StoreOrder')->name('store.order');
    Route::get('/order-success/{orderID}', 'OrderSuccess')->name('order.success');
+});
+
+Route::controller(UserDiscountController::class)->group(function () {
+   Route::post('/validate-discount-code', 'ValidateDiscountCode')->name('validate discount code');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
