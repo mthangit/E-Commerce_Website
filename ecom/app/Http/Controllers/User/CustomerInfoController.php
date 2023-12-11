@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class CustomerInfoController extends Controller
 {
-    //
+    public function getCustomerInfo()
+    {
+
+    }
 }
