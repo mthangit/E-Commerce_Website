@@ -22,8 +22,8 @@
         </div>
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
-        <p><span class="txt-bold">Nguyễn Nguyễn Nguyễn</span> - <span>0123456789</span></p>
-        <p>Số 159 Xa Lộ Hà Nội, Phường Thảo Điền, Quận 2, TP. Thủ Đức</p>
+        <p><span class="txt-bold">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
+        <p id="orderAddress">{{$info->customerAddress}}</p>
         <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label><br>
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
     </div>
@@ -67,13 +67,19 @@
 </div>
 
 <div class="discount-info payment-block">
+    <div id="errorAlert" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
+        <strong>Error!</strong> Mã giảm giá không tồn tại.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="discount-info-header payment-block-header">
         <h4 class="txt-cyan txt-18">Mã giảm giá</h4>
     </div>
     <div class="discount-pick" style="margin-top: -5px;">
-        <form action="" id="form-voucher">
+        <form action="javascript:void(0)" id="form-voucher">
             <input type="text" name="discount-voucher" id="discount-voucher" placeholder="Nhập mã giảm giá">
-            <button class="txt-uppercase order" id="btn-apply-voucher">Áp dụng</button>
+                <button class="txt-uppercase order" id="btn-apply-voucher">Áp dụng</button>
             <br>
             <span style="font-style: italic; color: rgb(128,128,128); font-size: 13px; margin-left: 695px;"><span style="text-decoration: underline;">Lưu ý:</span> Chỉ được áp dụng <strong>tối đa</strong> 1 mã giảm giá.</span>
         </form>
@@ -107,7 +113,6 @@
                             Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.
                         </li>
                     </ul>
-
                 </td>
             </tr>
         </table>
@@ -115,6 +120,12 @@
 </div>
 
 <div class="payment-total-info payment-block">
+    <div id="errorAlertPaymenMethod" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
+        <strong>Error!</strong> Vui lòng chọn phương thức thanh toán.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="payment-total-header payment-block-header">
         <h4 class="txt-cyan txt-18">Thành tiền</h4>
     </div>
@@ -124,8 +135,8 @@
                 <strong>Lựa chọn phương thức thanh toán: </strong>
                 <select name="payment" id="payment">
                     <option value="" selected>Chọn phương thức</option>
-                    <option value="banking">Chuyển khoản</option>
-                    <option value="cash">Tiền mặt</option>
+                    <option value="BANKING">Chuyển khoản</option>
+                    <option value="COD">Tiền mặt</option>
                 </select>
             </div>
             <div class="payment-note">
@@ -140,20 +151,20 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
-                    <span class="right">{{$totalPrice}} &#8363;</span>
+                    <span class="right" id="totalPrice" >{{$totalPrice}} &#8363;</span>
                 </div><br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
-                    <span class="right">20000 &#8363;</span>
+                    <span class="right">0 &#8363;</span>
                 </div><br>
                 <div class="discount-money">
                     <span class="left">Giảm giá</span>
-                    <span class="right">0&#8363;</span>
+                    <span class="right" id="giamgia">0 &#8363;</span>
                 </div><br>
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right" id="totalPrice" name="totalPrice">{{$totalPrice + 20000}}</span>
+                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{$totalPrice}}</span>
                 </div><br>
                 <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
             </div>
@@ -164,14 +175,91 @@
     <a href="" class="cyan-link txt-14">Quay lại</a>
     <hr style="color: var(--gray);">
 </div>
+@include('user.layouts.template_footer')
 
 <script>
+    var discountPrice = 0;
+    var discountValidCode = '';
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
+    var payment = document.getElementById('payment').value;
+    $(document).ready(function() {
+        // Initially hide the discount block and error message
+        $('#errorAlertPaymenMethod').hide();
+        $('.discount-detail').hide();
+        $('#errorAlert').hide();
+        $('#btn-apply-voucher').click(function(){
+            var voucher = $('#discount-voucher').val();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '{{route('validate discount code')}}',
+                    type: 'POST',
+                    data: {
+                        discountCode: voucher
+                    },
+                    success: function(response) {
+                        if(response.isValid){
+                            var discount_valid = response.discount;
+                            discountPrice = discount_valid.discountAmount;
+                            discountValidCode = discount_valid.discountCode;
+                            // Assuming you have a response from the server after validating the discount code
+                            var response = {
+                                name: discount_valid.discountName,
+                                price: discount_valid.discountAmount,
+                                expiryDate: discount_valid.discountEnd,
+                                description: discount_valid.discountDescription
+                            };
+                            // Fill the discount details in the table
+                            $('#discount-detail-info').html(`
+                            <tr>
+                                <th>Tên mã giảm giá</th>
+                                <td>${response.name}</td>
+                            </tr>
+                            <tr>
+                                <th>Mô tả</th>
+                                <td>${response.description}</td>
+                            </tr>
+                            <tr>
+                                <th>Thời hạn sử dụng</th>
+                                <td>${response.expiryDate}</td>
+                            </tr>
+                            <tr>
+                                <th>Số tiền giảm giá</th>
+                                <td>${response.price}</td>
+                            </tr>
+                        `);
+                            // Update the discount price
+                            $('#giamgia').html(`${discountPrice} &#8363;`);
+                            // Update the thanhtien
+                            $('#thanhtien').html(`${totalPrice - discountPrice} &#8363;`);
+                            // Show the discount detail section
+                            $('.discount-detail').show();
+                            $('#errorAlert').hide();
+                        }else{
+                            $('#giamgia').html(`0 &#8363;`);
+                            $('#thanhtien').html(`${totalPrice} &#8363;`);
+                            $('.discount-detail').hide();
+                            $('#errorAlert').show();
+                        }
+                    },
+                    error: function(error) {
+                        // Xử lý lỗi
+                        console.error('Lỗi request:', error);
+                    }
+                });
+        })
+    });
+
     document.getElementById('btn-finish').addEventListener('click', function() {
-        var totalPrice = document.getElementById('totalPrice').innerText;
-        var payment = document.getElementById('payment').value;
+        if(payment == ''){
+            $('#errorAlertPaymenMethod').show();
+            return;
+        }
         var requestData = {
-            totalPrice: totalPrice,
-            paymentMethod: payment
+            totalPrice: (totalPrice),
+            paymentMethod: payment,
+            discountValidCode: discountValidCode,
         };
         storeOrder(requestData);
     });
@@ -195,4 +283,3 @@
         }
 </script>
 
-@include('user.layouts.template_footer')

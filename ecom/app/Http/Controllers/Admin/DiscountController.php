@@ -96,4 +96,5 @@ class DiscountController extends Controller
 
         return redirect()->route('alldiscount')->with('message', 'Đã thực hiện thành công');;
     }
+
 }
