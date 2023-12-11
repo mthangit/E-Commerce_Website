@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\CustomerInfo;
 use App\Models\Discount;
+use App\Models\Province;
+use App\Models\Shipping;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -70,4 +72,17 @@ function orderEmail($orderID)
     } else {
         Log::error('Customer info not found for order: ' . $orderID);
     }
+}
+function getProvinceByProvinceID($provinceID)
+{
+    return Province::where('provinceID', $provinceID)->first();
+}
+function getProvinceByProvinceName($provinceName)
+{
+    return Province::where('provinceName', $provinceName)->first()->value('provinceID');
+}
+
+function getShippingExpenseByProvinceID($provinceID)
+{
+    return Shipping::where('provinceID', $provinceID)->value('shippingExpense');
 }

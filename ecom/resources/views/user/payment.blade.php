@@ -23,11 +23,24 @@
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
         <p><span class="txt-bold">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
-        <p id="orderAddress">{{$info->customerAddress}}</p>
-        <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label><br>
+        <p id="orderProvince" hidden>{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName)}} </p>
+        <p id="orderAddress">{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName).', '.$info->customerAddress}}</p>
+        <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label>
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
     </div>
-</div>
+    <div class="edit-delivery-content">
+        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+            <option value="" selected>Chọn tỉnh thành</option>
+        </select>
+
+        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+            <option value="" selected>Chọn quận huyện</option>
+        </select>
+
+        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+            <option value="" selected>Chọn phường xã</option>
+        </select>
+    </div>
 
 <div class="product-delivery-info payment-block">
     <div class="product-delivery-header payment-block-header">
@@ -155,7 +168,7 @@
                 </div><br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
-                    <span class="right">0 &#8363;</span>
+                    <span class="right"> &#8363;</span>
                 </div><br>
                 <div class="discount-money">
                     <span class="left">Giảm giá</span>
@@ -201,12 +214,17 @@
                     success: function(response) {
                         if(response.isValid){
                             var discount_valid = response.discount;
-                            discountPrice = discount_valid.discountAmount;
+                            var discountType = discount_valid.discountType;
+                            if(discountType == 'percent'){
+                                discountPrice = totalPrice * discount_valid.discountAmount / 100;
+                            } else {
+                                discountPrice = discount_valid.discountAmount;
+                            }
                             discountValidCode = discount_valid.discountCode;
                             // Assuming you have a response from the server after validating the discount code
                             var response = {
                                 name: discount_valid.discountName,
-                                price: discount_valid.discountAmount,
+                                price: discountPrice,
                                 expiryDate: discount_valid.discountEnd,
                                 description: discount_valid.discountDescription
                             };
@@ -252,6 +270,7 @@
     });
 
     document.getElementById('btn-finish').addEventListener('click', function() {
+        var payment = document.getElementById('payment').value;
         if(payment == ''){
             $('#errorAlertPaymenMethod').show();
             return;
@@ -281,5 +300,106 @@
                 }
             });
         }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    // Đoạn mã JavaScript để lấy các phần tử DOM
+    var editDeliveryContent = document.querySelector('.edit-delivery-content');
+    var deliveryContent = document.querySelector('.delivery-content');
+    var editLink = document.querySelector('.cyan-link');
+    var saveButton = document.createElement('button');
+    var provinceName = document.getElementById("orderProvince").innerText;
+    var provinceID = 0;
+
+    // Ẩn phần tử chỉnh sửa khi trang được tải
+    editDeliveryContent.style.display = 'none';
+
+    // Bắt sự kiện khi bấm vào nút "Chỉnh sửa"
+    editLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        // Ẩn phần tử thông tin hiển thị
+        deliveryContent.style.display = 'none';
+        // Hiển thị phần tử chỉnh sửa
+        editDeliveryContent.style.display = 'block';
+        // Tạo và thêm nút "Lưu lại"
+        saveButton.textContent = 'Lưu lại';
+        saveButton.className = 'btn-save';
+        saveButton.addEventListener('click', luuThayDoi);
+        editDeliveryContent.appendChild(saveButton);
+        provinceName = document.getElementById("orderProvince").innerText;
+        
+       // provinceID = 
+
+    });
+
+    // Đoạn mã JavaScript để tạo các phần tử select và lấy dữ liệu
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+
+        citis.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    districts.options[districts.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+
+        districts.onchange = function () {
+            wards.length = 1;
+
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+
+    
+
+    // Đoạn mã JavaScript để xử lý sự kiện khi bấm nút "Lưu lại"
+    function luuThayDoi() {
+        // Lấy giá trị từ các phần tử select
+        var selectedCity = citis.options[citis.selectedIndex].text;
+        var selectedDistrict = districts.options[districts.selectedIndex].text;
+        var selectedWard = wards.options[wards.selectedIndex].text;
+
+        // Lấy giá trị từ textarea
+        var deliveryNote = document.getElementById("delivery-note").value;
+
+        // Cập nhật giá trị trong các phần tử HTML tương ứng
+        document.getElementById("orderProvince").innerText = selectedCity;
+        document.getElementById("orderAddress").innerText =selectedCity + ', ' + selectedDistrict + ", " + selectedWard;
+
+        // Ẩn phần tử chỉnh sửa
+        editDeliveryContent.style.display = 'none';
+        // Hiển thị lại phần tử thông tin
+        deliveryContent.style.display = 'block';
+    }
 </script>
 
