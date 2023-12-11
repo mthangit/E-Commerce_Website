@@ -17,6 +17,9 @@ use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\CategoryController as UserCategoryController;
 use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
+use App\Http\Controllers\User\DiscountController as UserDiscountController;
+
 
 
 /*
@@ -29,6 +32,9 @@ use App\Http\Controllers\User\CartController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/test',function(){
+   orderEmail(1);
+});
 
 Route::get('/', function () {
    return view('user.dashboard_user');
@@ -40,7 +46,7 @@ Route::get('/userprofile', [DashboardController::class, 'Index']);
 /////////////////////////
 Route::get('/logout', function () {
    Auth::logout();
-   return redirect('/login');
+   return redirect('/');
 });
 
 Route::controller(UserSubCategoryController::class)->group(function () {
@@ -49,12 +55,24 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 });
 
 Route::controller(UserProductController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
 });
 
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
+   Route::get('/cart/delete/{rowID}', 'DeleteCart')->name('delete cart');
+   Route::post('/cart/update', 'UpdateCart')->name('update cart');
+});
+
+Route::controller(UserOrderController::class)->group(function () {
+   Route::get('/payment', 'Index')->name('payment');
+   Route::post('store-order', 'StoreOrder')->name('store.order');
+   Route::get('/order-success/{orderID}', 'OrderSuccess')->name('order.success');
+});
+
+Route::controller(UserDiscountController::class)->group(function () {
+   Route::post('/validate-discount-code', 'ValidateDiscountCode')->name('validate discount code');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);
@@ -69,7 +87,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
    Route::controller(DashboardController::class)->group(function () {
       Route::get('/admin/dashboard', 'DashboardAdmin')->name('admindashboard');
-      Route::get('/admin/shop-dashboard', 'ProfileAdmin')->name('adminshopdashboard');
+      Route::get('/admin/shop-dashboard', 'ShopDashboard')->name('adminshopdashboard');
    });
 
    Route::controller(CategoryController::class)->group(function () {
@@ -94,9 +112,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
    });
 
    Route::controller(ProductController::class)->group(function () {
-      Route::get('/admin/all-product', 'Index')->name('allproducts');
+      Route::get('/admin/all-product', 'Index')->name('allproduct');
       Route::get('/admin/add-product', 'AddProduct')->name('addproduct');
       Route::post('/admin/store-product', 'StoreProduct')->name('storeproduct');
+      Route::get('/admin/edit-product/{productID}', 'EditProduct')->name('editproduct');
+      Route::post('/admin/update-product', 'UpdateProduct')->name('updateproduct');
+      Route::get('/admin/delete-product/{productID}', 'DeleteCategory')->name('deleteproduct');
+      Route::get('/admin/search-product',  'SearchCategory')->name('searchproduct');
+
+      Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
+      Route::get('/admin/edit-product-img/{productID}', 'EditProductImg')->name('editproductimg');
    });
 
    Route::controller(DiscountController::class)->group(function () {
@@ -120,7 +145,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
    });
 
    Route::controller(OrderController::class)->group(function () {
-      Route::get('/admin/pending-order', 'Index')->name('pendingorder');
+      Route::get('/admin/all-order', 'Index')->name('allorder');
+      Route::get('/admin/detail-order/{orderID}', 'DetailOrder')->name('detailorder');
+      Route::post('/admin/update-order-status', 'UpdateOrderStatus')->name('updateorderstatus');
    });
 });
 
@@ -130,6 +157,5 @@ Route::middleware('auth')->group(function () {
    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 require __DIR__ . '/auth.php';

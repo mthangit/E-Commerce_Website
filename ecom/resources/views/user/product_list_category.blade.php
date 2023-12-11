@@ -11,7 +11,6 @@
             <li><a href="{{route('product list with category', ['categorySlug'=>$category_list->categorySlug])}}">{{$category_list->categoryName}}</a></li>
         </ul>
     </div>
-
     <div class="main-container grid-6-col">
         <div class="sidebar">
             <div class="sidebar-category">
@@ -20,7 +19,7 @@
                 </div>
                 <div class="side-bar-category">
                     @foreach($categories as $category)
-                    <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName.' - '.$category->categorySlug}}</a></div>
+                    <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName}}</a></div>
                     @endforeach
                 </div>
             </div>
@@ -75,11 +74,12 @@
             </div>
             <div class="product-list-content grid-4-col">
                 @foreach($list_products as $product)
+
                 <div class="preview-product">
                     <div class="product-ping width-common relative">
-                        <a href="" class="image-common relative">
+                        <a href="{{route('detail product',['categorySlug'=>$category_list->categorySlug,'subCategorySlug'=>getSubCategoryByProductID($product->productID)->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
                             <div class="product-img sale">
-                                <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" height="200" width="200">
+                                <img src="{{asset($product->productImage)}}" alt="" height="200" width="200">
                                 <span class="sale-percent">50%</span>
                             </div>
                             <div class="product-info">

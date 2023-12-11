@@ -33,7 +33,7 @@
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
-                    <a href="index.html" style="margin-top: 18px; margin-right: 18px;">
+                    <a href="{{route('adminshopdashboard')}}" style="margin-top: 18px; margin-right: 18px;">
                         <img src="{{ asset('dashboard/assets/images/logo/color-logo.svg') }}" alt="Logo">
                         <img class="logo-fold" src="{{ asset('dashboard/assets/images/logo/logo-fold.svg') }}" alt="Logo" style="width: 41px; margin-left: 20px; margin-top: -5px;">
                     </a>
@@ -217,7 +217,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('allproducts') }}">Sản phẩm</a>
+                                    <a href="{{ route('allproduct') }}">Sản phẩm</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('addproduct') }}">Thêm sản phẩm</a>
@@ -248,7 +248,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('pendingorder') }}">pending Order</a>
+                                    <a href="{{ route('allorder') }}">Quản lý đơn hàng</a>
                                 </li>
                             </ul>
                         </li>
@@ -646,7 +646,7 @@
      Core JS
     <script src=" {{ asset('dashboard/assets/js/app.min.js')}}"></script> -->
     <!-- Content Wrapper END KẾT THÚC TRANG PRODUCT Ở ĐÂY -->
-    
+
 </body>
 
 </html>

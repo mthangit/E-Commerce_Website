@@ -10,10 +10,11 @@
             @endguest
             <li><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}">{{$category->categoryName}}</a></li>
                 <li><a href="">{{$subCategory->subCategoryName}}</a></li>
-            <li>Tesst </li>
         </ul>
     </div>
-
+<?php
+    $thisCategory = $category;
+    ?>
     <div class="main-container grid-6-col">
         <div class="sidebar">
             <div class="sidebar-category">
@@ -22,7 +23,7 @@
                 </div>
                 <div class="side-bar-category">
                     @foreach($categories as $category)
-                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName.' - '.$category->categorySlug}}</a></div>
+                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName.' - '.$category->categoryID}}</a></div>
                     @endforeach
                 </div>
             </div>
@@ -79,7 +80,7 @@
                 @foreach($list_products as $product)
                 <div class="preview-product">
                     <div class="product-ping width-common relative">
-                        <a href="{{route('detail product',['categorySlug'=>$category->categorySlug, 'subCategorySlug'=>$subCategory->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
+                        <a href="{{route('detail product',['categorySlug'=>$thisCategory->categorySlug, 'subCategorySlug'=>$subCategory->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
                             <div class="product-img sale">
                                 <img src="{{asset($product->productImage)}}" alt="" height="200" width="200">
                                 <span class="sale-percent">50%</span>

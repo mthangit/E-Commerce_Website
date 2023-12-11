@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+//use App\Models\OrderDetail;
 
 class Order extends Model
 {
@@ -12,6 +13,7 @@ class Order extends Model
     protected $fillable = [
         'orderID',
         'customerID',
+        'orderCustomerName',
         'totalPrice',
         'shippingFee',
         'discountID',
@@ -26,4 +28,10 @@ class Order extends Model
         'paymentStatus',
         'orderStatus',
     ];
+
+    public function items(){
+        return $this->hasMany(OrderDetail::class, 'orderID', 'orderID');
+    }
+
+
 }

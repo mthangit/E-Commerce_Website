@@ -2,17 +2,22 @@
 
 <div class="page-navigation">
         <ul class="breadcrumb">
-            <li><a href="">Trang chủ</a></li>
-            <li><a href="">Kem chống nắng</a></li>
-            <li>{{$product->productName}}</li>
+            @auth
+                <li><a href="{{route('userdashboard')}}">Trang chủ</a></li>
+            @endauth
+            @guest
+                <li><a href="/">Trang chủ</a></li>
+            @endguest
+            <li><a href="{{route('product list with category', ['categorySlug'=>getCategoryByProductID($thisProduct->productID)->categorySlug])}}">{{getCategoryByProductID($thisProduct->productID)->categoryName}}</a></li>
+            <li><a href="{{route('productlist', ['categorySlug'=>getCategoryByProductID($thisProduct->productID)->categorySlug, 'subCategorySlug'=>getSubCategoryByProductID($thisProduct->productID)->subCategorySlug])}}">{{getSubCategoryByProductID($thisProduct->productID)->subCategoryName}}</a></li>
+            <li>{{$thisProduct->productName}}</li>
         </ul>
     </div>
-
     <div class="product-view grid-product-view">
         <div class="product-img-container grid-image">
             <div class="small-image-container">
                 <div class="small-image">
-                    <img src="{{asset($product->productImage)}}" alt="" width="150" height="150">
+                    <img src="{{asset($thisProduct->productImage)}}" alt="" width="150" height="150">
                 </div>
                 <div class="small-image">
                     <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg" alt="" width="150" height="150">
@@ -22,7 +27,7 @@
                 </div>
             </div>
             <div class="large-image">
-                <img src="{{asset($product->productImage)}}" alt="" width="450" height="450">
+                <img src="{{asset($thisProduct->productImage)}}" alt="" width="450" height="450">
             </div>
         </div>
         <div class="product-info-container">
@@ -30,11 +35,11 @@
                 <h3>Anessa</h3>
             </div>
             <div class="product-name">
-                <h1>{{$product->productName}}</h1>
+                <h1>{{$thisProduct->productName}}</h1>
             </div>
             <div class="product-price">
-                <strong class="left discounted-price">{{$product->productDiscountPrice}}</strong>
-                <span class="right real-price">{{$product->productOriginalPrice}}</span>
+                <strong class="left discounted-price">{{$thisProduct->productDiscountPrice}}</strong>
+                <span class="right real-price">{{$thisProduct->productOriginalPrice}}</span>
             </div>
             <br><br>
             <div class="product-variant">
@@ -47,7 +52,7 @@
                 </div>
                 <div class="btn-product">
                     <button class="btn-add-to-cart" id="addToCartBtn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
-                    <button class="btn-buy-now">Mua ngay</button>
+                    <button class="btn-buy-now" id="buy-now">Mua ngay</button>
                 </div>
             </div>
         </div>
@@ -58,19 +63,7 @@
             <h2 class="section-txt-title">Thông tin sản phẩm</h2>
         </div>
         <div class="product-detail-information-content">
-            <p>Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu Bảo Vệ Hoàn Hảo là
-                sản phẩm chống nắng đến từ thương hiệu chống nắng dưỡng da
-                ANESSA hàng đầu Nhật Bản suốt 21 năm liên tiếp, giúp chống
-                lại tác hại của tia UV & bụi mịn tối ưu dưới mọi điều kiện
-                sinh hoạt, kể cả thời tiết khắc nghiệt nhất. Sản phẩm đặc biệt
-                phù hợp với làn da thiên dầu.</p>
-            <p>Anessa Perfect UV Sunscreen Skincare Milk N SPF50+ PA++++ ứng
-                dụng công nghệ Auto Booster và Very Water Resistant độc quyền
-                từ thương hiệu ANESSA, giúp cho lớp màng chống UV trở nên bền
-                vững hơn khi gặp NHIỆT ĐỘ CAO - ĐỘ ẨM - MỒ HÔI - NƯỚC - MA SÁT,
-                đồng thời chống trôi trong nước lên đến 80 phút, chống bụi mịn PM.25
-                và chống dính cát. Ngoài ra, sự bổ sung của phức hợp 50% thành phần
-                dưỡng da giúp ngăn ngừa lão hoá do tia UV hiệu quả và nuôi dưỡng da ẩm mịn.</p>
+            <p>{{$thisProduct->productInfo}}</p>
         </div>
     </div>
 
@@ -340,8 +333,14 @@
 <script>
     $('#addToCartBtn').click(function () {
         var quantity = document.getElementById('quantityPick').value;
-        addToCart({{$product->productID}}, quantity);
+        addToCart({{$thisProduct->productID}}, quantity);
     });
+    $('#buy-now').click(function () {
+        var quantity = document.getElementById('quantityPick').value;
+        addToCart({{$thisProduct->productID}}, quantity);
+        window.location.href = "{{route('cart')}}";
+    });
+
     function addToCart(productID, quantity) {
         $.ajax({
             headers: {

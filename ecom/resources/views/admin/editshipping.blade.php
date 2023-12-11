@@ -10,7 +10,7 @@ PING - Edit shipping
     <div class="col-xxl">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Sửa danh mục</h5>
+                <h5 class="mb-0">Sửa chi phí ship</h5>
                 <small class="text-muted float-end">Sửa thông tin</small>
             </div>
             <div class="card-body">
