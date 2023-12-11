@@ -52,7 +52,7 @@
                 </div>
                 <div class="btn-product">
                     <button class="btn-add-to-cart" id="addToCartBtn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
-                    <button class="btn-buy-now">Mua ngay</button>
+                    <button class="btn-buy-now" id="buy-now">Mua ngay</button>
                 </div>
             </div>
         </div>
@@ -335,6 +335,12 @@
         var quantity = document.getElementById('quantityPick').value;
         addToCart({{$thisProduct->productID}}, quantity);
     });
+    $('#buy-now').click(function () {
+        var quantity = document.getElementById('quantityPick').value;
+        addToCart({{$thisProduct->productID}}, quantity);
+        window.location.href = "{{route('cart')}}";
+    });
+
     function addToCart(productID, quantity) {
         $.ajax({
             headers: {

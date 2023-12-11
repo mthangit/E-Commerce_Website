@@ -1,7 +1,12 @@
 @include('user.layouts.template_header_logged')
 <div class="page-navigation">
     <ul class="breadcrumb">
-        <li><a href="">Trang chủ</a></li>
+        @auth
+            <li><a href="{{route('userdashboard')}}">Trang chủ</a></li>
+        @endauth
+        @guest
+            <li><a href="/">Trang chủ</a></li>
+        @endguest
         <li><a href="">Giỏ hàng</a></li>
     </ul>
 </div>
@@ -21,7 +26,8 @@
                     ?>
                 @foreach($products as $product)
                     <?php
-                        $totalPrice += ($product->price * $product->qty)
+                        $totalPrice += ($product->price * $product->qty);
+                        $inputId = 'form' . $product->id;
                         ?>
                     <div class="card rounded-3 mb-4">
                         <div class="card-body p-4">
@@ -32,18 +38,16 @@
                                         class="img-fluid rounded-3" alt="">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="fw-normal mb-2">{{$product->name}}</p>
+                                    <p class="fw-normal mb-2">{{$product->name.'  -   '.$product->rowId}}</p>
 {{--                                    <p><span class="text-muted">Loại: </span>60ml</p>--}}
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <button class="btn btn-link px-2 sub" data-rowID="{{$product->rowId}}">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <input id="form1" min="1" name="quantity" value="{{$product->qty}}" type="number"
-                                           class="form-control form-control-sm" />
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <input id="{{$inputId}}" min="1" name="quantity" value="{{$product->qty}}"  type="number"
+                                           class="form-control form-control-sm quantity-input" />
+                                    <button class="btn btn-link px-2 add" data-rowID="{{$product->rowId}}">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
@@ -51,7 +55,7 @@
                                     <h5 class="mb-0 txt-16">{{$product->price * $product->qty}} &#8363;</h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                    <a href="{{route('delete cart', ['rowID'=>$product->rowId])}}" class="text-danger" id="delete-item" data-rowid="{{ $product->rowId }}"><i class="fas fa-trash fa-lg"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -63,12 +67,7 @@
                             <span class="tb-header left">Tạm tính</span>
                             <span class="tb-header right txt-18 txt-orange">{{$totalPrice}} &#8363;</span>
                         </div>
-{{--                        @auth--}}
                         <a href="{{route('payment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>
-{{--                        @endauth--}}
-{{--                        @guest--}}
-{{--                            <a href="{{route('loginAndRedirectToPayment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>--}}
-{{--                        @endguest--}}
                     </div>
                 </div>
             </div>
@@ -80,5 +79,47 @@
         <hr>
     </div>
 </section>
-
 @include('user.layouts.template_footer')
+<script>
+    $('.sub').click(function () {
+        var rowID = $(this).attr('data-rowID');
+        var inputElement = $(this).parent().find('.quantity-input');
+        var qty = parseInt(inputElement.val());
+        if(qty > 1) {
+            inputElement.val(qty - 1);
+        }
+        var newQty = parseInt(inputElement.val());
+        updateCart(rowID, newQty);
+    });
+    $('.add').click(function () {
+        var rowID = $(this).attr('data-rowID');
+        var inputElement = $(this).parent().find('.quantity-input');
+        var qty = parseInt(inputElement.val());
+        if(qty < 10) {
+            inputElement.val(qty + 1);
+        }
+        var newQty = parseInt(inputElement.val());
+        updateCart(rowID, newQty);
+    });
+    function updateCart(rowID, qty) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{route("update cart")}}',
+            method: 'POST',
+            data: {
+                rowID: rowID,
+                qty: qty
+            },
+            datatype: 'json',
+            success: function (response) {
+                if(response.status === true) {
+                    window.location.href = '{{route("cart")}}';
+                }
+            }
+
+        });
+    }
+</script>
+
