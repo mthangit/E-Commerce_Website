@@ -18,13 +18,20 @@ class OrderController extends Controller
         $order = new Order();
         $discount = Discount::where('discountCode', $discountValidCode)->first();
         $discountPrice = 0;
+
         if($discount){
+            if($discount->discountType == 'percent'){
+                $discountPrice = $totalPrice * $discount->discountAmount / 100;
+            }
+            else{
+                $discountPrice = $discount->discountAmount;
+            }
+
             $discount->discountQuantity = $discount->discountQuantity - 1;
             $discount->discountUsed = $discount->discountUsed + 1;
             $order->discountID = $discount->discountID;
             $order->discountCode = $discount->discountCode;
-            $order->discountPrice = $discount->discountAmount;
-            $discountPrice = $discount->discountAmount;
+            $order->discountPrice = $discountPrice;
             $discount->save();
         }
         $order->orderCustomerName = 'Nguyễn Văn A';
