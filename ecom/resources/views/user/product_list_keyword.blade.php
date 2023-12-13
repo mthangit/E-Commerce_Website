@@ -2,13 +2,9 @@
 	@include('user.layouts.template_header_logged')
 <div class="page-navigation">
         <ul class="breadcrumb">
-            @auth
-            <li><a href="{{route('userdashboard')}}">Trang chủ</a></li>
-            @endauth
-            @guest
-            <li><a href="/">Trang chủ</a></li>
-            @endguest
-            <li><a href="{{route('product list with category', ['categorySlug'=>$category_list->categorySlug])}}">{{$category_list->categoryName}}</a></li>
+            <li><a href="">Trang chủ</a></li>
+            <li><a href="">Từ khoá</a></li>
+            <li><a href=""></a></li>
         </ul>
     </div>
     <div class="main-container grid-6-col">
@@ -59,7 +55,7 @@
         <div class="product-list">
             <div class="product-list-header">
                 <div class="product-list-title">
-                    <h1 class="section-txt-title">{{$category_list->categoryName}}</h1>
+                    <h1 class="section-txt-title">{{$keyword}}</h1>
                 </div>
                 <div class="product-list-filter">
                     <div class="product-list-filter-content right">
@@ -73,10 +69,11 @@
                 </div>
             </div>
             <div class="product-list-content grid-4-col">
+
                 @foreach($list_products as $product)
                 <div class="preview-product">
                     <div class="product-ping width-common relative">
-                        <a href="{{route('detail product',['categorySlug'=>$category_list->categorySlug,'subCategorySlug'=>getSubCategoryByProductID($product->productID)->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
+                        <a href="{{route('detail product',['categorySlug'=>getCategoryByProductID($product->productID)->categorySlug,'subCategorySlug'=>getSubCategoryByProductID($product->productID)->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
                             <div class="product-img sale">
                                 <img src="{{asset($product->productImage)}}" alt="" height="200" width="200">
                                 <span class="sale-percent">50%</span>
@@ -101,7 +98,6 @@
                 </div>
                 @endforeach
             </div>
-
             <div class="pagination-container">
                 <nav>
                     <div class="pagination">
@@ -114,43 +110,43 @@
     </div>
 
 @include('user.layouts.template_footer')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
-            document.getElementById('sort-select').addEventListener('change', function() {
-                // Lấy giá trị được chọn
-                var selectedValue = this.value;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
+        document.getElementById('sort-select').addEventListener('change', function() {
+            // Lấy giá trị được chọn
+            var selectedValue = this.value;
 
-                // Sắp xếp lại các sản phẩm trên trang hiện tại
-                sortProducts(selectedValue);
-            });
-
-            // Hàm sắp xếp lại sản phẩm trên trang hiện tại
-            function sortProducts(sortBy) {
-                var productList = document.querySelector('.product-list-content');
-                var products = Array.from(productList.getElementsByClassName('preview-product'));
-
-                products.sort(function(a, b) {
-                    if (sortBy === 'Increase' || sortBy === 'Decrease') {
-                        var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
-                        var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
-
-                        return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
-                    } else if (sortBy === 'Alphabet') {
-                        var aValue = a.querySelector('.product-name').textContent.toLowerCase();
-                        var bValue = b.querySelector('.product-name').textContent.toLowerCase();
-                        return aValue.localeCompare(bValue);
-                    }
-                });
-
-                // Xóa các sản phẩm hiện tại
-                productList.innerHTML = '';
-
-                // Thêm lại sản phẩm đã được sắp xếp
-                products.forEach(function(product) {
-                    productList.appendChild(product);
-                });
-            }
+            // Sắp xếp lại các sản phẩm trên trang hiện tại
+            sortProducts(selectedValue);
         });
 
-    </script>
+        // Hàm sắp xếp lại sản phẩm trên trang hiện tại
+        function sortProducts(sortBy) {
+            var productList = document.querySelector('.product-list-content');
+            var products = Array.from(productList.getElementsByClassName('preview-product'));
+
+            products.sort(function(a, b) {
+                if (sortBy === 'Increase' || sortBy === 'Decrease') {
+                    var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+                    var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+
+                    return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
+                } else if (sortBy === 'Alphabet') {
+                    var aValue = a.querySelector('.product-name').textContent.toLowerCase();
+                    var bValue = b.querySelector('.product-name').textContent.toLowerCase();
+                    return aValue.localeCompare(bValue);
+                }
+            });
+
+            // Xóa các sản phẩm hiện tại
+            productList.innerHTML = '';
+
+            // Thêm lại sản phẩm đã được sắp xếp
+            products.forEach(function(product) {
+                productList.appendChild(product);
+            });
+        }
+    });
+
+</script>

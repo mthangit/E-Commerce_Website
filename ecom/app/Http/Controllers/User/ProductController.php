@@ -12,4 +12,12 @@ class ProductController extends Controller
         $product = Product::where('productSlug', $request->productSlug)->first();
         return view('user.product_detail', ['thisProduct' => $product]);
     }
+
+    public function ProductListByKeyword(Request $request){
+        $keyword = $request->input('keyword');
+        $products = Product::where('productName', 'like', '%'.$keyword.'%')->paginate(12);
+        return view('user.product_list_keyword', ['list_products' => $products, 'keyword' => $keyword]);
+    }
+
+
 }
