@@ -56,7 +56,8 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 
 Route::controller(UserProductController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
-});
+   Route::get('/search/result', 'ProductListByKeyword')->name('search product');
+    Route::post('/sortProducts', 'SortProducts')->name('sort products');});
 
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');

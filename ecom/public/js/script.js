@@ -70,7 +70,43 @@ function togglePassword(num) {
         eyeIcon.className = "fa-regular fa-eye txt-cyan reveal-pass"
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
+    document.getElementById('sort-select').addEventListener('change', function() {
+        // Lấy giá trị được chọn
+        var selectedValue = this.value;
 
+        // Sắp xếp lại các sản phẩm trên trang hiện tại
+        sortProducts(selectedValue);
+    });
+
+    // Hàm sắp xếp lại sản phẩm trên trang hiện tại
+    function sortProducts(sortBy) {
+        var productList = document.querySelector('.product-list-content');
+        var products = Array.from(productList.getElementsByClassName('preview-product'));
+
+        products.sort(function(a, b) {
+            if (sortBy === 'Increase' || sortBy === 'Decrease') {
+                var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+                var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+
+                return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
+            } else if (sortBy === 'Alphabet') {
+                var aValue = a.querySelector('.product-name').textContent.toLowerCase();
+                var bValue = b.querySelector('.product-name').textContent.toLowerCase();
+                return aValue.localeCompare(bValue);
+            }
+        });
+
+        // Xóa các sản phẩm hiện tại
+        productList.innerHTML = '';
+
+        // Thêm lại sản phẩm đã được sắp xếp
+        products.forEach(function(product) {
+            productList.appendChild(product);
+        });
+    }
+});
 
 
 

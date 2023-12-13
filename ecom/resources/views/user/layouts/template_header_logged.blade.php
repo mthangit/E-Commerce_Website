@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="search-cart">
-                    <form action="">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm..." class="input-search" name="search">
+                    <form method="get" action="{{route('search product')}}">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." class="input-search" name="keyword">
                         <button type="submit" class="btn-submit-search">
                             <img src="{{ asset('assets/search-icon.svg')}}" alt="Search">
                         </button>
