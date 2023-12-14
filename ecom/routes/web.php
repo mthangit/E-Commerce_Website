@@ -19,6 +19,7 @@ use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 
 
 
@@ -49,6 +50,18 @@ Route::get('/logout', function () {
    return redirect('/');
 });
 
+Route::controller(UserDashboardController::class)->group(function () {
+   Route::get('/user/dashboard', 'Index')->name('userdashboard');
+   Route::get('/about', 'About')->name('about');
+   Route::get('/most-asked-questions', 'MostAsked')->name('mostasked');
+   Route::get('/privacy-policy', 'PrivacyPolicy')->name('privacypolicy');
+   Route::get('/terms-of-use', 'TermOfUse')->name('termofuse');
+   Route::get('/contact', 'Contact')->name('contact');
+   Route::get('/delivery-policy', 'DeliveryPolicy')->name('deliverypolicy');
+   Route::get('/return-policy', 'ReturnPolicy')->name('returnpolicy');
+   Route::get('/blog', 'Blog')->name('blog');
+});
+
 Route::controller(UserSubCategoryController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug}/{sortBy?}', 'Index')->name('productlist');
    Route::get('/product-list/{categorySlug}/{sortBy?}', 'Index2')->name('product list with category');
@@ -56,7 +69,8 @@ Route::controller(UserSubCategoryController::class)->group(function () {
 
 Route::controller(UserProductController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
-});
+   Route::get('/search/result', 'ProductListByKeyword')->name('search product');
+    Route::post('/sortProducts', 'SortProducts')->name('sort products');});
 
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');

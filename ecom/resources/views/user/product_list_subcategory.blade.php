@@ -23,7 +23,7 @@
                 </div>
                 <div class="side-bar-category">
                     @foreach($categories as $category)
-                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName.' - '.$category->categoryID}}</a></div>
+                        <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName}}</a></div>
                     @endforeach
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="product-list-filter">
                     <div class="product-list-filter-content right">
                         <label for="">Sắp xếp theo: </label>
-                        <select name="" id="">
+                        <select id="sort-select" name="">
                             <option value="Increase">Giá thấp đến cao</option>
                             <option value="Decrease">Giá cao đến thấp</option>
                             <option value="Alphabet">A - Z</option>
@@ -109,19 +109,51 @@
             <div class="pagination-container">
                 <nav>
                     <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">&raquo;</a>
+                        {{$list_products->links()}}
                     </div>
                 </nav>
             </div>
-
         </div>
     </div>
 
 @include('user.layouts.template_footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
+            document.getElementById('sort-select').addEventListener('change', function() {
+                // Lấy giá trị được chọn
+                var selectedValue = this.value;
+
+                // Sắp xếp lại các sản phẩm trên trang hiện tại
+                sortProducts(selectedValue);
+            });
+
+            // Hàm sắp xếp lại sản phẩm trên trang hiện tại
+            function sortProducts(sortBy) {
+                var productList = document.querySelector('.product-list-content');
+                var products = Array.from(productList.getElementsByClassName('preview-product'));
+
+                products.sort(function(a, b) {
+                    if (sortBy === 'Increase' || sortBy === 'Decrease') {
+                        var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+                        var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+
+                        return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
+                    } else if (sortBy === 'Alphabet') {
+                        var aValue = a.querySelector('.product-name').textContent.toLowerCase();
+                        var bValue = b.querySelector('.product-name').textContent.toLowerCase();
+                        return aValue.localeCompare(bValue);
+                    }
+                });
+
+                // Xóa các sản phẩm hiện tại
+                productList.innerHTML = '';
+
+                // Thêm lại sản phẩm đã được sắp xếp
+                products.forEach(function(product) {
+                    productList.appendChild(product);
+                });
+            }
+        });
+
+    </script>

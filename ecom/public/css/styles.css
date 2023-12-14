@@ -1006,27 +1006,34 @@ li ol > li:before {
     justify-content: center;
     margin: 50px 0 40px 0;
 }
-
-.pagination {
+.text-muted { display: none; }
+.pagination li {
     display: inline-block;
 }
-
-.pagination a {
-    color: var(--black);
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid var(--gray);
-}
-
-.pagination a.active {
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
     background-color: var(--darker-orange);
-    color: var(--white);
-    border: 1px solid var(--darker-orange);
+    border-color: var(--darker-orange);
     font-weight: 500;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+/*.pagination a {*/
+/*    color: var(--black);*/
+/*    float: left;*/
+/*    padding: 8px 16px;*/
+/*    text-decoration: none;*/
+/*    border: 1px solid var(--gray);*/
+/*}*/
+
+/*.pagination a.active {*/
+/*    background-color: var(--darker-orange);*/
+/*    color: var(--white);*/
+/*    border: 1px solid var(--darker-orange);*/
+/*    font-weight: 500;*/
+/*}*/
+
+.pagination a:hover:not(.active) {background-color: #ddd; border-color: #ddd}
 
 .m-20{
     margin: 30px;
