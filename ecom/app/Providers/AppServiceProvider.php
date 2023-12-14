@@ -22,11 +22,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
         $categories = \App\Models\Category::all();
-        
+
         view()->share('categories', $categories);
         $subcategories = \App\Models\Subcategory::all();
         view()->share('subcategories', $subcategories);
         $products = \App\Models\Product::all();
         view()->share('products', $products);
+        $brands = \App\Models\Brand::all();
+        view()->share('brands', $brands);
     }
 }

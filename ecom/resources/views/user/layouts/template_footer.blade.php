@@ -24,7 +24,7 @@
                 <div class="contact-info"><a href="{{route('contact')}}" class="heavy-link">Thông tin liên hệ</a></div>
                 <div class="delivery-policy"><a href="{{route('deliverypolicy')}}" class="heavy-link">Chính sách vận chuyển</a></div>
                 <div class="return-policy"><a href="{{route('returnpolicy')}}" class="heavy-link">Chính sách đổi trả</a></div>
-                <div class="send-support"><a href="" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
+                <div class="send-support"><a href="/chatify/1" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
             </div>
         </div>
         <div class="copyright">

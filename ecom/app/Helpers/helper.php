@@ -11,7 +11,7 @@ use App\Models\Province;
 use App\Models\Shipping;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Brand;
 
 function getAllCategory()
 {
@@ -85,4 +85,13 @@ function getProvinceByProvinceName($provinceName)
 function getShippingExpenseByProvinceID($provinceID)
 {
     return Shipping::where('provinceID', $provinceID)->value('shippingExpense');
+}
+
+function getAllBrand()
+{
+    return Brand::all();
+}
+function getBrandByBrandID($brandID)
+{
+    return Brand::where('brandID', $brandID)->first();
 }

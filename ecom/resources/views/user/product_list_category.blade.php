@@ -22,6 +22,7 @@
                     <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName}}</a></div>
                     @endforeach
                 </div>
+                <br>
             </div>
             <div class="sidebar-filter">
                 <div class="side-bar-title">
@@ -29,23 +30,18 @@
                 </div>
                 <div class="brand-filter">
                     <h3 class="">Tên thương hiệu</h3>
+                    <br>
                     <div class="brand-choose">
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
+                        @foreach($brands as $brand)
+                            <input {{ (in_array($brand->brandID, $brandsArray)) ? 'checked' : '' }} class="brand-label" type="checkbox" name="brand-checked" id="brand-{{$brand->brandID}}" value="{{$brand->brandID}}">
+                            <label for="brand-{{$brand->brandID}}">{{$brand->brandName}}</label><br>
+                        @endforeach
                     </div>
+                    <br>
                 </div>
                 <div class="price-range">
                     <h3 class="">Khoảng giá</h3>
+                    <br>
                     <form action="" class="filter-product">
                         <input type="text" name="" id="" placeholder="Từ &#8363;">
                         <span class="price-range-line">-</span>
@@ -153,4 +149,33 @@
             }
         });
 
+        $(".brand-label").change(function (){
+            applyFilters();
+        });
+
+        function applyFilters(){
+            var brandIDs = [];
+            $(".brand-label:checked").each(function (){
+                brandIDs.push($(this).val());
+            });
+
+            var url = "{{ url()->current() }}?"
+            if(brandIDs.length > 0){
+                url += "&brand=" + brandIDs.toString();
+            }
+
+            window.location.href = url;
+
+            {{--$.ajax({--}}
+            {{--    url: "{{route('filter products')}}",--}}
+            {{--    method: "GET",--}}
+            {{--    data: {--}}
+            {{--        brandIDs: brandIDs,--}}
+            {{--        categorySlug: "{{$category_list->categorySlug}}"--}}
+            {{--    },--}}
+            {{--    success: function (response){--}}
+            {{--        $(".product-list-content").html(response);--}}
+            {{--    }--}}
+            {{--});--}}
+        }
     </script>
