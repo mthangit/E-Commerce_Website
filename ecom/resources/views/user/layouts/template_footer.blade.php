@@ -12,18 +12,18 @@
                 <div class="about-us-title">
                     <h4>VỀ CHÚNG TÔI</h4>
                 </div>
-                <div class="introduction"><a href="" class="heavy-link">Giới thiệu</a></div>
-                <div class="privacy-policy"><a href="" class="heavy-link">Chính sách bảo mật</a></div>
-                <div class="terms-of-use"><a href="" class="heavy-link">Điều khoản sử dụng</a></div>
+                <div class="introduction"><a href="{{route('about')}}" class="heavy-link">Giới thiệu</a></div>
+                <div class="privacy-policy"><a href="{{route('privacypolicy')}}" class="heavy-link">Chính sách bảo mật</a></div>
+                <div class="terms-of-use"><a href="{{route('termofuse')}}" class="heavy-link">Điều khoản sử dụng</a></div>
             </div>
             <div class="page-support">
                 <div class="page-support-title">
                     <h4>HỖ TRỢ</h4>
                 </div>
-                <div class="most-asked-questions"><a href="" class="heavy-link">Các câu hỏi thường gặp</a></div>
-                <div class="contact-info"><a href="" class="heavy-link">Thông tin liên hệ</a></div>
-                <div class="delivery-policy"><a href="" class="heavy-link">Chính sách vận chuyển</a></div>
-                <div class="return-policy"><a href="" class="heavy-link">Chính sách đổi trả</a></div>
+                <div class="most-asked-questions"><a href="{{route('mostasked')}}" class="heavy-link">Các câu hỏi thường gặp</a></div>
+                <div class="contact-info"><a href="{{route('contact')}}" class="heavy-link">Thông tin liên hệ</a></div>
+                <div class="delivery-policy"><a href="{{route('deliverypolicy')}}" class="heavy-link">Chính sách vận chuyển</a></div>
+                <div class="return-policy"><a href="{{route('returnpolicy')}}" class="heavy-link">Chính sách đổi trả</a></div>
                 <div class="send-support"><a href="" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
             </div>
         </div>

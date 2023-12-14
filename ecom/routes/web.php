@@ -19,6 +19,7 @@ use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 
 
 
@@ -47,6 +48,18 @@ Route::get('/userprofile', [DashboardController::class, 'Index']);
 Route::get('/logout', function () {
    Auth::logout();
    return redirect('/');
+});
+
+Route::controller(UserDashboardController::class)->group(function () {
+   Route::get('/user/dashboard', 'Index')->name('userdashboard');
+   Route::get('/about', 'About')->name('about');
+   Route::get('/most-asked-questions', 'MostAsked')->name('mostasked');
+   Route::get('/privacy-policy', 'PrivacyPolicy')->name('privacypolicy');
+   Route::get('/terms-of-use', 'TermOfUse')->name('termofuse');
+   Route::get('/contact', 'Contact')->name('contact');
+   Route::get('/delivery-policy', 'DeliveryPolicy')->name('deliverypolicy');
+   Route::get('/return-policy', 'ReturnPolicy')->name('returnpolicy');
+   Route::get('/blog', 'Blog')->name('blog');
 });
 
 Route::controller(UserSubCategoryController::class)->group(function () {
