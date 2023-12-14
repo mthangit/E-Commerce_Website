@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <th>Thương hiệu</th>
-                <td>Anessa</td>
+                <td>{{$thisProduct->productBrandName}}</td>
             </tr>
             <tr>
                 <th>Xuất xứ</th>
@@ -90,7 +90,7 @@
             </tr>
             <tr>
                 <th>Danh mục sản phẩm</th>
-                <td>Kem chống nắng</td>
+                <td>{{$thisProduct->productCategoryName}}</td>
             </tr>
         </table>
     </div>
