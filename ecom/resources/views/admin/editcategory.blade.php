@@ -6,7 +6,7 @@ PING - Edit Category
 <!-- Content -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sửa danh mục sản phẩm</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sửa danh mục sản phẩm cha</h4>
     <div class="col-xxl">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
@@ -32,53 +32,6 @@ PING - Edit Category
                             <input type="text" class="form-control" id="categoryName" name="categoryName" value="{{$category_info->categoryName}} " />
                         </div>
                     </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="categoryImage">Category Image</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="categoryImage" name="categoryImage" value="{{$category_info->categoryImage}}" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-primary" onclick="showImage()">Show Image</button>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="newCategoryImage">New Category Image</label>
-                        <div class="col-sm-8">
-                            <input type="file" class="form-control" id="newCategoryImage" name="newCategoryImage" style="display: none;" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-secondary" onclick="changeImage()">Upload New Image</button>
-                        </div>
-                    </div>
-
-                    <div id="imagePreview" style="display: none;">
-                        <!-- Image preview will be displayed here -->
-                    </div>
-
-                    <script>
-                        function showImage() {
-                            var imageUrl = document.getElementById('categoryImage').value;
-                            if (imageUrl) {
-                                var imagePreview = document.getElementById('imagePreview');
-                                imagePreview.innerHTML = '<img src="' + imageUrl + '" style="max-width:100%;" />';
-                                imagePreview.style.display = 'block';
-                            }
-                        }
-
-                        function changeImage() {
-                            var newImageInput = document.getElementById('newCategoryImage');
-                            newImageInput.click();
-
-                            newImageInput.addEventListener('change', function() {
-                                var imagePreview = document.getElementById('imagePreview');
-                                var newImageUrl = URL.createObjectURL(newImageInput.files[0]);
-                                imagePreview.innerHTML = '<img src="' + newImageUrl + '" style="max-width:100%;" />';
-                                imagePreview.style.display = 'block';
-                            });
-                        }
-                    </script>
 
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="categoryDescription">Category Description</label>

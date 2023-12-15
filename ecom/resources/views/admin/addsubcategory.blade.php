@@ -26,7 +26,7 @@ PING - Sub Category
             <label class="col-sm-2 col-form-label" for="basic-default-name">lựa chọn danh mục cha</label>
             <div class="col-sm-10">
               <select class="form-control" id="categoryID" name="categoryID" aria-label="Default select example">
-                <option>Lựa chọn danh mục cha</option>
+                <option value="" disabled selected>Lựa chọn danh mục cha</option>
                 @foreach ($categories as $category )
                 <option value="{{$category->categoryID}}">{{$category->categoryName}}</option>
                 @endforeach
@@ -34,12 +34,6 @@ PING - Sub Category
             </div>
           </div>
 
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="categoryImage">Ảnh danh mục</label>
-            <div class="col-sm-10">
-              <input type="file" class="form-control" id="subCategoryImage" name="subCategoryImage" accept="image/*" />
-            </div>
-          </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="categoryDescription">Mô tả danh mục</label>
             <div class="col-sm-10">
