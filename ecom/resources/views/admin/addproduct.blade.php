@@ -26,7 +26,12 @@ PING - Product
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Tên thương hiệu</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="productBrandName" name="productBrandName" placeholder="Haseline" />
+              <select class="form-control" id="productBrandID" name="productBrandID" aria-label="Default select example">
+                <option value="" disabled selected>Lựa chọn thương hiệu </option>
+                @foreach ($brands as $brand )
+                <option value="{{$brand->brandID}}">{{$brand->brandName}}</option>
+                @endforeach
+              </select>
             </div>
           </div>
 
@@ -34,7 +39,7 @@ PING - Product
             <label class="col-sm-2 col-form-label" for="basic-default-name">Lựa chọn danh mục cha</label>
             <div class="col-sm-10">
               <select class="form-control" id="productCategoryID" name="productCategoryID" aria-label="Default select example">
-                <option value="">Lựa chọn danh mục cha</option>
+                <option value="" disabled selected>Lựa chọn danh mục cha</option>
                 @foreach ($categories as $category )
                 <option value="{{$category->categoryID}}">{{$category->categoryName}}</option>
                 @endforeach
@@ -46,7 +51,7 @@ PING - Product
             <label class="col-sm-2 col-form-label" for="basic-default-name">Lựa chọn danh mục con</label>
             <div class="col-sm-10">
               <select class="form-control" id="productSubCategoryID" name="productSubCategoryID" aria-label="Default select example">
-                <option value="">Lựa chọn danh mục con</option>
+                <option value="" disabled selected>Lựa chọn danh mục con</option>
                 @foreach ($subcategories as $subcategory )
                 <option class="subcategory" data-category="{{$subcategory->categoryID}}" value="{{$subcategory->subCategoryID}}">{{$subcategory->subCategoryName}}</option>
                 @endforeach
@@ -110,25 +115,25 @@ PING - Product
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình</label>
             <div class="col-sm-10">
-              <input class="form-control" type="file"  name="productImage" id="productImage"   />
+              <input class="form-control" type="file"  name="productImage" id="productImage"/>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 1</label>
             <div class="col-sm-10">
-              <input class="form-control" type="file" id="productSideImage1" />
+              <input class="form-control" type="file" name="productSideImage1" id="productSideImage1" />
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 2</label>
             <div class="col-sm-10">
-              <input class="form-control" type="file" id="productSideImage2" />
+              <input class="form-control" type="file" name="productSideImage2" id="productSideImage2" />
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 3</label>
             <div class="col-sm-10">
-              <input class="form-control" type="file" id="productSideImage3" />
+              <input class="form-control" type="file" name="productSideImage3" id="productSideImage3" />
             </div>
           </div>
 

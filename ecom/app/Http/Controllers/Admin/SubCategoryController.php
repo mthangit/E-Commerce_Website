@@ -66,7 +66,8 @@ class SubCategoryController extends Controller
     public function EditSubCategory($subCategoryID)
     {   
         $subCategoryInfo = Subcategory::findOrFail($subCategoryID);
-        return view('admin.editsubcategory', compact('subCategoryInfo'));
+        $categories = Category::latest()->get();
+        return view('admin.editsubcategory', compact('subCategoryInfo','categories'));
     }
     public function UpdateSubCategory(Request $request)
     {   
@@ -74,13 +75,16 @@ class SubCategoryController extends Controller
         $request->validate([
             'subCategoryName' => 'required|unique:subcategories,subcategoryName,' . $subCategoryID . ',subCategoryID'
         ]);
-
+        $category_ID = $request->categoryID;
+        $category_Name = Category::where('categoryID',$category_ID)->value('categoryName');
         $subCategoryID = $request->subCategoryID;
         $isActive = $request->has('isActive') ? 1 : 0;
         Subcategory::findOrFail($subCategoryID)->update([
             'subCategoryName' => $request->subCategoryName,
             'subCategorySlug' => strtolower(str_replace(' ', '-', $request->subCategoryName)),
             'subCategoryDescription' => $request->subCategoryDescription,
+            'categoryID' => $category_ID,
+            'categoryName' => $category_Name,
             'subCategoryCreatedDate' => $request->subCategoryCreatedDate,
             'subCategoryModifiedDate' => $request->subCategoryModifiedDate, // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
             'isActive' => $isActive,

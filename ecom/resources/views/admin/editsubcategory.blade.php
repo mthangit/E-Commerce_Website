@@ -6,7 +6,7 @@ PING - Edit Sub Category
 <!-- Content -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sửa danh mục sản phẩm</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sửa danh mục sản phẩm con</h4>
     <div class="col-xxl">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
@@ -32,54 +32,17 @@ PING - Edit Sub Category
                             <input type="text" class="form-control" id="subCategoryName" name="subCategoryName" value="{{$subCategoryInfo->subCategoryName}} " />
                         </div>
                     </div>
-
                     <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="subCategoryImage">Category Image</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="subCategoryImage" name="subCategoryImage" value="{{$subCategoryInfo->subCategoryImage}}" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-primary" onclick="showImage()">Show Image</button>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="newsubCategoryImage">New Category Image</label>
-                        <div class="col-sm-8">
-                            <input type="file" class="form-control" id="newsubCategoryImage" name="newsubCategoryImage" style="display: none;" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-secondary" onclick="changeImage()">Upload New Image</button>
+                        <label class="col-sm-2 col-form-label" for="basic-default-name">lựa chọn danh mục cha</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="categoryID" name="categoryID" value="{{$subCategoryInfo->categoryName}}">
+                                <option value="{{$subCategoryInfo->categoryName}}" >{{$subCategoryInfo->categoryName}}</option>
+                                @foreach ($categories as $category )
+                                <option value="{{$category->categoryID}}">{{$category->categoryName}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
-                    <div id="imagePreview" style="display: none;">
-                        <!-- Image preview will be displayed here -->
-                    </div>
-
-                    <script>
-                        function showImage() {
-                            var imageUrl = document.getElementById('subCategoryImage').value;
-                            if (imageUrl) {
-                                var imagePreview = document.getElementById('imagePreview');
-                                imagePreview.innerHTML = '<img src="' + imageUrl + '" style="max-width:100%;" />';
-                                imagePreview.style.display = 'block';
-                            }
-                        }
-
-                        function changeImage() {
-                            var newImageInput = document.getElementById('newsubCategoryImage');
-                            newImageInput.click();
-
-                            newImageInput.addEventListener('change', function() {
-                                var imagePreview = document.getElementById('imagePreview');
-                                var newImageUrl = URL.createObjectURL(newImageInput.files[0]);
-                                imagePreview.innerHTML = '<img src="' + newImageUrl + '" style="max-width:100%;" />';
-                                imagePreview.style.display = 'block';
-                            });
-                        }
-                    </script>
-
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="subCategoryDescription">Category Description</label>
                         <div class="col-sm-10">
@@ -97,7 +60,7 @@ PING - Edit Sub Category
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="subCategoryCreateDate">Category Created Date</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control" id="subCategoryCreateDate" name="subCategoryCreateDate" value="{{$subCategoryInfo->subCategoryCreateDate}}" />
+                            <input type="datetime-local" class="form-control" id="subCategoryCreatedDate" name="subCategoryCreatedDate" value="{{$subCategoryInfo->subCategoryCreatedDate}}" />
                         </div>
                     </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -139,6 +140,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
       Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
       Route::get('/admin/edit-product-img/{productID}', 'EditProductImg')->name('editproductimg');
+
+      Route::post('/admin/update-product-side-img-one', 'UpdateProductSideImgOne')->name('updateproductsideimgone');
+      Route::get('/admin/edit-product-side-img-one/{productID}', 'EditProductSideImgOne')->name('editproductsideimgone');
+
+      Route::post('/admin/update-product-side-img-two', 'UpdateProductSideImgTwo')->name('updateproductsideimgtwo');
+      Route::get('/admin/edit-product-side-img-two/{productID}', 'EditProductSideImgTwo')->name('editproductsideimgtwo');
+
+       Route::post('/admin/update-product-side-img-three', 'UpdateProductSideImgThree')->name('updateproductsideimgthree');
+       Route::get('/admin/edit-product-side-img-three/{productID}', 'EditProductSideImgThree')->name('editproductsideimgthree');
    });
 
    Route::controller(DiscountController::class)->group(function () {
@@ -160,6 +170,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::get('/admin/search-shipping',  'SearchShipping')->name('searchshipping');
       Route::post('/admin/update-shipping', 'UpdateShipping')->name('updateshipping');
    });
+
+   Route::controller(BrandController::class)->group(function () {
+      Route::get('/admin/all-brand', 'Index')->name('allbrand');
+      Route::get('/admin/add-brand', 'AddBrand')->name('addbrand');
+      Route::post('/admin/store-brand', 'StoreBrand')->name('storebrand');
+      Route::get('/admin/edit-brand/{brandID}', 'EditBrand')->name('editbrand');
+      Route::get('/admin/delete-brand/{brandID}', 'DeleteBrand')->name('deletebrand');
+      Route::get('/admin/search-brand',  'SearchBrand')->name('searchbrand');
+      Route::post('/admin/update-brand', 'UpdateBrand')->name('updatebrand');
+   });
+
 
    Route::controller(OrderController::class)->group(function () {
       Route::get('/admin/all-order', 'Index')->name('allorder');

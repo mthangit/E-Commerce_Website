@@ -5,7 +5,7 @@ PING - product
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sản phẩm</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -28,6 +28,7 @@ PING - product
             <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
           </div>
         </div>
+        <button class="btn btn-outline-secondary" type="button" id="addProduct">Thêm sản phẩm</button>
       </div>
       <table class="table">
         <thead>
@@ -47,7 +48,6 @@ PING - product
             <td>{{ $product->productName }}</td>
             <td>{{ $product->productSubCategoryName }}</td>
             <td><img style="height:100px" src="{{asset($product->productImage)}}" alt=""></td>
-            <td></td>
             <td>@if($product->isActive == 1)
               <div class="d-flex align-items-center">
                 <div class="badge badge-success badge-dot m-r-10"></div>
@@ -91,6 +91,12 @@ PING - product
       $("#searchInput").val('');
       window.location.href = "{{ route('allproduct') }}";
     })
+
+    $("#addProduct").click(function() {
+      $("#addProduct").val('');
+      window.location.href = "{{ route('addproduct') }}";
+    });
+
   });
 </script>
 @endsection
