@@ -63,9 +63,12 @@ Route::controller(UserDashboardController::class)->group(function () {
    Route::get('/blog', 'Blog')->name('blog');
 });
 
+Route::controller(UserCategoryController::class)->group(function () {
+   Route::get('/product-list/{categorySlug}', 'Index')->name('product list with category');
+});
+
 Route::controller(UserSubCategoryController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/{sortBy?}', 'Index')->name('productlist');
-   Route::get('/product-list/{categorySlug}/{sortBy?}', 'Index2')->name('product list with category');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug}', 'Index')->name('productlist');
 });
 
 Route::controller(UserProductController::class)->group(function () {

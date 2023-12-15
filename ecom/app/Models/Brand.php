@@ -16,5 +16,6 @@ class Brand extends Model
         'brandName',
         'brandDescription',
         'isActive',
-    ];
+
+   ];
 }
