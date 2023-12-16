@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -180,6 +181,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::get('/admin/search-brand',  'SearchBrand')->name('searchbrand');
       Route::post('/admin/update-brand', 'UpdateBrand')->name('updatebrand');
    });
+
+
+   Route::controller(BlogController::class)->group(function () {
+      Route::get('/admin/all-blog', 'Index')->name('allblog');
+      Route::get('/admin/add-blog', 'AddBlog')->name('addblog');
+      Route::post('/admin/store-blog', 'StoreBlog')->name('storeblog');
+      Route::get('/admin/edit-blog/{blogID}', 'EditBlog')->name('editblog');
+      Route::get('/admin/delete-blog/{blogID}', 'DeleteBlog')->name('deleteblog');
+      Route::get('/admin/search-blog',  'SearchBlog')->name('searchblog');
+      Route::post('/admin/update-blog', 'UpdateBlog')->name('updateblog');
+   });
+
 
 
    Route::controller(OrderController::class)->group(function () {
