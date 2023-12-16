@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    protected function createOder($totalPrice, $paymentMethod, $discountValidCode){
+    protected function createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone){
         $order = new Order();
         $discount = Discount::where('discountCode', $discountValidCode)->first();
         $discountPrice = 0;
@@ -34,20 +34,32 @@ class OrderController extends Controller
             $order->discountPrice = $discountPrice;
             $discount->save();
         }
-        $order->orderCustomerName = 'Nguyễn Văn A';
-        $order->shippingFee = 20000;
+        $order->customerID = CustomerInfo::where('userID', Auth::user()->id)->first()->customerID;
+        $order->orderCustomerName = $orderCustomerName;
         $order->grandPrice = $totalPrice - $discountPrice;
         $order->totalPrice = $totalPrice;
+        if($totalPrice > 2500000){
+            $order->shippingFee = 0;
+        }
+        else{
+            $order->shippingFee = 30000;
+        }
         $order->paymentMethod = $paymentMethod;
         $order->orderCreatedDate = date('Y-m-d H:i:s');
-        $order->orderAddress = 'Hà Nội';
-        $order->orderPhone = '0123456789';
+        $order->orderAddress = $orderAddress;
+        $order->orderPhone = $orderPhone;
+
+
         return $order;
     }
     protected function createOderDetail(){
         $list_products = Cart::content();
         $order_list = [];
         foreach($list_products as $item){
+            $product = Product::find($item->id);
+            $product->productInStock = $product->productInStock - $item->qty;
+            $product->productSoldQuantity = $product->productSoldQuantity + $item->qty;
+            $product->save();
             $order_detail = new OrderDetail();
             $order_detail->productID = $item->id;
             $order_detail->productName = $item->name;
@@ -65,10 +77,13 @@ class OrderController extends Controller
         }
         $info = CustomerInfo::where('userID', Auth::user()->id)->first();
         if($info->customerPhone == null){
-            $info->customerPhone = '0123456789';
+            $info->customerPhone = '09xxxxxxxx';
         }
         if($info->customerAddress == null){
-            $info->customerAddress = 'Thủ Đức, TPHCM';
+            $info->customerAddress = 'Địa chỉ của bạn';
+        }
+        if($info->customerProvinceName == null){
+            $info->customerProvinceName = 'Tỉnh/Thành phố';
         }
         $data = Cart::content();
         return view('user.payment', ['order_list'=>$data, 'info'=>$info]);
@@ -77,13 +92,19 @@ class OrderController extends Controller
         $totalPrice = intval($request->input('totalPrice'));
         $paymentMethod = $request->input('paymentMethod');
         $discountValidCode = $request->input('discountValidCode');
-        $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode);
+        $orderCustomerName = $request->input('orderCustomerName');
+        $orderAddress = $request->input('orderAddress');
+        $orderPhone = $request->input('orderPhone');
+        $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone);
         $order->save();
         $order_list = $this->createOderDetail();
         foreach($order_list as $item){
             $item->orderID = $order->orderID;
             $item->save();
         }
+        $CustomerInfo = CustomerInfo::where('userID', Auth::user()->id)->first();
+        $CustomerInfo->customerOrderQuantity = $CustomerInfo->customerOrderQuantity + 1;
+        $CustomerInfo->save();
         Cart::destroy();
         return response()->json(['orderID' => $order->orderID]);
     }

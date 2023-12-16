@@ -15,9 +15,19 @@ class ProductController extends Controller
 
     public function ProductListByKeyword(Request $request){
         $keyword = $request->input('keyword');
-        $products = Product::where('productName', 'like', '%'.$keyword.'%')->paginate(12);
-        return view('user.product_list_keyword', ['list_products' => $products, 'keyword' => $keyword]);
+        $products = Product::where('productName', 'like', '%'.$keyword.'%');
+
+        $brandsArray = [];
+        if(!empty($request->get('brand'))){
+            $brandsArray = explode(',', $request->get('brand'));
+            $products = $products->whereIn('productBrandID', $brandsArray);
+        }
+        $products = $products->paginate(12);
+
+
+        return view('user.product_list_keyword', ['list_products' => $products, 'keyword' => $keyword, 'brandsArray' => $brandsArray]);
     }
+
 
 
 }

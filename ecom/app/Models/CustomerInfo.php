@@ -16,6 +16,7 @@ class CustomerInfo extends Model
         'customerPhone',
         'customerEmail',
         'customerProvinceID',
+        'customerProvinceName',
         'customerAddress',
         'customerStatus',
         'customerJoinDate',

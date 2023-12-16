@@ -95,3 +95,9 @@ function getBrandByBrandID($brandID)
 {
     return Brand::where('brandID', $brandID)->first();
 }
+if (!function_exists('formatCurrency')) {
+    function formatCurrency($amount): string
+    {
+        return number_format($amount, 0, ',', '.');
+    }
+}
