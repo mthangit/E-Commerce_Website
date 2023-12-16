@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\AccountController as UserAccountController;
 
 
 
@@ -81,6 +84,10 @@ Route::controller(CartController::class)->group(function () {
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
    Route::get('/cart/delete/{rowID}', 'DeleteCart')->name('delete cart');
    Route::post('/cart/update', 'UpdateCart')->name('update cart');
+});
+
+Route::controller(UserAccountController::class)->group(function () {
+   Route::get('/user/detail-account/{userID}', 'DetailAccount')->name('detailuseraccount');
 });
 
 Route::controller(UserOrderController::class)->group(function () {
@@ -180,6 +187,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::get('/admin/search-brand',  'SearchBrand')->name('searchbrand');
       Route::post('/admin/update-brand', 'UpdateBrand')->name('updatebrand');
    });
+
+
+   Route::controller(BlogController::class)->group(function () {
+      Route::get('/admin/all-blog', 'Index')->name('allblog');
+      Route::get('/admin/add-blog', 'AddBlog')->name('addblog');
+      Route::post('/admin/store-blog', 'StoreBlog')->name('storeblog');
+      Route::get('/admin/edit-blog/{blogID}', 'EditBlog')->name('editblog');
+      Route::get('/admin/delete-blog/{blogID}', 'DeleteBlog')->name('deleteblog');
+      Route::get('/admin/search-blog',  'SearchBlog')->name('searchblog');
+      Route::post('/admin/update-blog', 'UpdateBlog')->name('updateblog');
+   });
+
+
+   Route::controller(AccountController::class)->group(function () {
+      Route::get('/admin/all-account', 'Index')->name('allaccount');
+      Route::get('/admin/detail-account/{customerID}', 'DetailAccount')->name('detailaccount');
+   });
+
 
 
    Route::controller(OrderController::class)->group(function () {

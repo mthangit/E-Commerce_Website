@@ -264,7 +264,7 @@
                                     <a href="accordion.html">Tài khoản admin</a>
                                 </li>
                                 <li>
-                                    <a href="carousel.html">Tài khoản user</a>
+                                    <a href="{{route('allaccount')}}">Tài khoản user</a>
                                 </li>
                             </ul>
                         </li>
@@ -280,16 +280,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="form-elements.html">Doanh số ngày</a>
-                                </li>
-                                <li>
-                                    <a href="form-layouts.html">Doanh số tuần</a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">Doanh số tháng</a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">Doanh số năm</a>
+                                    <a href="{{route('allblog')}}">Quản lý bài đăng</a>
                                 </li>
                             </ul>
                         </li>

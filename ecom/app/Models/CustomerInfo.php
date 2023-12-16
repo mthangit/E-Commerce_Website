@@ -20,6 +20,7 @@ class CustomerInfo extends Model
         'customerAddress',
         'customerStatus',
         'customerJoinDate',
+        'customerBirthDay',
         'customerOrderQuantity',
         'customerBankAccount',
         'customerBankName',
