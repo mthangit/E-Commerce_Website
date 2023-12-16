@@ -22,6 +22,7 @@
                     <div class="category-sb"><a href="{{route('product list with category', ['categorySlug'=>$category->categorySlug])}}" class="cyan-link heavy-link">{{$category->categoryName}}</a></div>
                     @endforeach
                 </div>
+                <br>
             </div>
             <div class="sidebar-filter">
                 <div class="side-bar-title">
@@ -29,23 +30,18 @@
                 </div>
                 <div class="brand-filter">
                     <h3 class="">Tên thương hiệu</h3>
+                    <br>
                     <div class="brand-choose">
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
+                        @foreach($brands as $brand)
+                            <input {{ (in_array($brand->brandID, $brandsArray)) ? 'checked' : '' }} class="brand-label" type="checkbox" name="brand-checked" id="brand-{{$brand->brandID}}" value="{{$brand->brandID}}">
+                            <label for="brand-{{$brand->brandID}}">{{$brand->brandName}}</label><br>
+                        @endforeach
                     </div>
+                    <br>
                 </div>
                 <div class="price-range">
                     <h3 class="">Khoảng giá</h3>
+                    <br>
                     <form action="" class="filter-product">
                         <input type="text" name="" id="" placeholder="Từ &#8363;">
                         <span class="price-range-line">-</span>
@@ -64,7 +60,7 @@
                 <div class="product-list-filter">
                     <div class="product-list-filter-content right">
                         <label for="">Sắp xếp theo: </label>
-                        <select name="" id="">
+                        <select id="sort-select" name="">
                             <option value="Increase">Giá thấp đến cao</option>
                             <option value="Decrease">Giá cao đến thấp</option>
                             <option value="Alphabet">A - Z</option>
@@ -74,7 +70,6 @@
             </div>
             <div class="product-list-content grid-4-col">
                 @foreach($list_products as $product)
-
                 <div class="preview-product">
                     <div class="product-ping width-common relative">
                         <a href="{{route('detail product',['categorySlug'=>$category_list->categorySlug,'subCategorySlug'=>getSubCategoryByProductID($product->productID)->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
@@ -106,14 +101,7 @@
             <div class="pagination-container">
                 <nav>
                     <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">&raquo;</a>
+                        {{$list_products->links()}}
                     </div>
                 </nav>
             </div>
@@ -122,3 +110,72 @@
     </div>
 
 @include('user.layouts.template_footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
+            document.getElementById('sort-select').addEventListener('change', function() {
+                // Lấy giá trị được chọn
+                var selectedValue = this.value;
+
+                // Sắp xếp lại các sản phẩm trên trang hiện tại
+                sortProducts(selectedValue);
+            });
+
+            // Hàm sắp xếp lại sản phẩm trên trang hiện tại
+            function sortProducts(sortBy) {
+                var productList = document.querySelector('.product-list-content');
+                var products = Array.from(productList.getElementsByClassName('preview-product'));
+
+                products.sort(function(a, b) {
+                    if (sortBy === 'Increase' || sortBy === 'Decrease') {
+                        var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+                        var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫', '').replace(',', ''));
+
+                        return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
+                    } else if (sortBy === 'Alphabet') {
+                        var aValue = a.querySelector('.product-name').textContent.toLowerCase();
+                        var bValue = b.querySelector('.product-name').textContent.toLowerCase();
+                        return aValue.localeCompare(bValue);
+                    }
+                });
+
+                // Xóa các sản phẩm hiện tại
+                productList.innerHTML = '';
+
+                // Thêm lại sản phẩm đã được sắp xếp
+                products.forEach(function(product) {
+                    productList.appendChild(product);
+                });
+            }
+        });
+
+        $(".brand-label").change(function (){
+            applyFilters();
+        });
+
+        function applyFilters(){
+            var brandIDs = [];
+            $(".brand-label:checked").each(function (){
+                brandIDs.push($(this).val());
+            });
+
+            var url = "{{ url()->current() }}?"
+            if(brandIDs.length > 0){
+                url += "&brand=" + brandIDs.toString();
+            }
+
+            window.location.href = url;
+
+            {{--$.ajax({--}}
+            {{--    url: "{{route('filter products')}}",--}}
+            {{--    method: "GET",--}}
+            {{--    data: {--}}
+            {{--        brandIDs: brandIDs,--}}
+            {{--        categorySlug: "{{$category_list->categorySlug}}"--}}
+            {{--    },--}}
+            {{--    success: function (response){--}}
+            {{--        $(".product-list-content").html(response);--}}
+            {{--    }--}}
+            {{--});--}}
+        }
+    </script>

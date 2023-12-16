@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +22,8 @@ use App\Http\Controllers\User\SubCategoryController as UserSubCategoryController
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\AccountController as UserAccountController;
 
 
 
@@ -49,20 +54,40 @@ Route::get('/logout', function () {
    return redirect('/');
 });
 
+Route::controller(UserDashboardController::class)->group(function () {
+   Route::get('/user/dashboard', 'Index')->name('userdashboard');
+   Route::get('/about', 'About')->name('about');
+   Route::get('/most-asked-questions', 'MostAsked')->name('mostasked');
+   Route::get('/privacy-policy', 'PrivacyPolicy')->name('privacypolicy');
+   Route::get('/terms-of-use', 'TermOfUse')->name('termofuse');
+   Route::get('/contact', 'Contact')->name('contact');
+   Route::get('/delivery-policy', 'DeliveryPolicy')->name('deliverypolicy');
+   Route::get('/return-policy', 'ReturnPolicy')->name('returnpolicy');
+   Route::get('/blog', 'Blog')->name('blog');
+});
+
+Route::controller(UserCategoryController::class)->group(function () {
+   Route::get('/product-list/{categorySlug}', 'Index')->name('product list with category');
+});
+
 Route::controller(UserSubCategoryController::class)->group(function () {
-   Route::get('/product-list/{categorySlug}/{subCategorySlug}/{sortBy?}', 'Index')->name('productlist');
-   Route::get('/product-list/{categorySlug}/{sortBy?}', 'Index2')->name('product list with category');
+   Route::get('/product-list/{categorySlug}/{subCategorySlug}', 'Index')->name('productlist');
 });
 
 Route::controller(UserProductController::class)->group(function () {
    Route::get('/product-list/{categorySlug}/{subCategorySlug?}/sanpham/{productSlug}', 'ProductDetail')->name('detail product');
-});
+   Route::get('/search/result', 'ProductListByKeyword')->name('search product');
+    Route::post('/sortProducts', 'SortProducts')->name('sort products');});
 
 Route::controller(CartController::class)->group(function () {
    Route::get('/cart', 'Index')->name('cart');
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
    Route::get('/cart/delete/{rowID}', 'DeleteCart')->name('delete cart');
    Route::post('/cart/update', 'UpdateCart')->name('update cart');
+});
+
+Route::controller(UserAccountController::class)->group(function () {
+   Route::get('/user/detail-account/{userID}', 'DetailAccount')->name('detailuseraccount');
 });
 
 Route::controller(UserOrderController::class)->group(function () {
@@ -122,6 +147,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
       Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
       Route::get('/admin/edit-product-img/{productID}', 'EditProductImg')->name('editproductimg');
+
+      Route::post('/admin/update-product-side-img-one', 'UpdateProductSideImgOne')->name('updateproductsideimgone');
+      Route::get('/admin/edit-product-side-img-one/{productID}', 'EditProductSideImgOne')->name('editproductsideimgone');
+
+      Route::post('/admin/update-product-side-img-two', 'UpdateProductSideImgTwo')->name('updateproductsideimgtwo');
+      Route::get('/admin/edit-product-side-img-two/{productID}', 'EditProductSideImgTwo')->name('editproductsideimgtwo');
+
+       Route::post('/admin/update-product-side-img-three', 'UpdateProductSideImgThree')->name('updateproductsideimgthree');
+       Route::get('/admin/edit-product-side-img-three/{productID}', 'EditProductSideImgThree')->name('editproductsideimgthree');
    });
 
    Route::controller(DiscountController::class)->group(function () {
@@ -143,6 +177,35 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::get('/admin/search-shipping',  'SearchShipping')->name('searchshipping');
       Route::post('/admin/update-shipping', 'UpdateShipping')->name('updateshipping');
    });
+
+   Route::controller(BrandController::class)->group(function () {
+      Route::get('/admin/all-brand', 'Index')->name('allbrand');
+      Route::get('/admin/add-brand', 'AddBrand')->name('addbrand');
+      Route::post('/admin/store-brand', 'StoreBrand')->name('storebrand');
+      Route::get('/admin/edit-brand/{brandID}', 'EditBrand')->name('editbrand');
+      Route::get('/admin/delete-brand/{brandID}', 'DeleteBrand')->name('deletebrand');
+      Route::get('/admin/search-brand',  'SearchBrand')->name('searchbrand');
+      Route::post('/admin/update-brand', 'UpdateBrand')->name('updatebrand');
+   });
+
+
+   Route::controller(BlogController::class)->group(function () {
+      Route::get('/admin/all-blog', 'Index')->name('allblog');
+      Route::get('/admin/add-blog', 'AddBlog')->name('addblog');
+      Route::post('/admin/store-blog', 'StoreBlog')->name('storeblog');
+      Route::get('/admin/edit-blog/{blogID}', 'EditBlog')->name('editblog');
+      Route::get('/admin/delete-blog/{blogID}', 'DeleteBlog')->name('deleteblog');
+      Route::get('/admin/search-blog',  'SearchBlog')->name('searchblog');
+      Route::post('/admin/update-blog', 'UpdateBlog')->name('updateblog');
+   });
+
+
+   Route::controller(AccountController::class)->group(function () {
+      Route::get('/admin/all-account', 'Index')->name('allaccount');
+      Route::get('/admin/detail-account/{customerID}', 'DetailAccount')->name('detailaccount');
+   });
+
+
 
    Route::controller(OrderController::class)->group(function () {
       Route::get('/admin/all-order', 'Index')->name('allorder');

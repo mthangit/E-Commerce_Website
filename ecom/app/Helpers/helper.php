@@ -11,7 +11,7 @@ use App\Models\Province;
 use App\Models\Shipping;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Brand;
 
 function getAllCategory()
 {
@@ -45,7 +45,7 @@ function getProductsBySubCategoryID($subCategoryID)
 {
     //    return Product::where('subCategoryID', $subCategoryID)->get();
     //return product with status active and in stock > 0 and subcategory id
-    return Product::where('subCategoryID', $subCategoryID)->where('isActive', 1)->where('productInStock', '>', 0)->get();
+    return Product::where('subCategoryID', $subCategoryID)->where('isActive', 1)->where('productInStock', '>', 0)->paginate(12);
 }
 
 function getImageProductByProductID($productID)
@@ -85,4 +85,13 @@ function getProvinceByProvinceName($provinceName)
 function getShippingExpenseByProvinceID($provinceID)
 {
     return Shipping::where('provinceID', $provinceID)->value('shippingExpense');
+}
+
+function getAllBrand()
+{
+    return Brand::all();
+}
+function getBrandByBrandID($brandID)
+{
+    return Brand::where('brandID', $brandID)->first();
 }

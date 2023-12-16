@@ -841,7 +841,9 @@
                 </div>
             </div>
         </div>
-        <button class="btn-see-more">Xem thêm</button>
+        <a href="{{route('blog')}}">
+            <button class="btn-see-more">Xem thêm</button>
+        </a>
     </div>
 </section>
 @include('user.layouts.template_footer')
