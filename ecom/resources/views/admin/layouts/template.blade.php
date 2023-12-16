@@ -264,7 +264,7 @@
                                     <a href="accordion.html">Tài khoản admin</a>
                                 </li>
                                 <li>
-                                    <a href="carousel.html">Tài khoản user</a>
+                                    <a href="{{route('allaccount')}}">Tài khoản user</a>
                                 </li>
                             </ul>
                         </li>

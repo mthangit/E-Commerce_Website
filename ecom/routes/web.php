@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -191,6 +192,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
       Route::get('/admin/delete-blog/{blogID}', 'DeleteBlog')->name('deleteblog');
       Route::get('/admin/search-blog',  'SearchBlog')->name('searchblog');
       Route::post('/admin/update-blog', 'UpdateBlog')->name('updateblog');
+   });
+
+
+   Route::controller(AccountController::class)->group(function () {
+      Route::get('/admin/all-account', 'Index')->name('allaccount');
+      Route::get('/admin/detail-account/{customerID}', 'DetailAccount')->name('detailaccount');
    });
 
 
