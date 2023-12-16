@@ -23,6 +23,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\AccountController as UserAccountController;
 
 
 
@@ -83,6 +84,10 @@ Route::controller(CartController::class)->group(function () {
    Route::post('add-to-cart', 'AddToCart')->name('add to cart');
    Route::get('/cart/delete/{rowID}', 'DeleteCart')->name('delete cart');
    Route::post('/cart/update', 'UpdateCart')->name('update cart');
+});
+
+Route::controller(UserAccountController::class)->group(function () {
+   Route::get('/user/detail-account/{userID}', 'DetailAccount')->name('detailuseraccount');
 });
 
 Route::controller(UserOrderController::class)->group(function () {
