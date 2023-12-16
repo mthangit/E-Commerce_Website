@@ -219,20 +219,17 @@
                                 <li>
                                     <a href="{{ route('allproduct') }}">Sản phẩm</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('addproduct') }}">Thêm sản phẩm</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('allcategory') }}">Danh mục</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('addcategory') }}">Thêm danh mục</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('allsubcategory') }}">SUB CATEGORY</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('addsubcategory') }}">ADD SUB CATEGORY</a>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="javascript:void(0);">Danh mục</a>
+                                    
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ route('allcategory') }}">Danh mục cha</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('allsubcategory') }}">Danh mục con</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
@@ -314,6 +311,11 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{ route('allshipping') }}">Chi phí ship</a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('allbrand') }}">Quản lí thương hiệu</a>
                                 </li>
                             </ul>
                         </li>
@@ -628,11 +630,11 @@
     <!-- Core JS -->
     <script src="{{ asset('dashboard/assets/js/app.min.js') }}"></script>
     <script type="text/javascript">
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
     @yield('customJS')
     <!-- page jsCHO TRANG ALLPRODUCT

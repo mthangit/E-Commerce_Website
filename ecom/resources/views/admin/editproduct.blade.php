@@ -1,6 +1,6 @@
 @extends('admin.layouts.template')
 @section('page_title')
-PING - Add product
+PING - EDIT PRODUCT
 @endsection
 @section('content')
 <!-- Content -->
@@ -36,7 +36,13 @@ PING - Add product
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Tên thương hiệu</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="productBrandName" name="productBrandName" value="{{$product_info->productBrand}}" />
+                            <select class="form-control" id="productBrandID" name="productBrandID" aria-label="Default select example">
+                                @foreach ($brands as $brand)
+                                <option value="{{$brand->brandID}}" {{ $product_info->productBrandID == $brand->brandID ? 'selected' : '' }}>
+                                    {{$brand->brandName}}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -120,17 +126,6 @@ PING - Add product
                         </div>
                     </div>
 
-                    <!-- <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="file" name="productImage" id="productImage" />
-                            @foreach($products as $product)
-                            @if ($product->productID == $product_info->productID)
-                            <img style="height:100px" src="{{asset($product->productImage)}}" alt="">
-                            @endif
-                            @endforeach
-                        </div>
-                    </div> -->
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình</label>
                         <div class="col-sm-10">
@@ -148,25 +143,60 @@ PING - Add product
                             window.location.href = "{{route('editproductimg', $product_info->productID)}}";
                         }
                     </script>
-                    </script>
+
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 1</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" id="productSideImage1" />
+                            <input class="form-control" type="file" name="productSideImageOne" id="productSideImageOne" />
+                            @if ($product_info->productImage)
+                            <img style="height:100px" src="{{ asset($product_info->productSideImage1) }}" alt="">
+                            <button type="button" class="btn btn-primary" onclick="updateImageOne()">cập nhật ảnh</button>
+                            @endif
+                            <input type="hidden" name="deleteImageOne" id="deleteImageInputOne" value="0">
                         </div>
                     </div>
+
+                    <script>
+                        function updateImageOne() {
+                            window.location.href = "{{route('editproductsideimgone', $product_info->productID)}}";
+                        }
+                    </script>
+
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 2</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" id="productSideImage2" />
+                            <input class="form-control" type="file" name="productSideImageTwo" id="productSideImageTwo" />
+                            @if ($product_info->productSideImage1)
+                            <img style="height:100px" src="{{ asset($product_info->productSideImage2) }}" alt="">
+                            <button type="button" class="btn btn-primary" onclick="updateImageTwo()">cập nhật ảnh</button>
+                            @endif
+                            <input type="hidden" name="deleteImageTwo" id="deleteImageInputTwo" value="0">
                         </div>
                     </div>
+
+                    <script>
+                        function updateImageTwo() {
+                            window.location.href = "{{route('editproductsideimgtwo', $product_info->productID)}}";
+                        }
+                    </script>
+
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 3</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" id="productSideImage3" />
+                            <input class="form-control" type="file" name="productSideImageThree" id="productSideImageThree" />
+                            @if ($product_info->productImage)
+                            <img style="height:100px" src="{{ asset($product_info->productSideImage3) }}" alt="">
+                            <button type="button" class="btn btn-primary" onclick="updateImageThree()">cập nhật ảnh</button>
+                            @endif
+                            <input type="hidden" name="deleteImageThree" id="deleteImageInputThree" value="0">
                         </div>
                     </div>
+
+                    <script>
+                        function updateImageThree() {
+                            window.location.href = "{{route('editproductsideimgthree', $product_info->productID)}}";
+                        }
+                    </script>
 
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="categoryCreatedDate">Category Created Date</label>

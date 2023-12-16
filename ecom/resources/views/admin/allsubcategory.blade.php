@@ -5,7 +5,7 @@ PING - Category
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm con</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục con sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -28,6 +28,7 @@ PING - Category
             <a class="dropdown-item" href="{{ route('allsubcategory', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
           </div>
         </div>
+        <button class="btn btn-outline-secondary" type="button" id="addSubCategory">Thêm danh mục</button>
       </div>
       <table class="table">
         <thead>
@@ -90,6 +91,10 @@ PING - Category
       $("#searchInput").val('');
       window.location.href = 'http://localhost:8000/admin/search-subcategory';
     })
+
+    $("#addSubCategory").click(function() {
+      window.location.href = "{{ route('addsubcategory') }}";
+    });
   });
 </script>
 @endsection
