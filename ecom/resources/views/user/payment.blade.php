@@ -13,6 +13,13 @@
 {{--</div>--}}
 
 <div class="delivery-info payment-block" style="margin-top: 30px;">
+    <div id="errorInfo" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
+        <strong>Error!</strong> Nhập đầy đủ thông tin.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     <div class="delivery-info-header payment-block-header">
         <div class="left">
             <h4 class="txt-cyan txt-18">Thông tin nhận hàng</h4>
@@ -22,26 +29,66 @@
         </div>
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
-        <p><span class="txt-bold">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
-        <p id="orderProvince" hidden>{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName)}} </p>
-        <p id="orderAddress">{{(getProvinceByProvinceID($info->customerProvinceID)->provinceName).', '.$info->customerAddress}}</p>
+        <p><span class="txt-bold" id="orderName">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
+        <h4 class="txt-cyan txt-18">Địa chỉ nhận hàng</h4>
+        <p id="orderAddress">{{$info->customerAddress}}</p>
         <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label>
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
     </div>
     <div class="edit-delivery-content">
-        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
-            <option value="" selected>Chọn tỉnh thành</option>
-        </select>
+        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+            <br>
+            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                <option value="" selected>Chọn tỉnh thành</option>
+            </select>
 
-        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
-            <option value="" selected>Chọn quận huyện</option>
-        </select>
-
-        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
-            <option value="" selected>Chọn phường xã</option>
-        </select>
+            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                <option value="" selected>Chọn quận huyện</option>
+            </select>
+            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm">
+                <option value="" selected>Chọn phường xã</option>
+            </select>
+            <br>
+        </div>
+        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+        </div>
+        <div id="errorPhone" class="alert alert-danger alert-dismissible fade show small" role="alert" disabled >
+            <strong >Error!</strong> Sai định dạng số điện thoại.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+            <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+        </div>
+        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+            <button class="btn-save"> Lưu lại</button>
+        </div>
     </div>
 
+    <br>
+
+    <style>
+        /* Đặt các select thành kiểu inline-block */
+        .edit-delivery-content select {
+            display: flex;
+            margin-right: 10px; /* Điều chỉnh giá trị theo nhu cầu của bạn */
+        }
+        #errorPhone {
+            padding: 5px; /* Điều chỉnh khoảng trắng xung quanh nội dung */
+        }
+        #errorPhone .close {
+            margin: 0;
+            align-self: center; /* Căn giữa nút theo chiều dọc */
+        }
+        #errorPhone .alert {
+            padding: 0.5rem 1rem; /* Điều chỉnh chiều cao và chiều rộng của cảnh báo */
+            flex: 1;
+        }
+    </style>
+
+</div>
 <div class="product-delivery-info payment-block">
     <div class="product-delivery-header payment-block-header">
         <h4 class="txt-cyan txt-18">Đơn hàng</h4>
@@ -133,7 +180,7 @@
 </div>
 
 <div class="payment-total-info payment-block">
-    <div id="errorAlertPaymenMethod" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
+    <div id="errorAlertPaymentMethod" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
         <strong>Error!</strong> Vui lòng chọn phương thức thanh toán.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -165,11 +212,20 @@
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
                     <span class="right" id="totalPrice" >{{$totalPrice}} &#8363;</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
-                    <span class="right"> &#8363;</span>
-                </div><br>
+                    <?php
+                        if($totalPrice > 250000) {
+                            $shippingFee = 0;
+                        } else {
+                            $shippingFee = 30000;
+                        }
+                        ?>
+                    <span class="right">{{$shippingFee}} &#8363;</span>
+                </div>
+                <br>
                 <div class="discount-money">
                     <span class="left">Giảm giá</span>
                     <span class="right" id="giamgia">0 &#8363;</span>
@@ -177,7 +233,7 @@
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{$totalPrice}}</span>
+                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{$totalPrice + $shippingFee}}</span>
                 </div><br>
                 <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
             </div>
@@ -185,21 +241,27 @@
     </div>
 </div>
 <div class="return">
-    <a href="" class="cyan-link txt-14">Quay lại</a>
+    <a href="{{route('cart')}}" class="cyan-link txt-14">Quay lại</a>
     <hr style="color: var(--gray);">
 </div>
 @include('user.layouts.template_footer')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
     var discountPrice = 0;
     var discountValidCode = '';
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
     var payment = document.getElementById('payment').value;
+    var address = document.getElementById('orderAddress').innerText;
+    var phone = document.getElementById('orderPhone').innerText;
+    var name = document.getElementById('orderName').innerText;
+
     $(document).ready(function() {
         // Initially hide the discount block and error message
-        $('#errorAlertPaymenMethod').hide();
+        $('#errorAlertPaymentMethod').hide();
         $('.discount-detail').hide();
         $('#errorAlert').hide();
+        $('#errorInfo').hide();
+        $('#errorPhone').hide();
         $('#btn-apply-voucher').click(function(){
             var voucher = $('#discount-voucher').val();
                 $.ajax({
@@ -269,18 +331,50 @@
         })
     });
 
+    document.getElementById('phone').addEventListener('input', function (e) {
+        var input = e.target;
+        var value = input.value;
+
+        // Remove all non-digit characters
+        value = value.replace(/\D/g, '');
+
+        // Ensure the first digit is 0
+        if (value.length > 0 && value[0] !== '0') {
+            value = '0' + value;
+        }
+
+        // Limit to 10 digits
+        if (value.length > 10) {
+            value = value.slice(0, 10);
+        }
+
+        // Update the input value
+        input.value = value;
+    });
+
     document.getElementById('btn-finish').addEventListener('click', function() {
         var payment = document.getElementById('payment').value;
-        if(payment == ''){
-            $('#errorAlertPaymenMethod').show();
+        if(payment === ''){
+            $('#errorAlertPaymentMethod').show();
             return;
         }
-        var requestData = {
-            totalPrice: (totalPrice),
-            paymentMethod: payment,
-            discountValidCode: discountValidCode,
-        };
-        storeOrder(requestData);
+        if(checkOrderInfo()){
+            var requestData = {
+                totalPrice: (totalPrice),
+                paymentMethod: payment,
+                discountValidCode: discountValidCode,
+                orderCustomerName: name,
+                orderPhone: phone,
+                orderAddress: address,
+            };
+            storeOrder(requestData);
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            $('#errorInfo').show();
+        }
     });
     function storeOrder(requestData){
             // Gửi AJAX request
@@ -300,15 +394,11 @@
                 }
             });
         }
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
     // Đoạn mã JavaScript để lấy các phần tử DOM
     var editDeliveryContent = document.querySelector('.edit-delivery-content');
     var deliveryContent = document.querySelector('.delivery-content');
     var editLink = document.querySelector('.cyan-link');
-    var saveButton = document.createElement('button');
-    var provinceName = document.getElementById("orderProvince").innerText;
+    var saveButton = document.querySelector('.btn-save');
     var provinceID = 0;
 
     // Ẩn phần tử chỉnh sửa khi trang được tải
@@ -321,14 +411,8 @@
         deliveryContent.style.display = 'none';
         // Hiển thị phần tử chỉnh sửa
         editDeliveryContent.style.display = 'block';
-        // Tạo và thêm nút "Lưu lại"
-        saveButton.textContent = 'Lưu lại';
-        saveButton.className = 'btn-save';
+        saveButton.style.display = 'block';
         saveButton.addEventListener('click', luuThayDoi);
-        editDeliveryContent.appendChild(saveButton);
-        provinceName = document.getElementById("orderProvince").innerText;
-        
-       // provinceID = 
 
     });
 
@@ -380,26 +464,50 @@
         };
     }
 
-    
+    function checkOrderInfo(){
+        var selectedCity = citis.options[citis.selectedIndex].text;
+        var selectedDistrict = districts.options[districts.selectedIndex].text;
+        var selectedWard = wards.options[wards.selectedIndex].text;
+        var phone = document.getElementById("phone").value;
+        // Lấy giá trị từ textarea
+        var deliveryAddress = document.getElementById("address").value;
 
+        if(deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã' || phone.length !== 10){
+            return false;
+        } else {
+            return true;
+        }
+    }
     // Đoạn mã JavaScript để xử lý sự kiện khi bấm nút "Lưu lại"
     function luuThayDoi() {
         // Lấy giá trị từ các phần tử select
         var selectedCity = citis.options[citis.selectedIndex].text;
         var selectedDistrict = districts.options[districts.selectedIndex].text;
         var selectedWard = wards.options[wards.selectedIndex].text;
-
+        var phone = document.getElementById("phone").value;
         // Lấy giá trị từ textarea
-        var deliveryNote = document.getElementById("delivery-note").value;
+        var deliveryAddress = document.getElementById("address").value;
 
-        // Cập nhật giá trị trong các phần tử HTML tương ứng
-        document.getElementById("orderProvince").innerText = selectedCity;
-        document.getElementById("orderAddress").innerText =selectedCity + ', ' + selectedDistrict + ", " + selectedWard;
+        if(phone.length < 10 && phone.length > 0){
+            $('#errorPhone').show();
+            return;
+        }
 
-        // Ẩn phần tử chỉnh sửa
-        editDeliveryContent.style.display = 'none';
-        // Hiển thị lại phần tử thông tin
-        deliveryContent.style.display = 'block';
+        if(deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã'){
+            editDeliveryContent.style.display = 'none';
+            // Hiển thị lại phần tử thông tin
+            deliveryContent.style.display = 'block';
+            saveButton.style.display = 'none';
+        } else {
+            // Cập nhật giá trị trong các phần tử HTML tương ứng
+            document.getElementById("orderAddress").innerText = deliveryAddress + ', ' + selectedWard + ", " + selectedDistrict + ", " + selectedCity;
+            document.getElementById("orderPhone").innerText = document.getElementById("phone").value;
+            // Ẩn phần tử chỉnh sửa
+            editDeliveryContent.style.display = 'none';
+            // Hiển thị lại phần tử thông tin
+            deliveryContent.style.display = 'block';
+            saveButton.style.display = 'none';
+        }
     }
 </script>
 
