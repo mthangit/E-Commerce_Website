@@ -14,11 +14,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/colored-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link href="{{ asset('dashboard/assets/css/app.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/be-vietnam-pro" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
-    <link rel="shortcut icon" href="{{ asset('dashboard/assets/images/logo/colored-logo.png') }}">
-    <link href="{{ asset('dashboard/assets/vendors/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 

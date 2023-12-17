@@ -29,7 +29,7 @@
                         $totalPrice += ($product->price * $product->qty);
                         $inputId = 'form' . $product->id;
                         ?>
-                    <div class="card rounded-3 mb-4">
+                    <div class="card1 rounded-3 mb-4">
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                     <p class="fw-normal mb-2">{{$product->name.'  -   '.$product->rowId}}</p>
-{{--                                    <p><span class="text-muted">Loại: </span>60ml</p>--}}
+                                  <!-- <p><span class="text-muted">Loại: </span>60ml</p> -->
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                     <button class="btn btn-link px-2 sub" data-rowID="{{$product->rowId}}">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="card">
+                <div class="card1">
                     <div class="card-body">
                         <div class="total mb-lg-5">
                             <span class="tb-header left">Tạm tính</span>
