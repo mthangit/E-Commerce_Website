@@ -15,7 +15,6 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/colored-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
 </head>
 
 <body>
