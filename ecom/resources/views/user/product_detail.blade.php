@@ -74,11 +74,11 @@
         <table class="parameter-detail">
             <tr>
                 <th>Mã sản phẩm</th>
-                <td>422206430</td>
+                <td>{{$thisProduct->productID}}</td>
             </tr>
             <tr>
                 <th>Barcode</th>
-                <td>4909978120757</td>
+                <td>{{$thisProduct->productBarcode}}</td>
             </tr>
             <tr>
                 <th>Thương hiệu</th>

@@ -34,30 +34,51 @@
                 <div class="brand-filter">
                     <h3 class="">Tên thương hiệu</h3>
                     <div class="brand-choose">
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
+                        @foreach($brands as $brand)
+                            <input {{ (in_array($brand->brandID, $brandsArray)) ? 'checked' : '' }} class="brand-label" type="checkbox" name="brand-checked" id="brand-{{$brand->brandID}}" value="{{$brand->brandID}}">
+                            <label for="brand-{{$brand->brandID}}">{{$brand->brandName}}</label><br>
+                        @endforeach
                     </div>
                 </div>
                 <div class="price-range">
+{{--            <form action="" class="filter-product">--}}
                     <h3 class="">Khoảng giá</h3>
-                    <form action="" class="filter-product">
-                        <input type="text" name="" id="" placeholder="Từ &#8363;">
-                        <span class="price-range-line">-</span>
-                        <input type="text" name="" id="" placeholder="Đến &#8363;">
-                        <br><br>
-                        <button type="submit" class="btn-apply">Áp dụng</button>
-                    </form>
+                    <div class="price-content">
+                        <div>
+                            <label>Min</label>
+                            <p id="min-value">$50</p>
+                        </div>
+                        <div>
+                            <label>Max</label>
+                            <p id="max-value">$500</p>
+                        </div>
+                    </div>
+
+                    <div class="range-slider">
+                        <div class="range-fill"></div>
+
+                        <input
+                            type="range"
+                            class="min-price"
+                            value="100"
+                            min="10"
+                            max="500"
+                            step="10"
+                        />
+                        <input
+                            type="range"
+                            class="max-price"
+                            value="250"
+                            min="10"
+                            max="500"
+                            step="10"
+                        />
+                    </div>
+
+                    <button type="submit" class="btn-apply" id="btn-apply-price-filter">Áp dụng</button>
+{{--                    </form>--}}
                 </div>
+
             </div>
         </div>
         <div class="product-list">
@@ -117,6 +138,7 @@
     </div>
 
 @include('user.layouts.template_footer')
+    <script src="{{asset("js/slider.js")}}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
@@ -154,6 +176,59 @@
                     productList.appendChild(product);
                 });
             }
+
+            $(".brand-label").change(function (){
+                applyFilters();
+            });
+
+            function applyFilters(){
+                var brandIDs = [];
+                $(".brand-label:checked").each(function (){
+                    brandIDs.push($(this).val());
+                });
+
+                var url = "{{ url()->current() }}?"
+                if(brandIDs.length > 0){
+                    url += "&brand=" + brandIDs.toString();
+                }
+                window.location.href = url;
+            }
+
+            });
+
+        let minValue = document.getElementById("min-value");
+        let maxValue = document.getElementById("max-value");
+
+        const rangeFill = document.querySelector(".range-fill");
+
+        // Function to validate range and update the fill color on slider
+        function validateRange() {
+            let minPrice = parseInt(inputElements[0].value);
+            let maxPrice = parseInt(inputElements[1].value);
+
+            if (minPrice > maxPrice) {
+                let tempValue = maxPrice;
+                maxPrice = minPrice;
+                minPrice = tempValue;
+            }
+
+            const minPercentage = ((minPrice - 10) / 490) * 100;
+            const maxPercentage = ((maxPrice - 10) / 490) * 100;
+
+            rangeFill.style.left = minPercentage + "%";
+            rangeFill.style.width = maxPercentage - minPercentage + "%";
+
+            minValue.innerHTML = "$" + minPrice;
+            maxValue.innerHTML = "$" + maxPrice;
+        }
+
+        const inputElements = document.querySelectorAll("input");
+
+        // Add an event listener to each input element
+        inputElements.forEach((element) => {
+            element.addEventListener("input", validateRange);
         });
 
+        // Initial call to validateRange
+        validateRange();
     </script>

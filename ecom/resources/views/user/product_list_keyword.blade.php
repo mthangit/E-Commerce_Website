@@ -26,18 +26,10 @@
                 <div class="brand-filter">
                     <h3 class="">Tên thương hiệu</h3>
                     <div class="brand-choose">
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
-                        <input type="checkbox" name="" id="">
-                        <label for="">Thương hiệu</label><br>
+                        @foreach($brands as $brand)
+                            <input {{ (in_array($brand->brandID, $brandsArray)) ? 'checked' : '' }} class="brand-label" type="checkbox" name="brand-checked" id="brand-{{$brand->brandID}}" value="{{$brand->brandID}}">
+                            <label for="brand-{{$brand->brandID}}">{{$brand->brandName}}</label><br>
+                        @endforeach
                     </div>
                 </div>
                 <div class="price-range">
@@ -76,7 +68,7 @@
                         <a href="{{route('detail product',['categorySlug'=>getCategoryByProductID($product->productID)->categorySlug,'subCategorySlug'=>getSubCategoryByProductID($product->productID)->subCategorySlug,'productSlug'=>$product->productSlug])}}" class="image-common relative">
                             <div class="product-img sale">
                                 <img src="{{asset($product->productImage)}}" alt="" height="200" width="200">
-                                <span class="sale-percent">50%</span>
+                                <span class="sale-percent">{{(1 - round($product->productDiscountPrice / $product->productOriginalPrice, 2)) * 100 .'%'}}</span>
                             </div>
                             <div class="product-info">
                                 <div class="width-common price-block">
@@ -147,6 +139,25 @@
                 productList.appendChild(product);
             });
         }
+        $(".brand-label").change(function (){
+            applyFilters();
+        });
+
+        function applyFilters(){
+            var brandIDs = [];
+            $(".brand-label:checked").each(function (){
+                brandIDs.push($(this).val());
+            });
+
+            var url = "{{ url()->current() }}?"
+            if(brandIDs.length > 0){
+                url += "&brand=" + brandIDs.toString();
+            }
+            window.location.href = url;
+
+        }
+
+
     });
 
 </script>

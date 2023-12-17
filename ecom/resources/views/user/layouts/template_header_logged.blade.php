@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,600">
+    <link href="https://pennypixels.pennymacusa.com/css/1_4_1/pp.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/colored-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,7 +36,7 @@
 
             <div class="search-site">
                 <div class="suggested-keywords">
-                    @foreach($subcategories as $subcategory_header)
+                    @foreach($subcategories_5 as $subcategory_header)
                         @php
                         $categorySlug = getCategoryByCategoryID($subcategory_header->categoryID)->categorySlug;
                         @endphp

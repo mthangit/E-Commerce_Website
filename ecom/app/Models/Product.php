@@ -23,6 +23,7 @@ class Product extends Model
         'productInfo',
         'productBarcode',
         'productInStock',
+        'productSoldQuantity',
         'productImage',
         'productSideImage1',
         'productSideImage2',
