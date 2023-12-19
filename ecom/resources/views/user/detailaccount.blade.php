@@ -80,7 +80,6 @@
                             <img src="{{ asset('assets/cart-icon.svg')}}" alt="">
                         </a>
                     </div>
-
                     <div class="item-header logout">
                         <a href="" class="white-anchor">
                             <img src="{{ asset('assets/login-icon.svg')}}" alt="">
@@ -137,9 +136,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders" role="tab" aria-controls="account-orders" aria-selected="false">Orders</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" id="account-address-tab" data-bs-toggle="tab" href="#account-address" role="tab" aria-controls="account-address" aria-selected="false">Addresses</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Account Details</a>
                         </li>
@@ -202,7 +201,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{$order->grandPrice}}</td>
-                                                <td><a href="javascript:void(0)" class="btn btn-secondary btn-primary-hover"><span>View</span></a>
+                                                <td><a href="{{route('detailuserorder', $order->orderID)}}" class="btn btn-secondary btn-primary-hover"><span>View</span></a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -211,7 +210,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
+                        <!-- <div class="tab-pane fade" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
                             <div class="myaccount-address">
                                 <p>The following addresses will be used on the checkout page by default.</p>
                                 <div class="row">
@@ -229,44 +228,94 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
-                            <div class="myaccount-details">
-                                <form action="#" class="myaccount-form">
-                                    <div class="myaccount-form-inner">
-                                        <div class="single-input single-input-half">
-                                            <label>First Name*</label>
-                                            <input type="text">
+                            <div class="card1">
+                                <div class="card-header">
+                                    <h4 class="card-title">Basic Infomation</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="avatar avatar-image  m-h-10 m-r-15" style="height: 80px; width: 80px">
+                                            <img src="https://www.cnet.com/a/img/resize/fa38a5b9ea31b11e369c328cc63de0968985b4fd/hub/2023/02/16/e90ef303-aaf9-42cd-8943-88b5b6998563/social-crop-tom-holland-spidey.jpg?auto=webp&fit=crop&height=900&width=1200" alt="">
                                         </div>
-                                        <div class="single-input single-input-half">
-                                            <label>Last Name*</label>
-                                            <input type="text">
-                                        </div>
-                                        <div class="single-input">
-                                            <label>Email*</label>
-                                            <input type="email">
-                                        </div>
-                                        <div class="single-input">
-                                            <label>Current Password(leave blank to leave
-                                                unchanged)</label>
-                                            <input type="password">
-                                        </div>
-                                        <div class="single-input">
-                                            <label>New Password (leave blank to leave
-                                                unchanged)</label>
-                                            <input type="password">
-                                        </div>
-                                        <div class="single-input">
-                                            <label>Confirm New Password</label>
-                                            <input type="password">
-                                        </div>
-                                        <div class="single-input">
-                                            <button class="btn btn-custom-size lg-size btn-secondary btn-primary-hover rounded-0" type="submit">
-                                                <span>SAVE CHANGES</span>
-                                            </button>
+                                        <div class="m-l-20 m-r-20">
+                                            <h5 class="m-b-5 font-size-18">{{$customers->customerName}}</h5>
                                         </div>
                                     </div>
-                                </form>
+                                    <hr class="m-v-25">
+                                    <form>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="userName">User Name:</label>
+                                                <input type="text" class="form-control" id="userName" placeholder="User Name" value="{{$customers->customerName}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="email">Email:</label>
+                                                <input type="text" class="form-control" id="email" placeholder="email" value="{{$customers->customerEmail}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label class="font-weight-semibold" for="phoneNumber">Phone Number:</label>
+                                                <input type="text" class="form-control" id="phoneNumber" value="{{$customers->customerPhone}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="font-weight-semibold" for="dob">Date of Birth:</label>
+                                                <input type="text" class="form-control" id="dob" value="{{$customers->customerBirthDay}}">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Change Password</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label class="font-weight-semibold" for="oldPassword">Old Password:</label>
+                                        <input type="password" class="form-control" id="oldPassword" placeholder="Old Password">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="font-weight-semibold" for="newPassword">New Password:</label>
+                                        <input type="password" class="form-control" id="newPassword" placeholder="New Password">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="font-weight-semibold" for="confirmPassword">Confirm Password:</label>
+                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button class="btn btn-primary m-t-30">Change</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div> -->
+                            <div class="card1">
+                                <div class="card-header">
+                                    <h4 class="card-title">Address Details</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label class="font-weight-semibold" for="fullAddress">Full Address:</label>
+                                                <input type="text" class="form-control" id="fullAddress" value="{{$customers->customerAddress}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="stateCity">Bank Account:</label>
+                                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankAccount}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="stateCity">Bank Name:</label>
+                                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankName}}">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
