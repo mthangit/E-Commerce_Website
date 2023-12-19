@@ -1,5 +1,5 @@
 @include('user.layouts.template_header_logged')
-
+@notifyCss
 <div class="page-navigation">
         <ul class="breadcrumb">
             @auth
@@ -32,14 +32,15 @@
         </div>
         <div class="product-info-container">
             <div class="product-brand">
-                <h3>Anessa</h3>
+                <h3>{{$thisProduct->productBrandName}}</h3>
             </div>
+            <br>
             <div class="product-name">
                 <h1>{{$thisProduct->productName}}</h1>
             </div>
             <div class="product-price">
-                <strong class="left discounted-price">{{$thisProduct->productDiscountPrice}}</strong>
-                <span class="right real-price">{{$thisProduct->productOriginalPrice}}</span>
+                <strong class="left discounted-price">{{formatCurrency($thisProduct->productDiscountPrice)}}</strong>
+                <span class="right real-price">{{formatCurrency($thisProduct->productOriginalPrice)}}</span>
             </div>
             <br><br>
             <div class="product-variant">
@@ -327,7 +328,6 @@
         </div>
     </div>
 
-
 @include('user.layouts.template_footer')
 
 <script>
@@ -354,10 +354,10 @@
             },
             datatype: "JSON",
             success: function (response) {
-                if (response.status == 200) {
-                    alert(response.message);
+                if(response.status === true) {
+                    alert('Thêm vào giỏ hàng thành công');
                 } else {
-                    alert(response.message);
+
                 }
             }
         });

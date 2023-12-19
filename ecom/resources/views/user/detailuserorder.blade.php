@@ -6,7 +6,7 @@
     </ul>
 </div>
 
-<section class="content-header">
+<section class="content-header" style="justify-content: center">
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <!-- Default box -->
-    <div class="container-fluid">
+    <div class="container-fluid justify-content-between align-items-center" >
         <div class="row">
             <div class="col-md-9">
                 <div class="card1">
@@ -65,8 +65,6 @@
                                     <td>{{$orderdetail->productTotalPrice}}</td>
                                 </tr>
                                 @endforeach
-
-
                                 <tr>
                                     <th colspan="3" class="text-right">Tổng tiền:</th>
                                     <td>{{$order->totalPrice}} VND</td>
@@ -77,7 +75,7 @@
                                     <td>{{$order->shippingFee}} VND</td>
                                 </tr>
                                 <tr>
-                                    <th colspan="3" class="text-right">Mã giảm giá ({{$discount->discountCode }}):</th>
+                                    <th colspan="3" class="text-right">Mã giảm giá ({{$order->discountCode }}):</th>
                                     <td> @if($discount->discountType == 'percent')
                                         {{$discount->discountAmount}}%
                                         @else
@@ -99,5 +97,5 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
-</div>
+
 @include('user.layouts.template_footer')

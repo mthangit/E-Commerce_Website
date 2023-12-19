@@ -14,7 +14,17 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    protected function createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone){
+
+    protected function createHistory($orderID, $totalPrice, $paymentMethod){
+        $history = new PurchaseHistory();
+        $history->customerID = CustomerInfo::where('userID', Auth::user()->id)->first()->customerID;
+        $history->orderID = $orderID;
+        $history->totalPrice = $totalPrice;
+        $history->paymentMethod = $paymentMethod;
+        return $history;
+    }
+
+    protected function createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone, $paymentStatus){
         $order = new Order();
         $discount = Discount::where('discountCode', $discountValidCode)->first();
         $discountPrice = 0;
@@ -34,6 +44,7 @@ class OrderController extends Controller
             $order->discountPrice = $discountPrice;
             $discount->save();
         }
+        $order->orderID = time() . "";
         $order->customerID = CustomerInfo::where('userID', Auth::user()->id)->first()->customerID;
         $order->orderCustomerName = $orderCustomerName;
         $order->grandPrice = $totalPrice - $discountPrice;
@@ -48,8 +59,7 @@ class OrderController extends Controller
         $order->orderCreatedDate = date('Y-m-d H:i:s');
         $order->orderAddress = $orderAddress;
         $order->orderPhone = $orderPhone;
-
-
+        $order->paymentStatus = $paymentStatus;
         return $order;
     }
     protected function createOderDetail(){
@@ -95,7 +105,8 @@ class OrderController extends Controller
         $orderCustomerName = $request->input('orderCustomerName');
         $orderAddress = $request->input('orderAddress');
         $orderPhone = $request->input('orderPhone');
-        $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone);
+        $paymentStatus = $request->input('paymentStatus');
+        $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone, $paymentStatus);
         $order->save();
         $order_list = $this->createOderDetail();
         foreach($order_list as $item){

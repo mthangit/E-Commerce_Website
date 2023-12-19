@@ -232,7 +232,7 @@
                         <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
                             <div class="card1">
                                 <div class="card-header">
-                                    <h4 class="card-title">Basic Infomation</h4>
+                                    <h4 class="card-title">Thông tin cá nhân</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="media align-items-center">

@@ -24,7 +24,7 @@ use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
-
+use App\Http\Controllers\User\PaymentController;
 
 
 /*
@@ -99,6 +99,13 @@ Route::controller(UserOrderController::class)->group(function () {
 
 Route::controller(UserDiscountController::class)->group(function () {
    Route::post('/validate-discount-code', 'ValidateDiscountCode')->name('validate discount code');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+   Route::post('/vnpay-payment', 'vnpay_payment')->name('vnpay.payment');
+   Route::get('/vnpay-return', 'VnpayReturn')->name('vnpay return');
+   Route::get('/vnpay-error', 'VnpayError')->name('vnpay error');
+   Route::post('/momo-payment', 'momo_payment')->name('momo.payment');
 });
 
 Route::get('/user-profile', [DashboardController::class, 'Index']);

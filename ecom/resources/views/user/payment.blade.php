@@ -116,9 +116,9 @@
                         <img src="{{asset(getImageProductByProductID($order_detail->id)->productImage)}}" alt="" style="width: 100px; height: 50px; margin-right: 10px;">
                         {{$order_detail->name}}
                     </td>
-                    <td style="text-align: center;">{{$order_detail->price}} &#8363;</td>
+                    <td style="text-align: center;">{{formatCurrency($order_detail->price)}} &#8363;</td>
                     <td style="text-align: center;">{{$order_detail->qty}}</td>
-                    <td style="font-weight: bold;text-align: center;">{{$order_detail->price * $order_detail->qty }}&#8363;</td>
+                    <td style="font-weight: bold;text-align: center;">{{formatCurrency($order_detail->price * $order_detail->qty) }}&#8363;</td>
                 </tr>
                 </tbody>
             @endforeach
@@ -195,8 +195,9 @@
                 <strong>Lựa chọn phương thức thanh toán: </strong>
                 <select name="payment" id="payment">
                     <option value="" selected>Chọn phương thức</option>
-                    <option value="BANKING">Chuyển khoản</option>
-                    <option value="COD">Tiền mặt</option>
+                    <option value="COD">Thanh toán khi nhận hàng</option>
+                    <option value="VNPAY">Ví VNPAY</option>
+                    <option value="MOMO">Ví MOMO</option>
                 </select>
             </div>
             <div class="payment-note">
@@ -211,7 +212,7 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
-                    <span class="right" id="totalPrice" >{{$totalPrice}} &#8363;</span>
+                    <span class="right" id="totalPrice" >{{($totalPrice)}} &#8363;</span>
                 </div>
                 <br>
                 <div class="shipping-cost">
@@ -223,7 +224,7 @@
                             $shippingFee = 30000;
                         }
                         ?>
-                    <span class="right">{{$shippingFee}} &#8363;</span>
+                    <span class="right">{{formatCurrency($shippingFee)}} &#8363;</span>
                 </div>
                 <br>
                 <div class="discount-money">
@@ -233,9 +234,11 @@
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{$totalPrice + $shippingFee}}</span>
+                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{formatCurrency($totalPrice + $shippingFee)}}</span>
                 </div><br>
-                <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
+                <form method="POST" id="form-finish">
+                    <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
+                </form>
             </div>
         </div>
     </div>
@@ -250,10 +253,6 @@
     var discountPrice = 0;
     var discountValidCode = '';
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
-    var payment = document.getElementById('payment').value;
-    var address = document.getElementById('orderAddress').innerText;
-    var phone = document.getElementById('orderPhone').innerText;
-    var name = document.getElementById('orderName').innerText;
 
     $(document).ready(function() {
         // Initially hide the discount block and error message
@@ -359,6 +358,12 @@
             return;
         }
         if(checkOrderInfo()){
+            var payment = document.getElementById('payment').value;
+            var address = document.getElementById('orderAddress').innerText;
+            var phone = document.getElementById('orderPhone').innerText;
+            var name = document.getElementById('orderName').innerText;
+            var payment_status = 'unpaid';
+
             var requestData = {
                 totalPrice: (totalPrice),
                 paymentMethod: payment,
@@ -366,8 +371,30 @@
                 orderCustomerName: name,
                 orderPhone: phone,
                 orderAddress: address,
+                paymentStatus: payment_status,
             };
-            storeOrder(requestData);
+
+            if(payment === 'VNPAY')
+            {
+                requestData.paymentStatus = 'paid';
+                storeOrderAndPayment(requestData, function(orderID) {
+                    VnPay_Payment(orderID, totalPrice);
+                }, function(error) {
+                    console.error('Có lỗi xảy ra:', error);
+                    // Xử lý lỗi nếu cần
+                });
+            } else if (payment === 'MOMO'){
+                requestData.paymentStatus = 'paid';
+                storeOrderAndPayment(requestData, function(orderID) {
+                    console.log(orderID);
+                    Momo_Payment(orderID, totalPrice);
+                }, function(error) {
+                    console.error('Có lỗi xảy ra:', error);
+                    // Xử lý lỗi nếu cần
+                });
+            } else {
+                storeOrder(requestData);
+            }
         } else {
             window.scrollTo({
                 top: 0,
@@ -376,6 +403,65 @@
             $('#errorInfo').show();
         }
     });
+
+    // send a request to server to store order and payment using form with POST method id form-finish
+
+    function VnPay_Payment(orderID, totalPrice){
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{ route("vnpay.payment") }}',
+            type: 'POST',
+            data: {
+                orderID: orderID,
+                totalPrice: totalPrice,
+            },
+            success: function(response) {
+                window.location.href = response.data;
+            },
+        })
+    }
+
+    function Momo_Payment(orderID, totalPrice){
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:'{{ route("momo.payment") }}',
+            type: 'POST',
+            data: {
+                orderID: orderID,
+                totalPrice: totalPrice
+            },
+            success: function(response) {
+                // console.log(response);
+                window.location.href = response.data;
+            },
+        })
+    }
+
+    function storeOrderAndPayment(requestData, successCallback, errorCallback) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{ route("store.order") }}',
+            type: 'POST',
+            data: requestData,
+            success: function(response) {
+                successCallback(response.orderID);
+            },
+            error: function(error) {
+                // Xử lý lỗi
+                console.error('Lỗi request:', error);
+                errorCallback(error);
+            }
+        });
+    }
+
+    // Sử dụng hàm
+
     function storeOrder(requestData){
             // Gửi AJAX request
             $.ajax({
