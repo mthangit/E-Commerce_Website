@@ -52,7 +52,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0 txt-16">{{$product->price * $product->qty}} &#8363;</h5>
+                                    <h5 class="mb-0 txt-16">{{formatCurrency($product->price * $product->qty)}} &#8363;</h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                     <a href="{{route('delete cart', ['rowID'=>$product->rowId])}}" class="text-danger" id="delete-item" data-rowid="{{ $product->rowId }}"><i class="fas fa-trash fa-lg"></i></a>
@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <div class="total mb-lg-5">
                             <span class="tb-header left">Tạm tính</span>
-                            <span class="tb-header right txt-18 txt-orange">{{$totalPrice}} &#8363;</span>
+                            <span class="tb-header right txt-18 txt-orange">{{formatCurrency($totalPrice)}} &#8363;</span>
                         </div>
                         <a href="{{route('payment')}}"><button type="button" class="btn btn-block btn-lg order text-uppercase">Tiến hành thanh toán</button></a>
                     </div>

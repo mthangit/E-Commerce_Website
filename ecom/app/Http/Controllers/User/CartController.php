@@ -50,7 +50,7 @@ class CartController extends Controller
                     ]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
-                    notify()->success('Laravel Notify is awesome!');
+
                 }
             }
         } else {

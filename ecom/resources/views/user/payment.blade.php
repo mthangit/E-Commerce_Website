@@ -116,9 +116,9 @@
                         <img src="{{asset(getImageProductByProductID($order_detail->id)->productImage)}}" alt="" style="width: 100px; height: 50px; margin-right: 10px;">
                         {{$order_detail->name}}
                     </td>
-                    <td style="text-align: center;">{{$order_detail->price}} &#8363;</td>
+                    <td style="text-align: center;">{{formatCurrency($order_detail->price)}} &#8363;</td>
                     <td style="text-align: center;">{{$order_detail->qty}}</td>
-                    <td style="font-weight: bold;text-align: center;">{{$order_detail->price * $order_detail->qty }}&#8363;</td>
+                    <td style="font-weight: bold;text-align: center;">{{formatCurrency($order_detail->price * $order_detail->qty) }}&#8363;</td>
                 </tr>
                 </tbody>
             @endforeach
@@ -212,7 +212,7 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
-                    <span class="right" id="totalPrice" >{{$totalPrice}} &#8363;</span>
+                    <span class="right" id="totalPrice" >{{($totalPrice)}} &#8363;</span>
                 </div>
                 <br>
                 <div class="shipping-cost">
@@ -224,7 +224,7 @@
                             $shippingFee = 30000;
                         }
                         ?>
-                    <span class="right">{{$shippingFee}} &#8363;</span>
+                    <span class="right">{{formatCurrency($shippingFee)}} &#8363;</span>
                 </div>
                 <br>
                 <div class="discount-money">
@@ -234,7 +234,7 @@
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{$totalPrice + $shippingFee}}</span>
+                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{formatCurrency($totalPrice + $shippingFee)}}</span>
                 </div><br>
                 <form method="POST" id="form-finish">
                     <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>

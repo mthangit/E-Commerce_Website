@@ -79,8 +79,8 @@
                             </div>
                             <div class="product-info">
                                 <div class="width-common price-block">
-                                    <strong class="discount-price txt-16">{{$product->productDiscountPrice}} &#8363;</strong>
-                                    <span class="original-price txt-12 right">{{$product->productOriginalPrice}} &#8363;</span>
+                                    <strong class="discount-price txt-16">{{formatCurrency($product->productDiscountPrice)}} &#8363;</strong>
+                                    <span class="original-price txt-12 right">{{formatCurrency($product->productOriginalPrice)}} &#8363;</span>
                                 </div>
                                 <div class="product-name-block">
                                     <h3 class="width-common pr-name sp-bottom-5">

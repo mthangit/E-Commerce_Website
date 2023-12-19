@@ -357,7 +357,7 @@
                 if(response.status === true) {
                     alert('Thêm vào giỏ hàng thành công');
                 } else {
-                    toastr.error(response.message);
+
                 }
             }
         });
