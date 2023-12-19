@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class AccountController extends Controller
 {
     public function Index()
-    {   
+    {
         $customers = CustomerInfo::latest()->get();
         $customerss = CustomerInfo::latest()->get();
         return view('admin.allaccount', compact('customers', 'customerss'));
@@ -45,7 +45,7 @@ class AccountController extends Controller
         return redirect()->route('allaccount')->with('message', 'Thêm tài khoản thành công');
     }
     public function DetailAccount($userID)
-    {   
+    {
         $customerID = CustomerInfo::where('userID', $userID)->first()->customerID;
         $customers = CustomerInfo::find($customerID);
         $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->get();
@@ -77,7 +77,13 @@ class AccountController extends Controller
               $order = Order::where('orderID', $orderID)->first(); // 10
               $orderdetails = OrderDetail::where('orderID', $orderID)->get(); // 10
               $customerinfo = CustomerInfo::leftJoin('orders', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.orderID', $orderID)->first();
+
+              if($order->discountID == null) {
+                  $discount = 0;
+              } else {
+                  $discount = Discount::where('discountID', $order->discountID)->first();
+              }
               $discount = Discount::leftJoin('orders', 'orders.discountID', '=', 'discounts.discountID')->where('orders.orderID', $orderID)->first();
-              return view('user.detailuserorder', compact('order', 'customerinfo', 'orderdetails','discount'    ));
+              return view('user.detailuserorder', compact('order', 'customerinfo', 'orderdetails','discount'));
        }
 }

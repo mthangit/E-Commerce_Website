@@ -38,7 +38,7 @@
                                         class="img-fluid rounded-3" alt="">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="fw-normal mb-2">{{$product->name.'  -   '.$product->rowId}}</p>
+                                    <p class="fw-normal mb-2">{{$product->name}}</p>
                                   <!-- <p><span class="text-muted">Loại: </span>60ml</p> -->
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">

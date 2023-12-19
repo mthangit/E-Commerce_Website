@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,600">
     <link href="https://pennypixels.pennymacusa.com/css/1_4_1/pp.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/colored-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -55,7 +57,6 @@
                             <img src="{{ asset('assets/cart-icon.svg')}}" alt="">
                         </a>
                     </div>
-
                     <div class="item-header logout">
                         <a href="" class="white-anchor">
                             <img src="{{ asset('assets/login-icon.svg')}}" alt="">

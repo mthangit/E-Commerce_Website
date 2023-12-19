@@ -33,6 +33,7 @@ class CartController extends Controller
                     Cart::update($item->rowId, ['qty' => $quantityItem, 'price' => $price]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
+                    notify()->success('Laravel Notify is awesome!');
                     break;
                 } else {
                     if($product->isFlashSale == 1){
@@ -49,6 +50,7 @@ class CartController extends Controller
                     ]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
+                    notify()->success('Laravel Notify is awesome!');
                 }
             }
         } else {
