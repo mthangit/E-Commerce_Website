@@ -28,12 +28,7 @@ PING - Dashboard
                                 <h1 class="h5 mb-3">Shipping Address</h1>
                                 <address>
                                     <strong>{{$customerinfo->customerName}}</strong><br>
-                                    @foreach ($provinces as $province)
-                                    @if ($order->orderProvinceID == $province->provinceID)
-                                    {{$province->provinceName}}
-                                    @endif
-                                    @endforeach<br>
-                                    {{$order->orderAddress}}<br>
+                                    {{$customerinfo->customerAddress}}<br>
                                     {{$customerinfo->customerPhone}}<br>
                                     {{$customerinfo->customerEmail}}
                                 </address>
