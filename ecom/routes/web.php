@@ -88,6 +88,7 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(UserAccountController::class)->group(function () {
    Route::get('/user/detail-account/{userID}', 'DetailAccount')->name('detailuseraccount');
+   Route::get('/user/detail-order/{orderID}', 'DetailOrder')->name('detailuserorder');
 });
 
 Route::controller(UserOrderController::class)->group(function () {

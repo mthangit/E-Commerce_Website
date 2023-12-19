@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Discount;
+
 use App\Models\CustomerInfo;
 
 use Illuminate\Http\Request;
@@ -67,4 +70,14 @@ class AccountController extends Controller
         CustomerInfo::find($customerID)->delete();
         return redirect()->route('allaccount')->with('message', 'Xóa tài khoản thành công');
     }
+
+    public function DetailOrder($orderID)
+       {
+              // $products = Product::latest()->get();
+              $order = Order::where('orderID', $orderID)->first(); // 10
+              $orderdetails = OrderDetail::where('orderID', $orderID)->get(); // 10
+              $customerinfo = CustomerInfo::leftJoin('orders', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.orderID', $orderID)->first();
+              $discount = Discount::leftJoin('orders', 'orders.discountID', '=', 'discounts.discountID')->where('orders.orderID', $orderID)->first();
+              return view('user.detailuserorder', compact('order', 'customerinfo', 'orderdetails','discount'    ));
+       }
 }
