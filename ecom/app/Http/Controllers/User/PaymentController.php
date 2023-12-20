@@ -4,15 +4,19 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\User\PurchaseHistoryController;
+//use App\Http\Controllers\User\PurchaseHistoryController;
 
 class PaymentController extends Controller
 {
     protected $PurchaseHistoryController;
+    protected $OrderController;
 
-    public function __construct(PurchaseHistoryController $PurchaseHistoryController)
-    {
+    public function __construct(
+        PurchaseHistoryController $PurchaseHistoryController,
+        OrderController $OrderController
+    ) {
         $this->PurchaseHistoryController = $PurchaseHistoryController;
+        $this->OrderController = $OrderController;
     }
 
     // Thanh toán qua VNPAY
@@ -20,10 +24,9 @@ class PaymentController extends Controller
         $orderID = $request->input('orderID');
         $totalPrice = $request->input('totalPrice');
 
-        $this->PurchaseHistoryController->storePurchaseHistory($orderID, $totalPrice, 'VNPAY');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://127.0.0.1:8000/order-success/" . $orderID;
+        $vnp_Returnurl = route('vnpay.return');
         $vnp_TmnCode = "COITO8B1";//Mã website tại VNPAY
         $vnp_HashSecret = "NOZZACDLIXEBGNPEDSNEHAIWBQALWLLM"; //Chuỗi bí mật
 
@@ -31,8 +34,8 @@ class PaymentController extends Controller
         $vnp_OrderInfo = "Thanh toán đơn hàng #" . $vnp_TxnRef;
         $vnp_OrderType = "PING SHOP";
         $vnp_Amount = $request->input('totalPrice') * 100;
-        $vnp_Locale = "VN";
-        $vnp_BankCode = "NCB";
+        $vnp_Locale = "vn";
+//        $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 ////Add Params of 2.0.1 Version
 //        $vnp_ExpireDate = $_POST['txtexpire'];
@@ -114,18 +117,36 @@ class PaymentController extends Controller
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-//        $returnData = array('code' => '00'
-//        , 'message' => 'success'
-//        , 'data' => $vnp_Url);
-        return response()->json(['code' => '00', 'message' => 'success', 'data' => $vnp_Url]);
+        $returnData = array('code' => '00'
+        , 'message' => 'success'
+        , 'data' => $vnp_Url);
 //        if (isset($_POST['redirect'])) {
 //            header('Location: ' . $vnp_Url);
 //            die();
 //        } else {
 //            echo json_encode($returnData);
 //        }
+        return response()->json($returnData);
         // vui lòng tham khảo thêm tại code demo
     }
+
+    public function VnpayReturn(Request $request){
+//        dd($request->vnp_ResponseCode .' ' .gettype($request->vnp_ResponseCode));
+        $vnp_ResponseCode = $request->vnp_ResponseCode;
+        $vnp_TxnRef = $request->vnp_TxnRef;
+        $vnp_Amount = $request->vnp_Amount;
+        if($vnp_ResponseCode == "00"){
+            $paymentStatus = 'paid';
+            $this->PurchaseHistoryController->storePurchaseHistory($vnp_TxnRef, $vnp_Amount, 'VNPAY');
+            $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
+            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
+        } else {
+            $paymentStatus = 'unpaid';
+            $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
+            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
+        }
+    }
+
 
     // Thanh toán qua MOMO
     function execPostRequest($url, $data)

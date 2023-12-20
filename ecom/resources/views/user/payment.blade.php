@@ -376,7 +376,6 @@
 
             if(payment === 'VNPAY')
             {
-                requestData.paymentStatus = 'paid';
                 storeOrderAndPayment(requestData, function(orderID) {
                     VnPay_Payment(orderID, totalPrice);
                 }, function(error) {
@@ -384,7 +383,6 @@
                     // Xử lý lỗi nếu cần
                 });
             } else if (payment === 'MOMO'){
-                requestData.paymentStatus = 'paid';
                 storeOrderAndPayment(requestData, function(orderID) {
                     console.log(orderID);
                     Momo_Payment(orderID, totalPrice);
@@ -418,6 +416,7 @@
                 totalPrice: totalPrice,
             },
             success: function(response) {
+                // console.log(response);
                 window.location.href = response.data;
             },
         })

@@ -103,7 +103,7 @@ Route::controller(UserDiscountController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
    Route::post('/vnpay-payment', 'vnpay_payment')->name('vnpay.payment');
-   Route::get('/vnpay-return', 'VnpayReturn')->name('vnpay return');
+   Route::get('/vnpay-return', 'VnpayReturn')->name('vnpay.return');
    Route::get('/vnpay-error', 'VnpayError')->name('vnpay error');
    Route::post('/momo-payment', 'momo_payment')->name('momo.payment');
 });

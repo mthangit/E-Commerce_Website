@@ -126,4 +126,10 @@ class OrderController extends Controller
         $order_list = OrderDetail::where('orderID', $orderID)->get();
         return view('user.OrderSuccess', ['order'=>$order, 'order_list'=>$order_list]);
     }
+
+    public function UpdatePaymentStatusPaid($orderID, $paymentStatus){
+        $order = Order::find($orderID);
+        $order->paymentStatus = $paymentStatus;
+        $order->save();
+    }
 }

@@ -1,7 +1,6 @@
 Thông tin thanh toán
 
-VNPAY:
-
+VNPAY
 Thẻ: 9704198526191432198
 Tên: NGUYEN VAN A
 Ngày phát hành: 07/15
