@@ -1,16 +1,16 @@
 @include('user.layouts.template_header_logged')
-{{--<div class="header-wrapper cyan fixed" >--}}
-{{--    <div class="header-container flex">--}}
-{{--        <div class="logo-site">--}}
-{{--            <a href="/" class="logo">--}}
-{{--                <img src="assets/logo.svg" alt="logo">--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--        <div class="page-header">--}}
-{{--            <h2 class="section-txt-title" style="color: white;">Thanh toán</h2>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
+{{-- <div class="header-wrapper cyan fixed" > --}}
+{{--    <div class="header-container flex"> --}}
+{{--        <div class="logo-site"> --}}
+{{--            <a href="/" class="logo"> --}}
+{{--                <img src="assets/logo.svg" alt="logo"> --}}
+{{--            </a> --}}
+{{--        </div> --}}
+{{--        <div class="page-header"> --}}
+{{--            <h2 class="section-txt-title" style="color: white;">Thanh toán</h2> --}}
+{{--        </div> --}}
+{{--    </div> --}}
+{{-- </div> --}}
 
 <div class="delivery-info payment-block" style="margin-top: 30px;">
     <div id="errorInfo" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
@@ -29,11 +29,13 @@
         </div>
     </div>
     <div class="delivery-content" style="margin-top: -1px;">
-        <p><span class="txt-bold" id="orderName">{{$info->customerName}}</span> - <span id="orderPhone">{{$info->customerPhone}}</span></p>
+        <p><span class="txt-bold" id="orderName">{{ $info->customerName }}</span> - <span
+                id="orderPhone">{{ $info->customerPhone }}</span></p>
         <h4 class="txt-cyan txt-18">Địa chỉ nhận hàng</h4>
-        <p id="orderAddress">{{$info->customerAddress}}</p>
+        <p id="orderAddress">{{ $info->customerAddress }}</p>
         <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label>
-        <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px" placeholder="Nhập ghi chú"></textarea>
+        <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px"
+            placeholder="Nhập ghi chú"></textarea>
     </div>
     <div class="edit-delivery-content">
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
@@ -51,16 +53,18 @@
             <br>
         </div>
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường"
+                style="width: 100%; margin-bottom: 10px; margin-right: 10px">
         </div>
-        <div id="errorPhone" class="alert alert-danger alert-dismissible fade show small" role="alert" disabled >
-            <strong >Error!</strong> Sai định dạng số điện thoại.
+        <div id="errorPhone" class="alert alert-danger alert-dismissible fade show small" role="alert" disabled>
+            <strong>Error!</strong> Sai định dạng số điện thoại.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại"
+                style="width: 100%; margin-bottom: 10px; margin-right: 10px">
         </div>
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
             <button class="btn-save"> Lưu lại</button>
@@ -73,17 +77,24 @@
         /* Đặt các select thành kiểu inline-block */
         .edit-delivery-content select {
             display: flex;
-            margin-right: 10px; /* Điều chỉnh giá trị theo nhu cầu của bạn */
+            margin-right: 10px;
+            /* Điều chỉnh giá trị theo nhu cầu của bạn */
         }
+
         #errorPhone {
-            padding: 5px; /* Điều chỉnh khoảng trắng xung quanh nội dung */
+            padding: 5px;
+            /* Điều chỉnh khoảng trắng xung quanh nội dung */
         }
+
         #errorPhone .close {
             margin: 0;
-            align-self: center; /* Căn giữa nút theo chiều dọc */
+            align-self: center;
+            /* Căn giữa nút theo chiều dọc */
         }
+
         #errorPhone .alert {
-            padding: 0.5rem 1rem; /* Điều chỉnh chiều cao và chiều rộng của cảnh báo */
+            padding: 0.5rem 1rem;
+            /* Điều chỉnh chiều cao và chiều rộng của cảnh báo */
             flex: 1;
         }
     </style>
@@ -96,30 +107,32 @@
     <div class="product-delivery-content">
         <table class="tb-payment-product">
             <thead>
-            <tr>
-                <th style="text-align: left;">Sản phẩm</th>
-                <th style="text-align: center;">Đơn giá</th>
-                <th style="text-align: center;">Số lượng</th>
-                <th style="text-align: center;">Thành tiền</th>
-            </tr>
+                <tr>
+                    <th style="text-align: left;">Sản phẩm</th>
+                    <th style="text-align: center;">Đơn giá</th>
+                    <th style="text-align: center;">Số lượng</th>
+                    <th style="text-align: center;">Thành tiền</th>
+                </tr>
             </thead>
             <?php
             $totalPrice = 0;
             ?>
-            @foreach($order_list as $order_detail)
+            @foreach ($order_list as $order_detail)
                 <?php
-                $totalPrice += ($order_detail->price * $order_detail->qty)
-                    ?>
+                $totalPrice += $order_detail->price * $order_detail->qty;
+                ?>
                 <tbody class="tb-product">
-                <tr>
-                    <td style="text-align: left;">
-                        <img src="{{asset(getImageProductByProductID($order_detail->id)->productImage)}}" alt="" style="width: 100px; height: 50px; margin-right: 10px;">
-                        {{$order_detail->name}}
-                    </td>
-                    <td style="text-align: center;">{{formatCurrency($order_detail->price)}} &#8363;</td>
-                    <td style="text-align: center;">{{$order_detail->qty}}</td>
-                    <td style="font-weight: bold;text-align: center;">{{formatCurrency($order_detail->price * $order_detail->qty) }}&#8363;</td>
-                </tr>
+                    <tr>
+                        <td style="text-align: left;">
+                            <img src="{{ asset(getImageProductByProductID($order_detail->id)->productImage) }}"
+                                alt="" style="width: 100px; height: 50px; margin-right: 10px;">
+                            {{ $order_detail->name }}
+                        </td>
+                        <td style="text-align: center;">{{ formatCurrency($order_detail->price) }} &#8363;</td>
+                        <td style="text-align: center;">{{ $order_detail->qty }}</td>
+                        <td style="font-weight: bold;text-align: center;">
+                            {{ formatCurrency($order_detail->price * $order_detail->qty) }}&#8363;</td>
+                    </tr>
                 </tbody>
             @endforeach
         </table>
@@ -139,9 +152,11 @@
     <div class="discount-pick" style="margin-top: -5px;">
         <form action="javascript:void(0)" id="form-voucher">
             <input type="text" name="discount-voucher" id="discount-voucher" placeholder="Nhập mã giảm giá">
-                <button class="txt-uppercase order" id="btn-apply-voucher">Áp dụng</button>
+            <button class="txt-uppercase order" id="btn-apply-voucher">Áp dụng</button>
             <br>
-            <span style="font-style: italic; color: rgb(128,128,128); font-size: 13px; margin-left: 695px;"><span style="text-decoration: underline;">Lưu ý:</span> Chỉ được áp dụng <strong>tối đa</strong> 1 mã giảm giá.</span>
+            <span style="font-style: italic; color: rgb(128,128,128); font-size: 13px; margin-left: 695px;"><span
+                    style="text-decoration: underline;">Lưu ý:</span> Chỉ được áp dụng <strong>tối đa</strong> 1 mã
+                giảm giá.</span>
         </form>
     </div>
     <div class="discount-detail">
@@ -164,13 +179,15 @@
                 <td>
                     <ul>
                         <li>
-                            Sử dụng mã giảm phí vận chuyển (tối đa 10.000 &#8363;) cho đơn hàng từ 0Đ khi mua hàng trên PING Cosmetics.
+                            Sử dụng mã giảm phí vận chuyển (tối đa 10.000 &#8363;) cho đơn hàng từ 0Đ khi mua hàng trên
+                            PING Cosmetics.
                         </li>
                         <li>
                             Áp dụng tất cả các hình thức thanh toán.
                         </li>
                         <li>
-                            Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi, tuỳ điều kiện nào đến trước.
+                            Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết
+                            hạn ưu đãi, tuỳ điều kiện nào đến trước.
                         </li>
                     </ul>
                 </td>
@@ -178,7 +195,6 @@
         </table>
     </div>
 </div>
-
 <div class="payment-total-info payment-block">
     <div id="errorAlertPaymentMethod" class="alert alert-danger alert-dismissible fade show" role="alert" disabled>
         <strong>Error!</strong> Vui lòng chọn phương thức thanh toán.
@@ -193,18 +209,50 @@
         <div class="payment-left">
             <div class="payment-method">
                 <strong>Lựa chọn phương thức thanh toán: </strong>
+                {{-- <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Chọn phương thức
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0)">Thanh toán khi nhận hàng</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)">Ví VNPAY</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)">Ví MOMO</a></li>
+                    </ul>
+                </div>
+ --}}
+
                 <select name="payment" id="payment">
                     <option value="" selected>Chọn phương thức</option>
                     <option value="COD">Thanh toán khi nhận hàng</option>
                     <option value="VNPAY">Ví VNPAY</option>
                     <option value="MOMO">Ví MOMO</option>
                 </select>
+                {{-- &nbsp;
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="payment" id="payment1" autocomplete="off"
+                        value="COD" checked>
+                    <label class="btn btn-outline-primary" for="payment1">Thanh toán khi nhận hàng</label>
+                    <br>
+                    <input type="radio" class="btn-check" name="payment" id="payment2" autocomplete="off"
+                        value="VNPAY">
+                    <label class="btn btn-outline-primary" for="payment2">Ví VNPAY</label>
+                    <br>
+                    <input type="radio" class="btn-check" name="payment" id="payment3" autocomplete="off"
+                        value="MOMO">
+                    <label class="btn btn-outline-primary" for="payment3">Ví MOMO</label>
+                </div> --}}
+
+
+                <br>
             </div>
             <div class="payment-note">
                 <strong>Lưu ý:</strong><br>
                 <ul>
-                    <li>Thành tiền đã bao gồm VAT, phí đóng gói, phí vận chuyển và các chi phí khác vui lòng xem <a href="" class="cyan-link txt-bold">chính sách vận chuyển</a>.</li>
-                    <li>Nếu có nhu cầu đổi trả hàng, vui lòng xem <a href="" class="cyan-link txt-bold">chính sách đổi trả hàng</a> hoặc liên hệ hotline để được hướng dẫn chi tiết.</li>
+                    <li>Thành tiền đã bao gồm VAT, phí đóng gói, phí vận chuyển và các chi phí khác vui lòng xem <a
+                            href="" class="cyan-link txt-bold">chính sách vận chuyển</a>.</li>
+                    <li>Nếu có nhu cầu đổi trả hàng, vui lòng xem <a href="" class="cyan-link txt-bold">chính
+                            sách đổi trả hàng</a> hoặc liên hệ hotline để được hướng dẫn chi tiết.</li>
                 </ul>
             </div>
         </div>
@@ -212,19 +260,19 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
-                    <span class="right" id="totalPrice" >{{($totalPrice)}} &#8363;</span>
+                    <span class="right" id="totalPrice">{{ $totalPrice }} &#8363;</span>
                 </div>
                 <br>
                 <div class="shipping-cost">
                     <span class="left">Phí vận chuyển</span>
                     <?php
-                        if($totalPrice > 250000) {
-                            $shippingFee = 0;
-                        } else {
-                            $shippingFee = 30000;
-                        }
-                        ?>
-                    <span class="right">{{formatCurrency($shippingFee)}} &#8363;</span>
+                    if ($totalPrice > 250000) {
+                        $shippingFee = 0;
+                    } else {
+                        $shippingFee = 30000;
+                    }
+                    ?>
+                    <span class="right">{{ formatCurrency($shippingFee) }} &#8363;</span>
                 </div>
                 <br>
                 <div class="discount-money">
@@ -234,21 +282,25 @@
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
-                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice" id="thanhtien">{{formatCurrency($totalPrice + $shippingFee)}}</span>
+                    <span class="txt-orange txt-bold txt-18 right"name="totalPrice"
+                        id="thanhtien">{{ formatCurrency($totalPrice + $shippingFee) }}</span>
                 </div><br>
                 <form method="POST" id="form-finish">
-                    <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt hàng</button>
+                    <button type="button" class="order txt-uppercase" id="btn-finish" name="btn-finish">Đặt
+                        hàng</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <div class="return">
-    <a href="{{route('cart')}}" class="cyan-link txt-14">Quay lại</a>
+    <a href="{{ route('cart') }}" class="cyan-link txt-14">Quay lại</a>
     <hr style="color: var(--gray);">
 </div>
 @include('user.layouts.template_footer')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     var discountPrice = 0;
     var discountValidCode = '';
@@ -261,36 +313,37 @@
         $('#errorAlert').hide();
         $('#errorInfo').hide();
         $('#errorPhone').hide();
-        $('#btn-apply-voucher').click(function(){
+        $('#btn-apply-voucher').click(function() {
             var voucher = $('#discount-voucher').val();
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: '{{route('validate discount code')}}',
-                    type: 'POST',
-                    data: {
-                        discountCode: voucher
-                    },
-                    success: function(response) {
-                        if(response.isValid){
-                            var discount_valid = response.discount;
-                            var discountType = discount_valid.discountType;
-                            if(discountType == 'percent'){
-                                discountPrice = totalPrice * discount_valid.discountAmount / 100;
-                            } else {
-                                discountPrice = discount_valid.discountAmount;
-                            }
-                            discountValidCode = discount_valid.discountCode;
-                            // Assuming you have a response from the server after validating the discount code
-                            var response = {
-                                name: discount_valid.discountName,
-                                price: discountPrice,
-                                expiryDate: discount_valid.discountEnd,
-                                description: discount_valid.discountDescription
-                            };
-                            // Fill the discount details in the table
-                            $('#discount-detail-info').html(`
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('validate discount code') }}',
+                type: 'POST',
+                data: {
+                    discountCode: voucher
+                },
+                success: function(response) {
+                    if (response.isValid) {
+                        var discount_valid = response.discount;
+                        var discountType = discount_valid.discountType;
+                        if (discountType == 'percent') {
+                            discountPrice = totalPrice * discount_valid.discountAmount /
+                                100;
+                        } else {
+                            discountPrice = discount_valid.discountAmount;
+                        }
+                        discountValidCode = discount_valid.discountCode;
+                        // Assuming you have a response from the server after validating the discount code
+                        var response = {
+                            name: discount_valid.discountName,
+                            price: discountPrice,
+                            expiryDate: discount_valid.discountEnd,
+                            description: discount_valid.discountDescription
+                        };
+                        // Fill the discount details in the table
+                        $('#discount-detail-info').html(`
                             <tr>
                                 <th>Tên mã giảm giá</th>
                                 <td>${response.name}</td>
@@ -308,29 +361,29 @@
                                 <td>${response.price}</td>
                             </tr>
                         `);
-                            // Update the discount price
-                            $('#giamgia').html(`${discountPrice} &#8363;`);
-                            // Update the thanhtien
-                            $('#thanhtien').html(`${totalPrice - discountPrice} &#8363;`);
-                            // Show the discount detail section
-                            $('.discount-detail').show();
-                            $('#errorAlert').hide();
-                        }else{
-                            $('#giamgia').html(`0 &#8363;`);
-                            $('#thanhtien').html(`${totalPrice} &#8363;`);
-                            $('.discount-detail').hide();
-                            $('#errorAlert').show();
-                        }
-                    },
-                    error: function(error) {
-                        // Xử lý lỗi
-                        console.error('Lỗi request:', error);
+                        // Update the discount price
+                        $('#giamgia').html(`${discountPrice} &#8363;`);
+                        // Update the thanhtien
+                        $('#thanhtien').html(`${totalPrice - discountPrice} &#8363;`);
+                        // Show the discount detail section
+                        $('.discount-detail').show();
+                        $('#errorAlert').hide();
+                    } else {
+                        $('#giamgia').html(`0 &#8363;`);
+                        $('#thanhtien').html(`${totalPrice} &#8363;`);
+                        $('.discount-detail').hide();
+                        $('#errorAlert').show();
                     }
-                });
+                },
+                error: function(error) {
+                    // Xử lý lỗi
+                    console.error('Lỗi request:', error);
+                }
+            });
         })
     });
 
-    document.getElementById('phone').addEventListener('input', function (e) {
+    document.getElementById('phone').addEventListener('input', function(e) {
         var input = e.target;
         var value = input.value;
 
@@ -353,15 +406,19 @@
 
     document.getElementById('btn-finish').addEventListener('click', function() {
         var payment = document.getElementById('payment').value;
-        if(payment === ''){
+        // var payment = document.querySelector('input[name="payment"]:checked').value;
+        if (payment === '') {
             $('#errorAlertPaymentMethod').show();
             return;
         }
-        if(checkOrderInfo()){
+        if (checkOrderInfo()) {
             var payment = document.getElementById('payment').value;
             var address = document.getElementById('orderAddress').innerText;
             var phone = document.getElementById('orderPhone').innerText;
             var name = document.getElementById('orderName').innerText;
+
+            // var payment = document.querySelector('input[name="payment"]:checked').value;
+
             var payment_status = 'unpaid';
 
             var requestData = {
@@ -374,15 +431,14 @@
                 paymentStatus: payment_status,
             };
 
-            if(payment === 'VNPAY')
-            {
+            if (payment === 'VNPAY') {
                 storeOrderAndPayment(requestData, function(orderID) {
                     VnPay_Payment(orderID, totalPrice);
                 }, function(error) {
                     console.error('Có lỗi xảy ra:', error);
                     // Xử lý lỗi nếu cần
                 });
-            } else if (payment === 'MOMO'){
+            } else if (payment === 'MOMO') {
                 storeOrderAndPayment(requestData, function(orderID) {
                     console.log(orderID);
                     Momo_Payment(orderID, totalPrice);
@@ -404,12 +460,12 @@
 
     // send a request to server to store order and payment using form with POST method id form-finish
 
-    function VnPay_Payment(orderID, totalPrice){
+    function VnPay_Payment(orderID, totalPrice) {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route("vnpay.payment") }}',
+            url: '{{ route('vnpay.payment') }}',
             type: 'POST',
             data: {
                 orderID: orderID,
@@ -422,12 +478,12 @@
         })
     }
 
-    function Momo_Payment(orderID, totalPrice){
+    function Momo_Payment(orderID, totalPrice) {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url:'{{ route("momo.payment") }}',
+            url: '{{ route('momo.payment') }}',
             type: 'POST',
             data: {
                 orderID: orderID,
@@ -445,7 +501,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route("store.order") }}',
+            url: '{{ route('store.order') }}',
             type: 'POST',
             data: requestData,
             success: function(response) {
@@ -461,24 +517,24 @@
 
     // Sử dụng hàm
 
-    function storeOrder(requestData){
-            // Gửi AJAX request
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '{{ route("store.order") }}',
-                type: 'POST',
-                data: requestData,
-                success: function(response) {
-                    window.location.href = /order-success/ + response.orderID;
-                },
-                error: function(error) {
-                    // Xử lý lỗi
-                    console.error('Lỗi request:', error);
-                }
-            });
-        }
+    function storeOrder(requestData) {
+        // Gửi AJAX request
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '{{ route('store.order') }}',
+            type: 'POST',
+            data: requestData,
+            success: function(response) {
+                window.location.href = /order-success/ + response.orderID;
+            },
+            error: function(error) {
+                // Xử lý lỗi
+                console.error('Lỗi request:', error);
+            }
+        });
+    }
     // Đoạn mã JavaScript để lấy các phần tử DOM
     var editDeliveryContent = document.querySelector('.edit-delivery-content');
     var deliveryContent = document.querySelector('.delivery-content');
@@ -490,7 +546,7 @@
     editDeliveryContent.style.display = 'none';
 
     // Bắt sự kiện khi bấm vào nút "Chỉnh sửa"
-    editLink.addEventListener('click', function (event) {
+    editLink.addEventListener('click', function(event) {
         event.preventDefault();
         // Ẩn phần tử thông tin hiển thị
         deliveryContent.style.display = 'none';
@@ -513,7 +569,7 @@
     };
 
     var promise = axios(Parameter);
-    promise.then(function (result) {
+    promise.then(function(result) {
         renderCity(result.data);
     });
 
@@ -522,7 +578,7 @@
             citis.options[citis.options.length] = new Option(x.Name, x.Id);
         }
 
-        citis.onchange = function () {
+        citis.onchange = function() {
             districts.length = 1;
             wards.length = 1;
 
@@ -535,7 +591,7 @@
             }
         };
 
-        districts.onchange = function () {
+        districts.onchange = function() {
             wards.length = 1;
 
             const dataCity = data.filter((n) => n.Id === citis.value);
@@ -549,7 +605,7 @@
         };
     }
 
-    function checkOrderInfo(){
+    function checkOrderInfo() {
         var selectedCity = citis.options[citis.selectedIndex].text;
         var selectedDistrict = districts.options[districts.selectedIndex].text;
         var selectedWard = wards.options[wards.selectedIndex].text;
@@ -557,7 +613,8 @@
         // Lấy giá trị từ textarea
         var deliveryAddress = document.getElementById("address").value;
 
-        if(deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã' || phone.length !== 10){
+        if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||
+            selectedWard === 'Chọn phường xã' || phone.length !== 10) {
             return false;
         } else {
             return true;
@@ -573,19 +630,21 @@
         // Lấy giá trị từ textarea
         var deliveryAddress = document.getElementById("address").value;
 
-        if(phone.length < 10 && phone.length > 0){
+        if (phone.length < 10 && phone.length > 0) {
             $('#errorPhone').show();
             return;
         }
 
-        if(deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã'){
+        if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||
+            selectedWard === 'Chọn phường xã') {
             editDeliveryContent.style.display = 'none';
             // Hiển thị lại phần tử thông tin
             deliveryContent.style.display = 'block';
             saveButton.style.display = 'none';
         } else {
             // Cập nhật giá trị trong các phần tử HTML tương ứng
-            document.getElementById("orderAddress").innerText = deliveryAddress + ', ' + selectedWard + ", " + selectedDistrict + ", " + selectedCity;
+            document.getElementById("orderAddress").innerText = deliveryAddress + ', ' + selectedWard + ", " +
+                selectedDistrict + ", " + selectedCity;
             document.getElementById("orderPhone").innerText = document.getElementById("phone").value;
             // Ẩn phần tử chỉnh sửa
             editDeliveryContent.style.display = 'none';
@@ -595,4 +654,3 @@
         }
     }
 </script>
-

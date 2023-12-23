@@ -86,7 +86,7 @@ class ProductController extends Controller
         Product::insert([
             'productName' => $request->productName,
             'productSlug' => strtolower(str_replace(' ', '-', $request->productName)),
-            'productBrandID' => $brand_ID, 
+            'productBrandID' => $brand_ID,
             'productBrandName' => $brand_Name,
             'productCategoryID' => $category_ID,
             'productCategoryName' => $category_Name,
@@ -125,8 +125,8 @@ class ProductController extends Controller
             'productName' => 'required:products,productName,' . $productID . ',productID'
         ]);
 
-        
-    
+
+
 
         $category_ID = $request->productCategoryID;
         $category_Name = Category::where('categoryID', $category_ID)->value('categoryName');
@@ -142,14 +142,14 @@ class ProductController extends Controller
 
     // Check if an image is provided
     // if ($request->hasFile('productImage')) {
-        
-    
+
+
     //     // Tiến hành tải lên ảnh mới
     //     $image = $request->file('productImage');
     //     $imgname = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
     //     $request->productImage->move(public_path('upload'), $imgname);
     //     $imgurl = 'upload/' . $imgname;
-    
+
     //     // Cập nhật thông tin sản phẩm với ảnh mới
     //     $product->update([
     //         'productImage' => $imgurl,
@@ -157,7 +157,7 @@ class ProductController extends Controller
     // }
 
     // Check if the user wants to delete the image
-   
+
     $product->update([
         'productName' => $request->productName,
         'productSlug' => strtolower(str_replace(' ', '-', $request->productName)),
@@ -188,7 +188,7 @@ class ProductController extends Controller
     }
 
     public function UpdateProductImg( Request $request){
-        $request->validate([  
+        $request->validate([
             'productImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -211,7 +211,7 @@ class ProductController extends Controller
     }
 
     public function UpdateProductSideImgOne( Request $request){
-        $request->validate([  
+        $request->validate([
             'productSideImageOne' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -234,7 +234,7 @@ class ProductController extends Controller
     }
 
     public function UpdateProductSideImgTwo( Request $request){
-        $request->validate([  
+        $request->validate([
             'productSideImageTwo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -256,8 +256,9 @@ class ProductController extends Controller
         return view('admin.editproductsideimgthree', compact('product_info'));
     }
 
-    public function UpdateProductSideImgThree( Request $request){
-        $request->validate([  
+    public function UpdateProductSideImgThree( Request $request)
+    {
+        $request->validate([
             'productSideImageThree' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -272,6 +273,4 @@ class ProductController extends Controller
         ]);
         return redirect()->route('allproduct')->with('message', 'Cập nhật danh mục thành công');
     }
-
-
 }

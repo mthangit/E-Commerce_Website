@@ -13,8 +13,6 @@ class OrderEmail extends Mailable
 {
     use Queueable, SerializesModels;
     public $mailData;
-
-
     /**
      * Create a new message instance.
      */
@@ -22,7 +20,6 @@ class OrderEmail extends Mailable
     {
         $this->mailData = $mailData;
     }
-
     /**
      * Get the message envelope.
      */

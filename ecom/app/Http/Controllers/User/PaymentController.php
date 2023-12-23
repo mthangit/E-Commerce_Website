@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 //use App\Http\Controllers\User\PurchaseHistoryController;
+
 
 class PaymentController extends Controller
 {
@@ -20,14 +22,15 @@ class PaymentController extends Controller
     }
 
     // Thanh toán qua VNPAY
-    public function vnpay_payment(Request $request){
+    public function vnpay_payment(Request $request)
+    {
         $orderID = $request->input('orderID');
         $totalPrice = $request->input('totalPrice');
 
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route('vnpay.return');
-        $vnp_TmnCode = "COITO8B1";//Mã website tại VNPAY
+        $vnp_TmnCode = "COITO8B1"; //Mã website tại VNPAY
         $vnp_HashSecret = "NOZZACDLIXEBGNPEDSNEHAIWBQALWLLM"; //Chuỗi bí mật
 
         $vnp_TxnRef = $request->input('orderID'); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
@@ -35,9 +38,9 @@ class PaymentController extends Controller
         $vnp_OrderType = "PING SHOP";
         $vnp_Amount = $request->input('totalPrice') * 100;
         $vnp_Locale = "vn";
-//        $vnp_BankCode = "NCB";
+        //        $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-////Add Params of 2.0.1 Version
+        ////Add Params of 2.0.1 Version
 //        $vnp_ExpireDate = $_POST['txtexpire'];
 ////Billing
 //        $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
@@ -73,7 +76,7 @@ class PaymentController extends Controller
             "vnp_OrderType" => $vnp_OrderType,
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef
-//            "vnp_ExpireDate" => $vnp_ExpireDate,
+            //            "vnp_ExpireDate" => $vnp_ExpireDate,
 //            "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
 //            "vnp_Bill_Email" => $vnp_Bill_Email,
 //            "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
@@ -97,7 +100,7 @@ class PaymentController extends Controller
             $inputData['vnp_Bill_State'] = $vnp_Bill_State;
         }
 
-//var_dump($inputData);
+        //var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -114,13 +117,17 @@ class PaymentController extends Controller
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        $returnData = array('code' => '00'
-        , 'message' => 'success'
-        , 'data' => $vnp_Url);
-//        if (isset($_POST['redirect'])) {
+        $returnData = array(
+            'code' => '00'
+            ,
+            'message' => 'success'
+            ,
+            'data' => $vnp_Url
+        );
+        //        if (isset($_POST['redirect'])) {
 //            header('Location: ' . $vnp_Url);
 //            die();
 //        } else {
@@ -130,15 +137,17 @@ class PaymentController extends Controller
         // vui lòng tham khảo thêm tại code demo
     }
 
-    public function VnpayReturn(Request $request){
-//        dd($request->vnp_ResponseCode .' ' .gettype($request->vnp_ResponseCode));
+    public function VnpayReturn(Request $request)
+    {
+        //        dd($request->vnp_ResponseCode .' ' .gettype($request->vnp_ResponseCode));
         $vnp_ResponseCode = $request->vnp_ResponseCode;
         $vnp_TxnRef = $request->vnp_TxnRef;
         $vnp_Amount = $request->vnp_Amount;
-        if($vnp_ResponseCode == "00"){
+        if ($vnp_ResponseCode == "00") {
             $paymentStatus = 'paid';
             $this->PurchaseHistoryController->storePurchaseHistory($vnp_TxnRef, $vnp_Amount, 'VNPAY');
             $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
+            orderEmail($vnp_TxnRef);
             return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
         } else {
             $paymentStatus = 'unpaid';
@@ -155,9 +164,13 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
                 'Content-Type: application/json',
-                'Content-Length: ' . strlen($data))
+                'Content-Length: ' . strlen($data)
+            )
         );
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
@@ -168,19 +181,22 @@ class PaymentController extends Controller
         return $result;
     }
 
-    public function momo_payment(Request $request){
+    public function momo_payment(Request $request)
+    {
         $orderID = $request->input('orderID');
         $totalPrice = $request->input('totalPrice');
 
-        $this->PurchaseHistoryController->storePurchaseHistory($orderID, $totalPrice, 'VNPAY');
+        $this->PurchaseHistoryController->storePurchaseHistory($orderID, $totalPrice, 'MOMO');
 
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-        $partnerCode = 'MOMOBKUN20180529';
-        $accessKey = 'klm05TvNBzhg7h7j';
-        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        // $partnerCode = 'MOMOBKUN20180529';
+        $partnerCode = 'MOMO';
+        // $accessKey = 'klm05TvNBzhg7h7j';
+        $accessKey = 'F8BBA842ECF85';
+        // $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 
-
-        $orderInfo = "Thanh toán qua MoMo";
+        $orderInfo = "Thanh toán đơn hàng " . $orderID . ' tại PING Shop';
         $amount = $totalPrice;
         $orderId = $orderID;
         $redirectUrl = "http://127.0.0.1:8000/order-success/" . $orderID;
@@ -201,13 +217,16 @@ class PaymentController extends Controller
             $extraData = $extraData;
 
             $requestId = time() . "";
-            $requestType = "payWithATM";
+            // $requestType = "payWithATM";
+            // $requestType = "captureWallet";
+            $requestType = "payWithMethod";
             //$extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
             //before sign HMAC SHA256 signature
             $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
             $signature = hash_hmac("sha256", $rawHash, $serectkey);
-            $data = array('partnerCode' => $partnerCode,
-                'partnerName' => "Test",
+            $data = array(
+                'partnerCode' => $partnerCode,
+                'partnerName' => "PING Shop",
                 "storeId" => "MomoTestStore",
                 'requestId' => $requestId,
                 'amount' => $amount,
@@ -218,7 +237,8 @@ class PaymentController extends Controller
                 'lang' => 'vi',
                 'extraData' => $extraData,
                 'requestType' => $requestType,
-                'signature' => $signature);
+                'signature' => $signature
+            );
             $result = $this->execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true);  // decode json
 
@@ -228,5 +248,4 @@ class PaymentController extends Controller
             return response()->json(['code' => '00', 'message' => 'success', 'data' => $url]);
         }
     }
-
 }
