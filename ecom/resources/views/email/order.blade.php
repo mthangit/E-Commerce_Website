@@ -86,13 +86,6 @@
             color: #fff;
         }
 
-        .order-status .unpaid {
-            background-color: #f1c40f;
-            /* Màu vàng */
-            color: #fff;
-        }
-
-
         .order-status .pending {
             background-color: #f39c12;
             color: #fff;
@@ -116,18 +109,16 @@
         <p><strong>Tổng tiền:</strong> {{ formatCurrency($mailData['order']->grandPrice) }}</p>
         <p><strong>Phương thức thanh toán:</strong> <span class="method">{{ $mailData['order']->paymentMethod }}</span>
         </p>
+        {{-- <p><strong>Tình trạng thanh toán:</strong> <span class="status paid">Đã thanh toán</span></p> --}}
 
-        <?php
-        if ($mailData['order']->paymentStatus == 'unpaid') {
-            $status = 'Thanh toán khi nhận hàng';
-            $style = 'unpaid';
-            echo '<p><strong>Tình trạng thanh toán:</strong> <span class="status paid">' . $status . '</span></p>';
-        } else {
-            $status = 'Đã thanh toán';
-            $style = 'paid';
-            echo '<p><strong>Tình trạng thanh toán:</strong> <span class="status unpaid">' . $status . '</span></p>';
-        }
-        ?>
+
+        @if ($mailData['order']->paymentStatus == 'unpaid')
+            <p><strong>Tình trạng thanh toán:</strong> <span class="status pending">Thanh toán khi nhận hàng</span></p>
+        @else
+            <p><strong>Tình trạng thanh toán:</strong> <span class="status paid">Đã thanh toán</span></p>
+        @endif
+
+
 
 
         <h2>Bảng Chi Tiết Đơn Hàng</h2>
