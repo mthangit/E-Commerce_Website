@@ -38,7 +38,11 @@ use App\Http\Controllers\User\PaymentController;
 |
 */
 Route::get('/test',function(){
-   orderEmail(1);
+   orderEmail(1703256121);
+});
+
+Route::post('/thankyou-email', function (){
+
 });
 
 Route::get('/', function () {

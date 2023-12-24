@@ -48,7 +48,11 @@ class AccountController extends Controller
     {
         $customerID = CustomerInfo::where('userID', $userID)->first()->customerID;
         $customers = CustomerInfo::find($customerID);
-        $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->get();
+        $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')
+            ->where('orders.customerID', $customerID)
+            ->orderBy('orders.created_at', 'desc')
+            ->paginate(15);
+        //
         return view('user.detailaccount', compact('customers', 'orders'));
     }
     public function UpdateAccount(Request $request, $customerID)
@@ -72,18 +76,22 @@ class AccountController extends Controller
     }
 
     public function DetailOrder($orderID)
-       {
-              // $products = Product::latest()->get();
-              $order = Order::where('orderID', $orderID)->first(); // 10
-              $orderdetails = OrderDetail::where('orderID', $orderID)->get(); // 10
-              $customerinfo = CustomerInfo::leftJoin('orders', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.orderID', $orderID)->first();
+    {
+        // $products = Product::latest()->get();
+        $order = Order::where('orderID', $orderID)->first(); // 10
+        $orderdetails = OrderDetail::where('orderID', $orderID)->get(); // 10
+        $customerinfo = CustomerInfo::leftJoin('orders', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.orderID', $orderID)->first();
 
-              if($order->discountID == null) {
-                  $discount = 0;
-              } else {
-                  $discount = Discount::where('discountID', $order->discountID)->first();
-              }
-              $discount = Discount::leftJoin('orders', 'orders.discountID', '=', 'discounts.discountID')->where('orders.orderID', $orderID)->first();
-              return view('user.detailuserorder', compact('order', 'customerinfo', 'orderdetails','discount'));
-       }
+        if ($order->discountID == null) {
+            $discount = null;
+        } else {
+            $discount = Discount::where('discountID', $order->discountID)->first();
+        }
+        // $discount = Discount::leftJoin('orders', 'orders.discountID', '=', 'discounts.discountID')->where('orders.orderID', $orderID)->first();
+        //   dd($orderdetails);
+        //   dd($customerinfo);
+        // dd($order);
+        // dd($discount);
+        return view('user.detailuserorder', compact('order', 'customerinfo', 'orderdetails', 'discount'));
+    }
 }
