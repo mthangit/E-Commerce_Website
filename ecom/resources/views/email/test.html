@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select with Image Buttons</title>
+    <style>
+        /* Thêm CSS tùy chỉnh nếu cần */
+        select {
+            width: 200px;
+            height: 40px;
+            /* Điều chỉnh chiều cao của select */
+            line-height: 40px;
+            /* Điều chỉnh chiều cao dòng của select */
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            appearance: none;
+            text-align: center;
+        }
+
+        option {
+            height: 40px;
+            /* Điều chỉnh chiều cao của option */
+            line-height: 40px;
+            /* Điều chỉnh chiều cao dòng của option */
+            padding: 5px;
+        }
+
+        img {
+            max-width: 30px;
+            max-height: 30px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        option {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <select>
+        <option value="vnpay">
+            <img src="https://example.com/vnpay-icon.png" alt="VNPAY">
+            VNPAY
+        </option>
+        <option value="momo">
+            <img src="https://example.com/momo-icon.png" alt="MOMO">
+            MOMO
+        </option>
+        <!-- Thêm option khác nếu cần -->
+    </select>
+
+</body>
+
+</html>

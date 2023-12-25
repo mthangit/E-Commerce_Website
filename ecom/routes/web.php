@@ -38,7 +38,11 @@ use App\Http\Controllers\User\PaymentController;
 |
 */
 Route::get('/test',function(){
-   orderEmail(1);
+   orderEmail(1703256121);
+});
+
+Route::post('/thankyou-email', function (){
+
 });
 
 Route::get('/', function () {
@@ -105,7 +109,7 @@ Route::controller(UserDiscountController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
    Route::post('/vnpay-payment', 'vnpay_payment')->name('vnpay.payment');
-   Route::get('/vnpay-return', 'VnpayReturn')->name('vnpay return');
+   Route::get('/vnpay-return', 'VnpayReturn')->name('vnpay.return');
    Route::get('/vnpay-error', 'VnpayError')->name('vnpay error');
    Route::post('/momo-payment', 'momo_payment')->name('momo.payment');
 });

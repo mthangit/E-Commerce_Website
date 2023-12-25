@@ -1,7 +1,6 @@
 Thông tin thanh toán
 
-VNPAY:
-
+VNPAY
 Thẻ: 9704198526191432198
 Tên: NGUYEN VAN A
 Ngày phát hành: 07/15
@@ -14,3 +13,7 @@ Tên: NGUYEN VAN A
 Ngày phát hành: 03/07
 OTP: OTP
 
+Tên mail:
+pingqlda@gmail.com
+Mật khẩu ứng dụng: uztt didu jabh qior
+Ping12345@

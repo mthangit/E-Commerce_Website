@@ -9,6 +9,8 @@
             <p class="txt-cyan h1 txt-uppercase" style="font-weight: 800;">Đặt hàng thành công!</p>
             <hr style="width: 50%; margin: 20px auto;">
             <p class="txt-18">Mã đơn hàng của bạn là: <strong class="txt-cyan h5"> {{$order->orderID}}</strong></p>
+            <p class="txt-18">Trạng thái đơn hàng: <strong class="txt-cyan h5"> {{$order->paymentStatus}}</strong></p>
+
             <div class="button-order-success">
 
                 <button class="btn btn-outline-primary"><a href="{{route('userdashboard')}}">
