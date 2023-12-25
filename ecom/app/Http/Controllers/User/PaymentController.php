@@ -151,11 +151,13 @@ class PaymentController extends Controller
             return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
         } else {
             $paymentStatus = 'unpaid';
+            $error = true;
             $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
-            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
+            $this->OrderController->UpdatePaymentMethod($vnp_TxnRef, "COD");
+            orderEmail($vnp_TxnRef);
+            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef, 'isError' => $error]);
         }
     }
-
 
     // Thanh toán qua MOMO
     function execPostRequest($url, $data)
@@ -186,7 +188,6 @@ class PaymentController extends Controller
         $orderID = $request->input('orderID');
         $totalPrice = $request->input('totalPrice');
 
-        $this->PurchaseHistoryController->storePurchaseHistory($orderID, $totalPrice, 'MOMO');
 
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
         // $partnerCode = 'MOMOBKUN20180529';
@@ -199,7 +200,8 @@ class PaymentController extends Controller
         $orderInfo = "Thanh toán đơn hàng " . $orderID . ' tại PING Shop';
         $amount = $totalPrice;
         $orderId = $orderID;
-        $redirectUrl = "http://127.0.0.1:8000/order-success/" . $orderID;
+        // $redirectUrl = "http://127.0.0.1:8000/order-success/" . $orderID;
+        $redirectUrl = route("momo.redirect");
         $ipnUrl = "http://127.0.0.1:8000/order-success/" . $orderID;
         $extraData = "";
 
@@ -241,11 +243,29 @@ class PaymentController extends Controller
             );
             $result = $this->execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true);  // decode json
-
             $url = $jsonResult['payUrl'];
 
             //Just a example, please check more in there
             return response()->json(['code' => '00', 'message' => 'success', 'data' => $url]);
+        }
+    }
+
+
+    public function redirectMomoPayment(Request $request)
+    {
+        if ($request->resultCode == '0') {
+            $paymentStatus = 'paid';
+            $this->PurchaseHistoryController->storePurchaseHistory($request->orderId, $request->amount, 'MOMO');
+            $this->OrderController->UpdatePaymentStatusPaid($request->orderId, $paymentStatus);
+            orderEmail($request->orderId);
+            return redirect()->route('order.success', ['orderID' => $request->orderId]);
+        } else {
+            $paymentStatus = 'unpaid';
+            $error = true;
+            $this->OrderController->UpdatePaymentMethod($request->orderId, "COD");
+            $this->OrderController->UpdatePaymentStatusPaid($request->orderId, $paymentStatus);
+            orderEmail($request->orderId);
+            return redirect()->route('order.success', ['orderID' => $request->orderId, 'isError' => $error]);
         }
     }
 }

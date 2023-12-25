@@ -133,4 +133,11 @@ class OrderController extends Controller
         $order->paymentStatus = $paymentStatus;
         $order->save();
     }
+
+    public function UpdatePaymentMethod($orderID, $paymentMethod){
+        $order = Order::find($orderID);
+        $order->paymentMethod = $paymentMethod;
+        $order->save();
+        return redirect()->route('orderSuccess', ['orderID'=>$orderID]);
+    }
 }
