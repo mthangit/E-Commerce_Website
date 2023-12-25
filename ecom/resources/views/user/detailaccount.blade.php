@@ -244,77 +244,81 @@
                                         </div>
                                     </div>
                                     <hr class="m-v-25">
-                                    <form>
+                                    <form method="post" action="{{ route('updateaccount', ['customerID' => $customers->customerID]) }}">
+                                        @csrf
                                         <div class="form-row">
+                                            <input type="hidden" class="form-control" id="customerID" name="customerID" value="{{$customers->customerID}}" />
+                                            <input type="hidden" class="form-control" id="userID" name="userID" value="{{$customers->userID}}" />
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="userName">User Name:</label>
-                                                <input type="text" class="form-control" id="userName" placeholder="User Name" value="{{$customers->customerName}}">
+                                                <label class="font-weight-semibold" for="customerName">User Name:</label>
+                                                <input type="text" class="form-control" id="customerName" name="customerName" value="{{$customers->customerName}}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="email">Email:</label>
-                                                <input type="text" class="form-control" id="email" placeholder="email" value="{{$customers->customerEmail}}">
+                                                <label class="font-weight-semibold" for="customerEmail">Email:</label>
+                                                <input type="text" class="form-control" id="customerEmail" name="customerEmail" value="{{$customers->customerEmail}}">
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label class="font-weight-semibold" for="phoneNumber">Phone Number:</label>
-                                                <input type="text" class="form-control" id="phoneNumber" value="{{$customers->customerPhone}}">
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="customerPhone">Phone Number:</label>
+                                                <input type="text" class="form-control" id="customerPhone" name="customerPhone" value="{{$customers->customerPhone}}">
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                <label class="font-weight-semibold" for="dob">Date of Birth:</label>
-                                                <input type="text" class="form-control" id="dob" value="{{$customers->customerBirthDay}}">
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="customerBirthDay">Date of Birth:</label>
+                                                <input type="date" class="form-control" id="customerBirthDay" name="customerBirthDay" value="{{$customers->customerBirthDay}}">
                                             </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="customerBankAccount">Bank Account:</label>
+                                                <input type="text" class="form-control" id="customerBankAccount" name="customerBankAccount" value="{{$customers->customerBankAccount}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="font-weight-semibold" for="customerBankName">Bank Name:</label>
+                                                <input type="text" class="form-control" id="customerBankName" name="customerBankName" value="{{$customers->customerBankName}}">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">Cập nhật</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <!-- <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Change Password</h4>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label class="font-weight-semibold" for="oldPassword">Old Password:</label>
-                                        <input type="password" class="form-control" id="oldPassword" placeholder="Old Password">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="font-weight-semibold" for="newPassword">New Password:</label>
-                                        <input type="password" class="form-control" id="newPassword" placeholder="New Password">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="font-weight-semibold" for="confirmPassword">Confirm Password:</label>
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <button class="btn btn-primary m-t-30">Change</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> -->
                             <div class="card1">
                                 <div class="card-header">
                                     <h4 class="card-title">Address Details</h4>
+
+                                    <a href="" class="cyan-link" style="color: rgb(128,128,128);">Chỉnh sửa</a>
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label class="font-weight-semibold" for="fullAddress">Full Address:</label>
-                                                <input type="text" class="form-control" id="fullAddress" value="{{$customers->customerAddress}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="stateCity">Bank Account:</label>
-                                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankAccount}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="stateCity">Bank Name:</label>
-                                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankName}}">
-                                            </div>
+                                    <div class="edit-delivery-content">
+                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+                                            <br>
+                                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn tỉnh thành</option>
+                                            </select>
+
+                                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn quận huyện</option>
+                                            </select>
+                                            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn phường xã</option>
+                                            </select>
+                                            <br>
                                         </div>
-                                    </form>
+                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+                                            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+                                        </div>
+                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+                                            <button class="btn-save" id="save-button"> Lưu lại</button>
+                                        </div>
+                                    </div>
+                                    <div class="delivery-content">
+                                        <div class="form-group col-md-12">
+                                            <label class="font-weight-semibold" for="customerAddress">Full Address:</label>
+                                            <input type="text" class="form-control" id="customerAddress" name="customerAddress" value="{{$customers->customerAddress}}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -322,86 +326,199 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Main Content Area End Here -->
+        <!-- Main Content Area End Here -->
 
 
-    <!-- Begin Scroll To Top -->
-    <a class="scroll-to-top" href="">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-    <!-- Scroll To Top End Here -->
+        <!-- Begin Scroll To Top -->
+        <a class="scroll-to-top" href="">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+        <!-- Scroll To Top End Here -->
 
-    <footer>
-        <div class="footer-wrapper grid-3-col">
-            <div class="basic-info">
-                <div class="logo">
-                    <a href=""><img src="{{ asset('assets/logo.svg')}}" alt=""></a>
+        <footer>
+            <div class="footer-wrapper grid-3-col">
+                <div class="basic-info">
+                    <div class="logo">
+                        <a href=""><img src="{{ asset('assets/logo.svg')}}" alt=""></a>
+                    </div>
+                    <div class="slogan">"All Ages, All Races, All Genders"</div>
+                    <div class="address">Based in Ho Chi Minh City</div>
+                    <div class="hotline"><span>Hotline:</span> <a href="tel:+0123456789">0123-456-789</a></div>
                 </div>
-                <div class="slogan">"All Ages, All Races, All Genders"</div>
-                <div class="address">Based in Ho Chi Minh City</div>
-                <div class="hotline"><span>Hotline:</span> <a href="tel:+0123456789">0123-456-789</a></div>
-            </div>
-            <div class="about-us">
-                <div class="about-us-title">
-                    <h4>VỀ CHÚNG TÔI</h4>
+                <div class="about-us">
+                    <div class="about-us-title">
+                        <h4>VỀ CHÚNG TÔI</h4>
+                    </div>
+                    <div class="introduction"><a href="{{route('about')}}" class="heavy-link">Giới thiệu</a></div>
+                    <div class="privacy-policy"><a href="{{route('privacypolicy')}}" class="heavy-link">Chính sách bảo mật</a></div>
+                    <div class="terms-of-use"><a href="{{route('termofuse')}}" class="heavy-link">Điều khoản sử dụng</a></div>
                 </div>
-                <div class="introduction"><a href="{{route('about')}}" class="heavy-link">Giới thiệu</a></div>
-                <div class="privacy-policy"><a href="{{route('privacypolicy')}}" class="heavy-link">Chính sách bảo mật</a></div>
-                <div class="terms-of-use"><a href="{{route('termofuse')}}" class="heavy-link">Điều khoản sử dụng</a></div>
-            </div>
-            <div class="page-support">
-                <div class="page-support-title">
-                    <h4>HỖ TRỢ</h4>
+                <div class="page-support">
+                    <div class="page-support-title">
+                        <h4>HỖ TRỢ</h4>
+                    </div>
+                    <div class="most-asked-questions"><a href="{{route('mostasked')}}" class="heavy-link">Các câu hỏi thường gặp</a></div>
+                    <div class="contact-info"><a href="{{route('contact')}}" class="heavy-link">Thông tin liên hệ</a></div>
+                    <div class="delivery-policy"><a href="{{route('deliverypolicy')}}" class="heavy-link">Chính sách vận chuyển</a></div>
+                    <div class="return-policy"><a href="{{route('returnpolicy')}}" class="heavy-link">Chính sách đổi trả</a></div>
+                    <div class="send-support"><a href="/chatify/1" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
                 </div>
-                <div class="most-asked-questions"><a href="{{route('mostasked')}}" class="heavy-link">Các câu hỏi thường gặp</a></div>
-                <div class="contact-info"><a href="{{route('contact')}}" class="heavy-link">Thông tin liên hệ</a></div>
-                <div class="delivery-policy"><a href="{{route('deliverypolicy')}}" class="heavy-link">Chính sách vận chuyển</a></div>
-                <div class="return-policy"><a href="{{route('returnpolicy')}}" class="heavy-link">Chính sách đổi trả</a></div>
-                <div class="send-support"><a href="/chatify/1" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
             </div>
-        </div>
-        <div class="copyright">
-            <div>Chịu trách nhiệm quản lý nội dung: PING Cosmetics - Số điện thoại: 0123-456-789</div>
-            <div>&copy; 2023 - Bản quyền thuộc về PING Cosmetics</div>
-        </div>
-    </footer>
+            <div class="copyright">
+                <div>Chịu trách nhiệm quản lý nội dung: PING Cosmetics - Số điện thoại: 0123-456-789</div>
+                <div>&copy; 2023 - Bản quyền thuộc về PING Cosmetics</div>
+            </div>
+        </footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{{asset("js/script.js")}}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="{{asset("js/script.js")}}"></script>
 
-    <!-- Global Vendor, plugins JS -->
+        <!-- Global Vendor, plugins JS -->
 
-    <!-- JS Files
+        <!-- JS Files
     ============================================ -->
-    <!-- Global Vendor, plugins JS -->
+        <!-- Global Vendor, plugins JS -->
 
-    <!-- Vendor JS -->
-    <script src="{{ asset('attribute/js/vendor/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/vendor/jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/vendor/modernizr-3.11.2.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/vendor/jquery.waypoints.js') }}"></script>
+        <!-- Vendor JS -->
+        <script src="{{ asset('attribute/js/vendor/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/vendor/jquery-3.5.1.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/vendor/modernizr-3.11.2.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/vendor/jquery.waypoints.js') }}"></script>
 
-    <!--Plugins JS-->
-    <script src="{{ asset('attribute/js/plugins/wow.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/plugins/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/plugins/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/plugins/jquery.nice-select.js') }}"></script>
-    <script src="{{ asset('attribute/js/plugins/parallax.min.js') }}"></script>
-    <script src="{{ asset('attribute/js/plugins/jquery.magnific-popup.min.js') }}"></script>
+        <!--Plugins JS-->
+        <script src="{{ asset('attribute/js/plugins/wow.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/plugins/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/plugins/swiper-bundle.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/plugins/jquery.nice-select.js') }}"></script>
+        <script src="{{ asset('attribute/js/plugins/parallax.min.js') }}"></script>
+        <script src="{{ asset('attribute/js/plugins/jquery.magnific-popup.min.js') }}"></script>
 
-    <!-- Minify Version -->
-    <!-- <script src="attribute/js/vendor.min.js"></script> -->
-    <!-- <script src="attribute/js/plugins.min.js"></script> -->
+        <!-- Minify Version -->
+        <!-- <script src="attribute/js/vendor.min.js"></script> -->
+        <!-- <script src="attribute/js/plugins.min.js"></script> -->
 
-    <!--Main JS (Common Activation Codes)-->
-    <script src="{{ asset('attribute/js/main.js') }}"></script>
-    <!-- <script src="attribute/js/main.min.js"></script> -->
+        <!--Main JS (Common Activation Codes)-->
+        <script src="{{ asset('attribute/js/main.js') }}"></script>
+        <!-- <script src="attribute/js/main.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script>
+            // Đoạn mã JavaScript để lấy các phần tử DOM
+            var editDeliveryContent = document.querySelector('.edit-delivery-content');
+            var deliveryContent = document.querySelector('.delivery-content');
+            var editLink = document.querySelector('.cyan-link');
+            var saveButton = document.querySelector('.btn-save');
+
+            // Ẩn phần tử chỉnh sửa khi trang được tải
+            editDeliveryContent.style.display = 'none';
+
+            // Bắt sự kiện khi bấm vào nút "Chỉnh sửa"
+            editLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Ẩn phần tử thông tin hiển thị
+                deliveryContent.style.display = 'none';
+                // Hiển thị phần tử chỉnh sửa
+                editDeliveryContent.style.display = 'block';
+                saveButton.style.display = 'block';
+                saveButton.addEventListener('click', luuThayDoi);
+
+            });
+
+            // Đoạn mã JavaScript để tạo các phần tử select và lấy dữ liệu
+            var citis = document.getElementById("city");
+            var districts = document.getElementById("district");
+            var wards = document.getElementById("ward");
+
+            var Parameter = {
+                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                method: "GET",
+                responseType: "application/json",
+            };
+
+            var promise = axios(Parameter);
+            promise.then(function(result) {
+                renderCity(result.data);
+            });
+
+            function renderCity(data) {
+                for (const x of data) {
+                    citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                }
+
+                citis.onchange = function() {
+                    districts.length = 1;
+                    wards.length = 1;
+
+                    if (this.value != "") {
+                        const result = data.filter(n => n.Id === this.value);
+
+                        for (const k of result[0].Districts) {
+                            districts.options[districts.options.length] = new Option(k.Name, k.Id);
+                        }
+                    }
+                };
+
+                districts.onchange = function() {
+                    wards.length = 1;
+
+                    const dataCity = data.filter((n) => n.Id === citis.value);
+                    if (this.value != "") {
+                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                        for (const w of dataWards) {
+                            wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                        }
+                    }
+                };
+            }
+
+            // Đoạn mã JavaScript để xử lý sự kiện khi bấm nút "Lưu lại"
+            function luuThayDoi() {
+                // Lấy giá trị từ các phần tử select
+                var selectedCity = citis.options[citis.selectedIndex].text;
+                var selectedDistrict = districts.options[districts.selectedIndex].text;
+                var selectedWard = wards.options[wards.selectedIndex].text;
+                // Lấy giá trị từ textarea
+                var deliveryAddress = document.getElementById("address").value;
+
+
+                if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã') {
+                    editDeliveryContent.style.display = 'none';
+                    // Hiển thị lại phần tử thông tin
+                    deliveryContent.style.display = 'block';
+                    saveButton.style.display = 'none';
+                } else {
+                    // Cập nhật giá trị trong các phần tử HTML tương ứng
+                    document.getElementById("customerAddress").value = deliveryAddress + ', ' + selectedWard + ", " + selectedDistrict + ", " + selectedCity;
+                    // Ẩn phần tử chỉnh sửa
+                    editDeliveryContent.style.display = 'none';
+                    // Hiển thị lại phần tử thông tin
+                    deliveryContent.style.display = 'block';
+                    saveButton.style.display = 'none';
+                }
+
+
+                // Gửi AJAX request để lưu vào CSDL
+                axios.post('/update-address', {
+                        customerID: document.getElementById("customerID").value,
+                        newAddress: document.getElementById("customerAddress").value,
+                        userID: document.getElementById("userID").value
+                    })
+                    .then(function(response) {
+                        console.log(response.data.message);
+                        // Xử lý thành công nếu cần
+                    })
+                    .catch(function(error) {
+                        console.error('Error updating address:', error);
+                        // Xử lý lỗi nếu cần
+                    });
+            }
+        </script>
+
 
 </body>
 
