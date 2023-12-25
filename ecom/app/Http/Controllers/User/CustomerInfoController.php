@@ -9,6 +9,6 @@ class CustomerInfoController extends Controller
 {
     public function getCustomerInfo()
     {
-
+        
     }
 }

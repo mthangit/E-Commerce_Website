@@ -49,19 +49,27 @@ class AccountController extends Controller
     {
         $customerID = CustomerInfo::where('userID', $userID)->first()->customerID;
         $customers = CustomerInfo::find($customerID);
-        $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->get();
+        // $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->get();
+
+        // orders desc
+        $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->orderBy('orders.orderID', 'desc')->get();
+
         return view('user.detailaccount', compact('customers', 'orders'));
     }
     public function UpdateAccount(Request $request)
     {
         $customerID = $request->customerID;
         $userID = $request->userID;
+
+        // stil update if some of the fields are empty
+
+
         CustomerInfo::FindorFail($customerID)->update([
             'customerName' => $request->customerName,
             'customerEmail' => $request->customerEmail,
             'customerPhone' => $request->customerPhone,
             //    'customerAddress' => $request->customerAddress,
-            'customerBirthDay' => $request->customerBirthDay,
+            // 'customerBirthDay' => $request->customerBirthDay,
             'customerBankAccount' => $request->customerBankAccount,
             'customerBankName' => $request->customerBankName,
             // 'customerPassword' => $request->customerPassword,
@@ -80,10 +88,10 @@ class AccountController extends Controller
         // Perform database update logic here
         // Example using Eloquent:
         CustomerInfo::where('customerID', $customerID)->update(['customerAddress' => $newAddress]);
-  
+
 
         return redirect()->route('detailuseraccount', $userID)->with('message', 'Cập nhật tài khoản thành công');
-    
+
     }
     public function DeleteAccount($customerID)
     {
