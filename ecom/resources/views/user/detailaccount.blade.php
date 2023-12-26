@@ -89,7 +89,7 @@
                         </a>
                         <div class="text">
                             @auth
-                                <a href="{{ route('detailuseraccount', Auth::user()->id) }}"
+                                <a href="{{ route('detailuseraccount')}}"
                                     class="white-anchor heavy-link">{{ Auth::user()->name }}</a>
                                 <br>
                                 <a href="{{ route('logout') }}" class="white-anchor heavy-link">Đăng xuất</a>
@@ -150,6 +150,7 @@
                                 href="#account-details" role="tab" aria-controls="account-details"
                                 aria-selected="false">Account Details</a>
                         </li>
+                        <br>
                     </ul>
                 </div>
                 <div class="col-lg-9">
@@ -185,29 +186,26 @@
                                                     <td>
                                                         {{ $order->orderCreatedDate }}
                                                     </td>
-                                                    <?php
-                                                    $orderStatus = $order->orderStatus;
-                                                    if ($order->orderStatus == 'completed') {
-                                                        $orderStatus = 'Đã hoàn thành';
-                                                    } elseif ($order->orderStatus == 'processing') {
-                                                        $orderStatus = 'Đang xử lý';
-                                                    } elseif ($order->orderStatus == 'pending') {
-                                                        $orderStatus = 'Đang chờ xử lý';
-                                                    } elseif ($order->orderStatus == 'cancel') {
-                                                        $orderStatus = 'Đã hủy';
-                                                    } else {
-                                                        $orderStatus = 'Trạng thái không xác định';
-                                                    }
-                                                    ?>
                                                     <td>
-                                                        <div
-                                                            class="d-flex align-items-center justify-content-center text-center">
-                                                            <div class="badge  badge-dot m-r-10">
+                                                        @if ($order->orderStatus == 'completed')
+                                                            <div class="text-center text-success">
+                                                                <b> Đã hoàn thành </b>
                                                             </div>
-                                                            <div>
-                                                                {{ $orderStatus }}
+                                                        @elseif($order->orderStatus == 'processing')
+                                                            <div class="text-center text-info">
+                                                                <b> Đang xử lý </b>
                                                             </div>
-                                                        </div>
+                                                        @elseif($order->orderStatus == 'pending')
+                                                            <div class="text-center text-warning">
+                                                                <b> Đang chờ xử lý </b>
+                                                            </div>
+                                                        @elseif($order->orderStatus == 'canceled')
+                                                            <div class="text-center text-danger">
+                                                                <b> Đã huỷ </b>
+                                                            </div>
+                                                        @else
+                                                            <div>Unknown Status</div>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <?php
@@ -382,7 +380,6 @@
             </div>
         </div>
         <!-- Main Content Area End Here -->
-
 
         <!-- Begin Scroll To Top -->
         <a class="scroll-to-top" href="">
@@ -587,8 +584,6 @@
                     });
             }
         </script>
-
-
 </body>
 
 </html>

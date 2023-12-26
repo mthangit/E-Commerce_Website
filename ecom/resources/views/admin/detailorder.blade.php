@@ -24,7 +24,7 @@
                     <div class="card">
                         <div class="card-header pt-3">
                             <div class="row invoice-info">
-                                <div class="col-sm-4 invoice-col">
+                                <div class="col-sm-6 invoice-col">
                                     <h1 class="h5 mb-3">Shipping Address</h1>
                                     <address>
                                         <strong>{{ $customerinfo->customerName }}</strong><br>
@@ -33,11 +33,11 @@
                                         {{ $customerinfo->customerEmail }}
                                     </address>
                                 </div>
-                                <div class="col-sm-4 invoice-col">
-                                    <b>Invoice #007612</b><br>
+                                <div class="col-sm-6 invoice-col">
+                                    <b>Ngày đặt hàng: {{ $order->orderCreatedDate }}</b><br>
                                     <br>
                                     <b>ID đơn hàng: </b>{{ $order->orderID }}<br>
-                                    <b>Tổng tiền: </b>{{ $order->grandPrice }} VND<br>
+                                    <b>Tổng tiền: {{ formatCurrency($order->grandPrice) }} VND</b><br>
                                     <b>Trạng thái đơn: </b> <span class="text-success">{{ $order->orderStatus }} -- lúc :
                                         {{ $order->orderCompletedDate }}</span>
                                     <br>
@@ -120,7 +120,7 @@
                                         <option value="completed"
                                             {{ $order->orderStatus == 'completed' ? 'selected' : '' }}>Completed</option>
                                         <option value="cancelled"
-                                            {{ $order->orderStatus == 'cancelled' ? 'selected' : '' }}>Cancel</option>
+                                            {{ $order->orderStatus == 'canceled' ? 'selected' : '' }}>Cancel</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">Vào lúc
