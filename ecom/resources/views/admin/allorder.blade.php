@@ -38,8 +38,8 @@ PING - Oder List
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Trạng thái</th>
+                        <th>Ngày tạo đơn</th>
                         <th>Số tiền</th>
-                        <th>Ngày trả tiền</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -95,7 +95,7 @@ PING - Oder List
                             <div>Unknown Status</div>
                             @endif
                         </td>
-                        <td>{{$order->orderCompletedDate}}</td>
+                        <td>{{$order->created_at}}</td>
                         <td>{{$order->grandPrice}}</td>
                     </tr>
                     @endforeach
@@ -108,4 +108,8 @@ PING - Oder List
 <!--/ Contextual Classes -->
 @endsection
 @section('customJS')
+<!-- Add these scripts to your HTML head section -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.js"></script>
+
 @endsection
