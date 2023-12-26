@@ -92,7 +92,7 @@ Route::controller(CartController::class)->group(function () {
 });
 
 Route::controller(UserAccountController::class)->group(function () {
-   Route::get('/user/detail-account/{userID}', 'DetailAccount')->name('detailuseraccount');
+   Route::get('/user/detail-account', 'DetailAccount')->name('detailuseraccount');
    Route::get('/user/detail-order/{orderID}', 'DetailOrder')->name('detailuserorder');
    Route::post('/user/update-account', 'UpdateAccount')->name('updateaccount');
    Route::post('/update-address', 'UpdateAddress');
@@ -101,7 +101,8 @@ Route::controller(UserAccountController::class)->group(function () {
 Route::controller(UserOrderController::class)->group(function () {
     Route::get('/payment', 'Index')->name('payment');
     Route::post('store-order', 'StoreOrder')->name('store.order');
-    Route::get('/order-success/{orderID}/{isError?}', 'OrderSuccess')->name('order.success');
+    Route::get('/order-success/{orderID}', 'OrderSuccess')->name('order.success');
+    Route::post('cancel-order', 'CancelOrder')->name('cancel order');
 });
 
 Route::controller(UserDiscountController::class)->group(function () {

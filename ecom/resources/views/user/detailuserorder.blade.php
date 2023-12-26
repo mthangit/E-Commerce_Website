@@ -13,7 +13,7 @@ if ($order->orderStatus == 'completed') {
     $orderStatus = 'Đang xử lý';
 } elseif ($order->orderStatus == 'pending') {
     $orderStatus = 'Đang chờ xử lý';
-} elseif ($order->orderStatus == 'cancel') {
+} elseif ($order->orderStatus == 'canceled') {
     $orderStatus = 'Đã hủy';
 } else {
     $orderStatus = 'Trạng thái không xác định';
@@ -70,7 +70,7 @@ if ($order->orderStatus == 'completed') {
                             </address>
                         </div>
                         <div>
-                            <h5 class="info-title">Thông tin người đặt</h5>
+                            <h5 class="info-title">Thông tin đơn hàng</h5>
                             Ngày đặt: <b>{{ $order->orderCreatedDate }}</b><br>
                             Tổng tiền: <b>{{ formatCurrency($order->grandPrice) }} VND</b><br>
                             Phương thức thanh toán: <b>{{ $order->paymentMethod }}<br>
@@ -82,24 +82,38 @@ if ($order->orderStatus == 'completed') {
                                 Trạng thái thanh toán: <b> <span class="text-success">Đã thanh toán</span></b>
                                 <br>
                             @endif
-                            Trạng thái đơn: <b> <span class="text-success">{{ $orderStatus }}
-                                </span></b>
+                            Trạng thái đơn:
+                            <b>
+                                @if ($order->orderStatus == 'pending')
+                                    <span class="text-warning">{{ $orderStatus }}
+                                    </span>
+                                @elseif($order->orderStatus == 'completed')
+                                    <span class="text-success">{{ $orderStatus }}
+                                    </span>
+                                @elseif($order->orderStatus == 'processing')
+                                    <span class="text-primary">{{ $orderStatus }}
+                                    </span>
+                                @elseif($order->orderStatus == 'canceled')
+                                    <span class="text-danger">{{ $orderStatus }}
+                                    </span>
+                                @endif
+                            </b>
                             @if ($order->orderStatus != 'pending')
-                                -- lúc {{ $order->orderCompletedDate }}
+                                lúc {{ $order->orderCompletedDate }}
                             @endif
                         </div>
                         <br>
                         @if ($order->orderStatus == 'pending')
                             <div class="text-left">
                                 <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#cancelOrderModal">
+                                    data-target="#cancelOrderModal" id="btn-cancel">
                                     Hủy đơn hàng
                             </div>
                             <br>
                         @elseif($order->orderStatus == 'completed')
                             <div class="text-left">
                                 <button type="button" class="btn btn-warning" data-toggle="modal"
-                                    data-target="#cancelOrderModal">
+                                    data-target="#cancelOrderModal" id="btn-return">
                                     Trả đơn hàng
                             </div>
                             <br>
@@ -181,3 +195,51 @@ if ($order->orderStatus == 'completed') {
 <!-- /.content -->
 
 @include('user.layouts.template_footer')
+
+<script>
+    $(document).ready(function() {
+        $('#btn-cancel').click(function() {
+            var orderID = {{ $order->orderID }};
+            var currentDate = new Date();
+            var formattedDate = currentDate.toISOString().slice(0, 16);
+            console.log(formattedDate);
+            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                $.ajax({
+                    url: "{{ route('cancel order') }}",
+                    method: "POST",
+                    data: {
+                        orderID: orderID,
+                        orderCompletedDate: formattedDate,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === true) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#btn-return').click(function() {
+            var orderID = {{ $order->orderID }};
+
+            // if (confirm('Bạn có chắc chắn muốn trả đơn hàng này?')) {
+            //     $.ajax({
+            //         url: "",
+            //         method: "POST",
+            //         data: {
+            //             orderID: orderID,
+            //             _token: '{{ csrf_token() }}'
+            //         },
+            //         success: function(response) {
+            //             if (response.status === true) {
+            //                 location.reload();
+            //             }
+            //         }
+            //     });
+            // }
+        });
+
+    });
+</script>

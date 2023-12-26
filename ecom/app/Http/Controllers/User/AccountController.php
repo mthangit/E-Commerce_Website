@@ -45,12 +45,12 @@ class AccountController extends Controller
 
         return redirect()->route('allaccount')->with('message', 'Thêm tài khoản thành công');
     }
-    public function DetailAccount($userID)
+    public function DetailAccount()
     {
+        $userID = Auth()->user()->id;
         $customerID = CustomerInfo::where('userID', $userID)->first()->customerID;
         $customers = CustomerInfo::find($customerID);
         // $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->get();
-
         // orders desc
         $orders = Order::leftJoin('customer_infos', 'orders.customerID', '=', 'customer_infos.customerID')->where('orders.customerID', $customerID)->orderBy('orders.orderID', 'desc')->get();
 
@@ -69,7 +69,7 @@ class AccountController extends Controller
             'customerEmail' => $request->customerEmail,
             'customerPhone' => $request->customerPhone,
             //    'customerAddress' => $request->customerAddress,
-            // 'customerBirthDay' => $request->customerBirthDay,
+            'customerBirthDay' => $request->customerBirthDay,
             'customerBankAccount' => $request->customerBankAccount,
             'customerBankName' => $request->customerBankName,
             // 'customerPassword' => $request->customerPassword,
@@ -90,7 +90,7 @@ class AccountController extends Controller
         CustomerInfo::where('customerID', $customerID)->update(['customerAddress' => $newAddress]);
 
 
-        return redirect()->route('detailuseraccount', $userID)->with('message', 'Cập nhật tài khoản thành công');
+        return redirect()->route('detailuseraccount')->with('message', 'Cập nhật tài khoản thành công');
 
     }
     public function DeleteAccount($customerID)

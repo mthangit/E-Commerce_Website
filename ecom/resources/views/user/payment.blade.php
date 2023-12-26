@@ -97,6 +97,48 @@
             /* Điều chỉnh chiều cao và chiều rộng của cảnh báo */
             flex: 1;
         }
+
+        .btn-group button {
+            background-size: contain;
+            /* hoặc background-size: cover; tùy thuộc vào mong muốn của bạn */
+            background-repeat: no-repeat;
+
+            color: #fff;
+            padding: 20px;
+            /* Tăng padding để button lớn hơn */
+            border: 2px solid #181818;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 150px;
+            height: 30px;
+        }
+
+        .btn-group button.COD {
+            background-image: url('path/to/cod-image.jpg');
+
+            /* Đường dẫn đến hình ảnh của COD */
+        }
+
+        .btn-group #vnpay {
+            background-image: url('{{ asset('assets/vnpay-seeklogo.com.svg') }}');
+
+            /* Đường dẫn đến hình ảnh của VnPay */
+        }
+
+        .btn-group button.Momo {
+            background-image: url('path/to/momo-image.jpg');
+            /* Đường dẫn đến hình ảnh của Momo */
+        }
+
+        .btn-group button:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-group button.active {
+            border: 2px solid #2818db;
+            /* Hoặc màu khác để làm nổi bật button đang active */
+        }
     </style>
 
 </div>
@@ -222,12 +264,21 @@
                 </div>
  --}}
 
-                <select name="payment" id="payment">
+                <select name="payment" id="payment" class="">
                     <option value="" selected>Chọn phương thức</option>
                     <option value="COD">Thanh toán khi nhận hàng</option>
                     <option value="VNPAY">Ví VNPAY</option>
                     <option value="MOMO">Ví MOMO</option>
                 </select>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-light mx-2 rounded"
+                        onclick="activateButton(this)">COD</button>
+                    <button type="button" class="btn btn-light mx-2 rounded" id="vnpay"
+                        onclick="activateButton(this)"></button>
+                    <button type="button" class="btn btn-light mx-2 rounded"
+                        onclick="activateButton(this)">Momo</button>
+                </div>
+
                 {{-- &nbsp;
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="payment" id="payment1" autocomplete="off"
@@ -243,9 +294,8 @@
                     <label class="btn btn-outline-primary" for="payment3">Ví MOMO</label>
                 </div> --}}
 
-
-                <br>
             </div>
+
             <div class="payment-note">
                 <strong>Lưu ý:</strong><br>
                 <ul>
@@ -306,8 +356,39 @@
     var discountValidCode = '';
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
 
+    var activeButton = null;
+
+    function activateButton(clickedButton) {
+        // Kiểm tra xem button đã có lớp 'btn-pop' chưa
+        var isActive = clickedButton.classList.contains('btn-pop');
+
+        // Loại bỏ lớp 'btn-pop' từ button hiện tại (nếu có)
+        if (activeButton !== null) {
+            activeButton.classList.remove('btn-pop');
+            activeButton.classList.remove('font-bold');
+        }
+
+        // Nếu button chưa có lớp 'btn-pop', thêm nó vào
+        if (!isActive) {
+            clickedButton.classList.add('btn-pop');
+            clickedButton.classList.add('font-bold');
+        }
+
+        // Lưu trạng thái của button hiện tại
+        activeButton = clickedButton;
+    }
+
+    // Xử lý sự kiện khi click vào bất kỳ nơi nào trên trang
+    document.addEventListener('mousedown', function(event) {
+        // Kiểm tra xem phần tử được click có phải là button hay không
+        var isButton = event.target.classList.contains('btn');
+
+        // Nếu không phải là button, loại bỏ lớp 'btn-pop' từ button hiện tại
+    });
     $(document).ready(function() {
         // Initially hide the discount block and error message
+
+
         $('#errorAlertPaymentMethod').hide();
         $('.discount-detail').hide();
         $('#errorAlert').hide();
@@ -589,6 +670,8 @@
                     districts.options[districts.options.length] = new Option(k.Name, k.Id);
                 }
             }
+
+
         };
 
         districts.onchange = function() {
@@ -606,15 +689,20 @@
     }
 
     function checkOrderInfo() {
-        var selectedCity = citis.options[citis.selectedIndex].text;
-        var selectedDistrict = districts.options[districts.selectedIndex].text;
-        var selectedWard = wards.options[wards.selectedIndex].text;
-        var phone = document.getElementById("phone").value;
+
+        var payment = document.getElementById('payment').value;
+        var address = document.getElementById('orderAddress').innerText;
+        var phone = document.getElementById('orderPhone').innerText;
+        var name = document.getElementById('orderName').innerText;
+
+        // var selectedCity = citis.options[citis.selectedIndex].text;
+        // var selectedDistrict = districts.options[districts.selectedIndex].text;
+        // var selectedWard = wards.options[wards.selectedIndex].text;
+        // var phone = document.getElementById("phone").value;
         // Lấy giá trị từ textarea
         var deliveryAddress = document.getElementById("address").value;
 
-        if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||
-            selectedWard === 'Chọn phường xã' || phone.length !== 10) {
+        if (address === '' || phone.length !== 10) {
             return false;
         } else {
             return true;

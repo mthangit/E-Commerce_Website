@@ -145,17 +145,16 @@ class PaymentController extends Controller
         $vnp_Amount = $request->vnp_Amount;
         if ($vnp_ResponseCode == "00") {
             $paymentStatus = 'paid';
-            $this->PurchaseHistoryController->storePurchaseHistory($vnp_TxnRef, $vnp_Amount, 'VNPAY');
+            $this->PurchaseHistoryController->storePurchaseHistory($vnp_TxnRef, $vnp_Amount/100, 'VNPAY');
             $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
             orderEmail($vnp_TxnRef);
             return redirect()->route('order.success', ['orderID' => $vnp_TxnRef]);
         } else {
             $paymentStatus = 'unpaid';
-            $error = true;
             $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
             $this->OrderController->UpdatePaymentMethod($vnp_TxnRef, "COD");
             orderEmail($vnp_TxnRef);
-            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef, 'isError' => $error]);
+            return redirect()->route('order.success', ['orderID' => $vnp_TxnRef, 'isError' => "true"]);
         }
     }
 
@@ -261,11 +260,12 @@ class PaymentController extends Controller
             return redirect()->route('order.success', ['orderID' => $request->orderId]);
         } else {
             $paymentStatus = 'unpaid';
-            $error = true;
             $this->OrderController->UpdatePaymentMethod($request->orderId, "COD");
             $this->OrderController->UpdatePaymentStatusPaid($request->orderId, $paymentStatus);
             orderEmail($request->orderId);
-            return redirect()->route('order.success', ['orderID' => $request->orderId, 'isError' => $error]);
+            // set isError to session
+
+            return redirect()->route('order.success', ['orderID' => $request->orderId, 'isError' => "true"]);
         }
     }
 }
