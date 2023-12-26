@@ -65,7 +65,7 @@
                         </a>
                         <div class="text">
                             @auth
-                                <a href="{{ route('detailuseraccount', Auth::user()->id) }}"
+                                <a href="{{ route('detailuseraccount') }}"
                                     class="white-anchor heavy-link">{{ Auth::user()->name }}</a>
                                 <br>
                                 <a href="{{ route('logout') }}" class="white-anchor heavy-link">Đăng xuất</a>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PING Cosmetics Shop</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,600">
     <link href="https://pennypixels.pennymacusa.com/css/1_4_1/pp.css">
@@ -16,7 +18,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('attribute/images/favicon.ico') }}" />
+    {{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('attribute/images/favicon.ico') }}" /> --}}
 
     <!-- CSS
     ============================================ -->
@@ -47,60 +49,62 @@
         <div class="header-container">
             <div class="logo-site">
                 @auth
-                <a href="{{route('userdashboard')}}" class="logo">
-                    <img src="{{ asset('assets/logo.svg')}}" alt="logo">
-                </a>
+                    <a href="{{ route('userdashboard') }}" class="logo">
+                        <img src="{{ asset('assets/logo.svg') }}" alt="logo">
+                    </a>
                 @endauth
                 @guest
-                <a href="/" class="logo">
-                    <img src="{{ asset('assets/logo.svg')}}" alt="logo">
-                </a>
+                    <a href="/" class="logo">
+                        <img src="{{ asset('assets/logo.svg') }}" alt="logo">
+                    </a>
                 @endguest
             </div>
 
             <div class="search-site">
                 <div class="suggested-keywords">
-                    @foreach($subcategories_5 as $subcategory_header)
-                    @php
-                    $categorySlug = getCategoryByCategoryID($subcategory_header->categoryID)->categorySlug;
-                    @endphp
-                    <a href="{{route('productlist', ['categorySlug'=>$categorySlug, 'subCategorySlug'=>$subcategory_header->subCategorySlug])}}" class="white-anchor heavy-link">{{$subcategory_header->subCategoryName}}</a>
+                    @foreach ($subcategories_5 as $subcategory_header)
+                        @php
+                            $categorySlug = getCategoryByCategoryID($subcategory_header->categoryID)->categorySlug;
+                        @endphp
+                        <a href="{{ route('productlist', ['categorySlug' => $categorySlug, 'subCategorySlug' => $subcategory_header->subCategorySlug]) }}"
+                            class="white-anchor heavy-link">{{ $subcategory_header->subCategoryName }}</a>
                     @endforeach
                 </div>
 
                 <div class="search-cart">
-                    <form method="get" action="{{route('search product')}}">
+                    <form method="get" action="{{ route('search product') }}">
                         <input type="text" placeholder="Tìm kiếm sản phẩm..." class="input-search" name="keyword">
                         <button type="submit" class="btn-submit-search">
-                            <img src="{{ asset('assets/search-icon.svg')}}" alt="Search">
+                            <img src="{{ asset('assets/search-icon.svg') }}" alt="Search">
                         </button>
                     </form>
                     <div class="item-header cart">
-                        <a href="{{route('cart')}}" class="white-anchor">
-                            <img src="{{ asset('assets/cart-icon.svg')}}" alt="">
+                        <a href="{{ route('cart') }}" class="white-anchor">
+                            <img src="{{ asset('assets/cart-icon.svg') }}" alt="">
                         </a>
                     </div>
                     <div class="item-header logout">
                         <a href="" class="white-anchor">
-                            <img src="{{ asset('assets/login-icon.svg')}}" alt="">
+                            <img src="{{ asset('assets/login-icon.svg') }}" alt="">
                         </a>
                         <div class="text">
                             @auth
-                            <a href="{{route('detailuseraccount', Auth::user()->id)}}" class="white-anchor heavy-link">{{Auth::user()->name}}</a>
-                            <br>
-                            <a href="{{ route('logout') }}" class="white-anchor heavy-link">Đăng xuất</a>
+                                <a href="{{ route('detailuseraccount')}}"
+                                    class="white-anchor heavy-link">{{ Auth::user()->name }}</a>
+                                <br>
+                                <a href="{{ route('logout') }}" class="white-anchor heavy-link">Đăng xuất</a>
                             @endauth
                             @guest
-                            <a href="{{route('login')}}" class="white-anchor heavy-link">Đăng nhập</a>
-                            <br>
-                            <a href="{{route('register')}}" class="white-anchor heavy-link">Đăng ký</a>
+                                <a href="{{ route('login') }}" class="white-anchor heavy-link">Đăng nhập</a>
+                                <br>
+                                <a href="{{ route('register') }}" class="white-anchor heavy-link">Đăng ký</a>
                             @endguest
                         </div>
                     </div>
 
                     <div class="item-header support">
                         <a href="" class="white-anchor">
-                            <img src="{{ asset('assets/phone-icon.svg')}}" alt="">
+                            <img src="{{ asset('assets/phone-icon.svg') }}" alt="">
                         </a>
                         <a href="" class="white-anchor heavy-link">Hỗ trợ <br> khách hàng</a>
                     </div>
@@ -112,17 +116,18 @@
 
     <div class="top-bar">
         <a href="" class="category-fixed" style="font-weight: 600; background: #fff;">DANH MỤC</a>
-        @foreach($categories as $category)
-        <div class="sub-nav">
-            <button class="btn-sub-nav">{{$category->categoryName}} <i class="fa fa-caret-down"></i></button>
-            <div class="sub-nav-content">
-                @foreach($subcategories as $subcategory_header)
-                @if($subcategory_header->categoryID == $category->categoryID)
-                <a href="{{route('productlist', ['categorySlug'=>$category->categorySlug, 'subCategorySlug'=>$subcategory_header->subCategorySlug])}}" class="heavy-link">{{$subcategory_header->subCategoryName}}</a>
-                @endif
-                @endforeach
+        @foreach ($categories as $category)
+            <div class="sub-nav">
+                <button class="btn-sub-nav">{{ $category->categoryName }} <i class="fa fa-caret-down"></i></button>
+                <div class="sub-nav-content">
+                    @foreach ($subcategories as $subcategory_header)
+                        @if ($subcategory_header->categoryID == $category->categoryID)
+                            <a href="{{ route('productlist', ['categorySlug' => $category->categorySlug, 'subCategorySlug' => $subcategory_header->subCategorySlug]) }}"
+                                class="heavy-link">{{ $subcategory_header->subCategoryName }}</a>
+                        @endif
+                    @endforeach
+                </div>
             </div>
-        </div>
         @endforeach
     </div>
     <!-- Main Header Area End Here -->
@@ -134,77 +139,93 @@
                 <div class="col-lg-3">
                     <ul class="nav myaccount-tab-trigger" id="account-page-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders" role="tab" aria-controls="account-orders" aria-selected="false">Orders</a>
+                            <a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders"
+                                role="tab" aria-controls="account-orders" aria-selected="false">Orders</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" id="account-address-tab" data-bs-toggle="tab" href="#account-address" role="tab" aria-controls="account-address" aria-selected="false">Addresses</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Account Details</a>
+                            <a class="nav-link" id="account-details-tab" data-bs-toggle="tab"
+                                href="#account-details" role="tab" aria-controls="account-details"
+                                aria-selected="false">Account Details</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="account-logout-tab" href="login-register.html" role="tab" aria-selected="false">Logout</a>
-                        </li>
+                        <br>
                     </ul>
                 </div>
                 <div class="col-lg-9">
                     <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
-                        <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
+                        <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel"
+                            aria-labelledby="account-dashboard-tab">
                             <div class="myaccount-dashboard">
                                 <p>Cảm ơn đã tin tưởng chúng tôi</p>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
+                        <div class="tab-pane fade" id="account-orders" role="tabpanel"
+                            aria-labelledby="account-orders-tab">
                             <div class="myaccount-orders">
                                 <h4 class="small-title">MY ORDERS</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover">
-                                        @foreach ($orders as $order)
-                                        <tbody>
+                                        <thead>
                                             <tr>
                                                 <th>Mã đơn hàng</th>
                                                 <th>Ngày đặt hàng</th>
                                                 <th>Trạng thái</th>
+                                                <th>Tình trạng thanh toán</th>
                                                 <th>Tổng tiền</th>
                                                 <th></th>
                                             </tr>
-                                            <tr>
-                                                <td><a href="{{route('detailorder', $order->orderID)}}">{{$order->orderID}}</a></td>
-                                                <td><a href="{{route('detailorder', $order->orderID)}}">
-                                                        {{$order->orderCreatedDate}}
-
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @if($order->orderStatus == 'completed')
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="badge badge-success badge-dot m-r-10"></div>
-                                                        <div>Completed</div>
-                                                    </div>
-                                                    @elseif($order->orderStatus == 'processing')
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="badge badge-warning badge-dot m-r-10"></div>
-                                                        <div>Processing</div>
-                                                    </div>
-                                                    @elseif($order->orderStatus == 'pending')
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="badge badge-info badge-dot m-r-10"></div>
-                                                        <div>Pending</div>
-                                                    </div>
-                                                    @elseif($order->orderStatus == 'cancel')
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="badge badge-danger badge-dot m-r-10"></div>
-                                                        <div>Cancelled</div>
-                                                    </div>
-                                                    @else
-                                                    <div>Unknown Status</div>
-                                                    @endif
-                                                </td>
-                                                <td>{{$order->grandPrice}}</td>
-                                                <td><a href="{{route('detailuserorder', $order->orderID)}}" class="btn btn-secondary btn-primary-hover"><span>View</span></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                        </thead>
+                                        @foreach ($orders as $order)
+                                            <tbody>
+                                                <tr>
+                                                    <td><a
+                                                            href="{{ route('detailuserorder', $order->orderID) }}">{{ $order->orderID }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {{ $order->orderCreatedDate }}
+                                                    </td>
+                                                    <td>
+                                                        @if ($order->orderStatus == 'completed')
+                                                            <div class="text-center text-success">
+                                                                <b> Đã hoàn thành </b>
+                                                            </div>
+                                                        @elseif($order->orderStatus == 'processing')
+                                                            <div class="text-center text-info">
+                                                                <b> Đang xử lý </b>
+                                                            </div>
+                                                        @elseif($order->orderStatus == 'pending')
+                                                            <div class="text-center text-warning">
+                                                                <b> Đang chờ xử lý </b>
+                                                            </div>
+                                                        @elseif($order->orderStatus == 'canceled')
+                                                            <div class="text-center text-danger">
+                                                                <b> Đã huỷ </b>
+                                                            </div>
+                                                        @else
+                                                            <div>Unknown Status</div>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        $paymentStatus = $order->paymentStatus;
+                                                        if ($order->paymentStatus == 'paid') {
+                                                            $paymentStatus = 'Đã thanh toán';
+                                                        } elseif ($order->paymentStatus == 'unpaid') {
+                                                            $paymentStatus = 'Thanh toán khi nhận hàng';
+                                                        } else {
+                                                            $paymentStatus = 'Trạng thái không xác định';
+                                                        }
+                                                        ?>
+                                                        {{ $paymentStatus . ' - ' . $order->paymentMethod }}
+                                                    </td>
+                                                    <td>{{ formatCurrency($order->grandPrice) }}</td>
+                                                    <td><a href="{{ route('detailuserorder', $order->orderID) }}"
+                                                            class="btn btn-secondary btn-primary-hover"><span>View</span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
                                         @endforeach
                                     </table>
                                 </div>
@@ -229,53 +250,73 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
+                        <div class="tab-pane fade" id="account-details" role="tabpanel"
+                            aria-labelledby="account-details-tab">
                             <div class="card1">
                                 <div class="card-header">
                                     <h4 class="card-title">Thông tin cá nhân</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="media align-items-center">
-                                        <div class="avatar avatar-image  m-h-10 m-r-15" style="height: 80px; width: 80px">
-                                            <img src="https://www.cnet.com/a/img/resize/fa38a5b9ea31b11e369c328cc63de0968985b4fd/hub/2023/02/16/e90ef303-aaf9-42cd-8943-88b5b6998563/social-crop-tom-holland-spidey.jpg?auto=webp&fit=crop&height=900&width=1200" alt="">
+                                        <div class="avatar avatar-image  m-h-10 m-r-15"
+                                            style="height: 80px; width: 80px">
+                                            <img src="https://www.cnet.com/a/img/resize/fa38a5b9ea31b11e369c328cc63de0968985b4fd/hub/2023/02/16/e90ef303-aaf9-42cd-8943-88b5b6998563/social-crop-tom-holland-spidey.jpg?auto=webp&fit=crop&height=900&width=1200"
+                                                alt="">
                                         </div>
                                         <div class="m-l-20 m-r-20">
-                                            <h5 class="m-b-5 font-size-18">{{$customers->customerName}}</h5>
+                                            <h5 class="m-b-5 font-size-18">{{ $customers->customerName }}</h5>
                                         </div>
                                     </div>
                                     <hr class="m-v-25">
-                                    <form method="post" action="{{ route('updateaccount', ['customerID' => $customers->customerID]) }}">
+                                    <form method="post"
+                                        action="{{ route('updateaccount', ['customerID' => $customers->customerID]) }}">
                                         @csrf
                                         <div class="form-row">
-                                            <input type="hidden" class="form-control" id="customerID" name="customerID" value="{{$customers->customerID}}" />
-                                            <input type="hidden" class="form-control" id="userID" name="userID" value="{{$customers->userID}}" />
+                                            <input type="hidden" class="form-control" id="customerID"
+                                                name="customerID" value="{{ $customers->customerID }}" />
+                                            <input type="hidden" class="form-control" id="userID" name="userID"
+                                                value="{{ $customers->userID }}" />
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="customerName">User Name:</label>
-                                                <input type="text" class="form-control" id="customerName" name="customerName" value="{{$customers->customerName}}">
+                                                <label class="font-weight-semibold" for="customerName">User
+                                                    Name:</label>
+                                                <input type="text" class="form-control" id="customerName"
+                                                    name="customerName" value="{{ $customers->customerName }}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="font-weight-semibold" for="customerEmail">Email:</label>
-                                                <input type="text" class="form-control" id="customerEmail" name="customerEmail" value="{{$customers->customerEmail}}">
+                                                <input type="text" class="form-control" id="customerEmail"
+                                                    name="customerEmail" value="{{ $customers->customerEmail }}">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="customerPhone">Phone Number:</label>
-                                                <input type="text" class="form-control" id="customerPhone" name="customerPhone" value="{{$customers->customerPhone}}">
+                                                <label class="font-weight-semibold" for="customerPhone">Phone
+                                                    Number:</label>
+                                                <input type="text" class="form-control" id="customerPhone"
+                                                    name="customerPhone" value="{{ $customers->customerPhone }}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="customerBirthDay">Date of Birth:</label>
-                                                <input type="date" class="form-control" id="customerBirthDay" name="customerBirthDay" value="{{$customers->customerBirthDay}}">
+                                                <label class="font-weight-semibold" for="customerBirthDay">Date of
+                                                    Birth:</label>
+                                                <input type="date" class="form-control" id="customerBirthDay"
+                                                    name="customerBirthDay"
+                                                    value="{{ $customers->customerBirthDay }}">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="customerBankAccount">Bank Account:</label>
-                                                <input type="text" class="form-control" id="customerBankAccount" name="customerBankAccount" value="{{$customers->customerBankAccount}}">
+                                                <label class="font-weight-semibold" for="customerBankAccount">Bank
+                                                    Account:</label>
+                                                <input type="text" class="form-control" id="customerBankAccount"
+                                                    name="customerBankAccount"
+                                                    value="{{ $customers->customerBankAccount }}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="font-weight-semibold" for="customerBankName">Bank Name:</label>
-                                                <input type="text" class="form-control" id="customerBankName" name="customerBankName" value="{{$customers->customerBankName}}">
+                                                <label class="font-weight-semibold" for="customerBankName">Bank
+                                                    Name:</label>
+                                                <input type="text" class="form-control" id="customerBankName"
+                                                    name="customerBankName"
+                                                    value="{{ $customers->customerBankName }}">
                                             </div>
                                         </div>
                                         <div>
@@ -288,35 +329,47 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Address Details</h4>
 
-                                    <a href="" class="cyan-link" style="color: rgb(128,128,128);">Chỉnh sửa</a>
+                                    <a href="" class="cyan-link" style="color: rgb(128,128,128);">Chỉnh
+                                        sửa</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="edit-delivery-content">
-                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+                                        <div class="address-edit"
+                                            style="display: flex; justify-content: space-between; width: 100%">
                                             <br>
-                                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3" id="city"
+                                                aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn tỉnh thành</option>
                                             </select>
 
-                                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3" id="district"
+                                                aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn quận huyện</option>
                                             </select>
-                                            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3" id="ward"
+                                                aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn phường xã</option>
                                             </select>
                                             <br>
                                         </div>
-                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-                                            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+                                        <div class="address-edit"
+                                            style="display: flex; justify-content: space-between; width: 100%">
+                                            <input type="text" name="address" id="address"
+                                                placeholder="Nhập số nhà, tên đường"
+                                                style="width: 100%; margin-bottom: 10px; margin-right: 10px">
                                         </div>
-                                        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
+                                        <div class="address-edit"
+                                            style="display: flex; justify-content: space-between; width: 100%">
                                             <button class="btn-save" id="save-button"> Lưu lại</button>
                                         </div>
                                     </div>
                                     <div class="delivery-content">
                                         <div class="form-group col-md-12">
-                                            <label class="font-weight-semibold" for="customerAddress">Full Address:</label>
-                                            <input type="text" class="form-control" id="customerAddress" name="customerAddress" value="{{$customers->customerAddress}}">
+                                            <label class="font-weight-semibold" for="customerAddress">Full
+                                                Address:</label>
+                                            <input type="text" class="form-control" id="customerAddress"
+                                                name="customerAddress" value="{{ $customers->customerAddress }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -328,7 +381,6 @@
         </div>
         <!-- Main Content Area End Here -->
 
-
         <!-- Begin Scroll To Top -->
         <a class="scroll-to-top" href="">
             <i class="fa fa-chevron-up"></i>
@@ -339,7 +391,7 @@
             <div class="footer-wrapper grid-3-col">
                 <div class="basic-info">
                     <div class="logo">
-                        <a href=""><img src="{{ asset('assets/logo.svg')}}" alt=""></a>
+                        <a href=""><img src="{{ asset('assets/logo.svg') }}" alt=""></a>
                     </div>
                     <div class="slogan">"All Ages, All Races, All Genders"</div>
                     <div class="address">Based in Ho Chi Minh City</div>
@@ -349,18 +401,24 @@
                     <div class="about-us-title">
                         <h4>VỀ CHÚNG TÔI</h4>
                     </div>
-                    <div class="introduction"><a href="{{route('about')}}" class="heavy-link">Giới thiệu</a></div>
-                    <div class="privacy-policy"><a href="{{route('privacypolicy')}}" class="heavy-link">Chính sách bảo mật</a></div>
-                    <div class="terms-of-use"><a href="{{route('termofuse')}}" class="heavy-link">Điều khoản sử dụng</a></div>
+                    <div class="introduction"><a href="{{ route('about') }}" class="heavy-link">Giới thiệu</a></div>
+                    <div class="privacy-policy"><a href="{{ route('privacypolicy') }}" class="heavy-link">Chính sách
+                            bảo mật</a></div>
+                    <div class="terms-of-use"><a href="{{ route('termofuse') }}" class="heavy-link">Điều khoản sử
+                            dụng</a></div>
                 </div>
                 <div class="page-support">
                     <div class="page-support-title">
                         <h4>HỖ TRỢ</h4>
                     </div>
-                    <div class="most-asked-questions"><a href="{{route('mostasked')}}" class="heavy-link">Các câu hỏi thường gặp</a></div>
-                    <div class="contact-info"><a href="{{route('contact')}}" class="heavy-link">Thông tin liên hệ</a></div>
-                    <div class="delivery-policy"><a href="{{route('deliverypolicy')}}" class="heavy-link">Chính sách vận chuyển</a></div>
-                    <div class="return-policy"><a href="{{route('returnpolicy')}}" class="heavy-link">Chính sách đổi trả</a></div>
+                    <div class="most-asked-questions"><a href="{{ route('mostasked') }}" class="heavy-link">Các câu
+                            hỏi thường gặp</a></div>
+                    <div class="contact-info"><a href="{{ route('contact') }}" class="heavy-link">Thông tin liên
+                            hệ</a></div>
+                    <div class="delivery-policy"><a href="{{ route('deliverypolicy') }}" class="heavy-link">Chính
+                            sách vận chuyển</a></div>
+                    <div class="return-policy"><a href="{{ route('returnpolicy') }}" class="heavy-link">Chính sách
+                            đổi trả</a></div>
                     <div class="send-support"><a href="/chatify/1" class="heavy-link">Gửi yêu cầu hỗ trợ</a></div>
                 </div>
             </div>
@@ -370,12 +428,18 @@
             </div>
         </footer>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
         <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="{{asset("js/script.js")}}"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
 
         <!-- Global Vendor, plugins JS -->
 
@@ -486,14 +550,16 @@
                 var deliveryAddress = document.getElementById("address").value;
 
 
-                if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' || selectedWard === 'Chọn phường xã') {
+                if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||
+                    selectedWard === 'Chọn phường xã') {
                     editDeliveryContent.style.display = 'none';
                     // Hiển thị lại phần tử thông tin
                     deliveryContent.style.display = 'block';
                     saveButton.style.display = 'none';
                 } else {
                     // Cập nhật giá trị trong các phần tử HTML tương ứng
-                    document.getElementById("customerAddress").value = deliveryAddress + ', ' + selectedWard + ", " + selectedDistrict + ", " + selectedCity;
+                    document.getElementById("customerAddress").value = deliveryAddress + ', ' + selectedWard + ", " +
+                        selectedDistrict + ", " + selectedCity;
                     // Ẩn phần tử chỉnh sửa
                     editDeliveryContent.style.display = 'none';
                     // Hiển thị lại phần tử thông tin
@@ -518,8 +584,6 @@
                     });
             }
         </script>
-
-
 </body>
 
 </html>

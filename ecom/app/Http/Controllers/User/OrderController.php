@@ -10,12 +10,14 @@ use App\Models\Discount;
 use App\Models\OrderDetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
-    protected function createHistory($orderID, $totalPrice, $paymentMethod){
+    protected function createHistory($orderID, $totalPrice, $paymentMethod)
+    {
         $history = new PurchaseHistory();
         $history->customerID = CustomerInfo::where('userID', Auth::user()->id)->first()->customerID;
         $history->orderID = $orderID;
@@ -24,16 +26,16 @@ class OrderController extends Controller
         return $history;
     }
 
-    protected function createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone, $paymentStatus){
+    protected function createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone, $paymentStatus)
+    {
         $order = new Order();
         $discount = Discount::where('discountCode', $discountValidCode)->first();
         $discountPrice = 0;
 
-        if($discount){
-            if($discount->discountType == 'percent'){
+        if ($discount) {
+            if ($discount->discountType == 'percent') {
                 $discountPrice = $totalPrice * $discount->discountAmount / 100;
-            }
-            else{
+            } else {
                 $discountPrice = $discount->discountAmount;
             }
 
@@ -49,23 +51,25 @@ class OrderController extends Controller
         $order->orderCustomerName = $orderCustomerName;
         $order->grandPrice = $totalPrice - $discountPrice;
         $order->totalPrice = $totalPrice;
-        if($totalPrice > 2500000){
+        if ($totalPrice > 250000) {
             $order->shippingFee = 0;
-        }
-        else{
+        } else {
             $order->shippingFee = 30000;
         }
         $order->paymentMethod = $paymentMethod;
-        $order->orderCreatedDate = date('Y-m-d H:i:s');
+        $order->orderCreatedDate = now('Asia/Ho_Chi_Minh');
         $order->orderAddress = $orderAddress;
         $order->orderPhone = $orderPhone;
         $order->paymentStatus = $paymentStatus;
+        $order->created_at = now('Asia/Ho_Chi_Minh');
+        $order->updated_at = now('Asia/Ho_Chi_Minh');
         return $order;
     }
-    protected function createOderDetail(){
+    protected function createOderDetail()
+    {
         $list_products = Cart::content();
         $order_list = [];
-        foreach($list_products as $item){
+        foreach ($list_products as $item) {
             $product = Product::find($item->id);
             $product->productInStock = $product->productInStock - $item->qty;
             $product->productSoldQuantity = $product->productSoldQuantity + $item->qty;
@@ -82,23 +86,24 @@ class OrderController extends Controller
     }
     public function Index()
     {
-        If(!Auth::check()){
+        if (!Auth::check()) {
             return redirect()->route('redirectToPayment');
         }
         $info = CustomerInfo::where('userID', Auth::user()->id)->first();
-        if($info->customerPhone == null){
+        if ($info->customerPhone == null) {
             $info->customerPhone = '09xxxxxxxx';
         }
-        if($info->customerAddress == null){
+        if ($info->customerAddress == null) {
             $info->customerAddress = 'Địa chỉ của bạn';
         }
-        if($info->customerProvinceName == null){
+        if ($info->customerProvinceName == null) {
             $info->customerProvinceName = 'Tỉnh/Thành phố';
         }
         $data = Cart::content();
-        return view('user.payment', ['order_list'=>$data, 'info'=>$info]);
+        return view('user.payment', ['order_list' => $data, 'info' => $info]);
     }
-    public function StoreOrder(Request $request){
+    public function StoreOrder(Request $request)
+    {
         $totalPrice = intval($request->input('totalPrice'));
         $paymentMethod = $request->input('paymentMethod');
         $discountValidCode = $request->input('discountValidCode');
@@ -109,7 +114,7 @@ class OrderController extends Controller
         $order = $this->createOder($totalPrice, $paymentMethod, $discountValidCode, $orderCustomerName, $orderAddress, $orderPhone, $paymentStatus);
         $order->save();
         $order_list = $this->createOderDetail();
-        foreach($order_list as $item){
+        foreach ($order_list as $item) {
             $item->orderID = $order->orderID;
             $item->save();
         }
@@ -120,17 +125,39 @@ class OrderController extends Controller
         return response()->json(['orderID' => $order->orderID]);
     }
 
-    public function OrderSuccess(Request $request){
+    public function OrderSuccess(Request $request)
+    {
         $orderID = $request->orderID;
         $order = Order::find($orderID);
         $order_list = OrderDetail::where('orderID', $orderID)->get();
         orderEmail($orderID);
-        return view('user.OrderSuccess', ['order'=>$order, 'order_list'=>$order_list]);
+        return view('user.OrderSuccess', ['order' => $order, 'order_list' => $order_list]);
     }
 
-    public function UpdatePaymentStatusPaid($orderID, $paymentStatus){
+    public function UpdatePaymentStatusPaid($orderID, $paymentStatus)
+    {
         $order = Order::find($orderID);
         $order->paymentStatus = $paymentStatus;
         $order->save();
     }
+
+    public function UpdatePaymentMethod($orderID, $paymentMethod)
+    {
+        $order = Order::find($orderID);
+        $order->paymentMethod = $paymentMethod;
+        $order->save();
+        return redirect()->route('order.success', ['orderID' => $orderID]);
+    }
+
+    public function CancelOrder(Request $request)
+    {
+        $orderID = $request->orderID;
+        $date = now('Asia/Ho_Chi_Minh');
+        order::findOrFail($orderID)->update([
+            'orderStatus' => 'canceled',
+            'orderCompletedDate' => $date,
+        ]);
+        return response()->json(['status' => true]);
+    }
+
 }

@@ -37,37 +37,38 @@
         <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px"
             placeholder="Nhập ghi chú"></textarea>
     </div>
-    <div class="edit-delivery-content">
+    <div class="edit-delivery-content ">
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
             <br>
-            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+            <select class="form-select form-select-sm mb-3 form-control" id="city" aria-label=".form-select-sm">
                 <option value="" selected>Chọn tỉnh thành</option>
             </select>
 
-            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+            <select class="form-select form-select-sm mb-3 form-control" id="district" aria-label=".form-select-sm">
                 <option value="" selected>Chọn quận huyện</option>
             </select>
-            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm">
+            <select class="form-select form-select-sm mb-3 form-control" id="ward" aria-label=".form-select-sm">
                 <option value="" selected>Chọn phường xã</option>
             </select>
             <br>
         </div>
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input type="text" name="address" id="address" placeholder="Nhập số nhà, tên đường"
-                style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            <input class="form-control" type="text" name="address" id="address"
+                placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
         </div>
-        <div id="errorPhone" class="alert alert-danger alert-dismissible fade show small" role="alert" disabled>
+        <div id="errorPhone" class="alert alert-warning alert-dismissible fade show" role="alert" disabled>
             <strong>Error!</strong> Sai định dạng số điện thoại.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="btn-close btn-lg" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại"
+            <input class="form-control" type="text" name="phone" id="phone" placeholder="Nhập số điện thoại"
                 style="width: 100%; margin-bottom: 10px; margin-right: 10px">
         </div>
-        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <button class="btn-save"> Lưu lại</button>
+        <div class="address-edit d-flex justify-content-between w-100">
+            <button class="btn btn-primary" id="btn-save"> Lưu lại</button>
         </div>
     </div>
 
@@ -81,21 +82,59 @@
             /* Điều chỉnh giá trị theo nhu cầu của bạn */
         }
 
-        #errorPhone {
-            padding: 5px;
-            /* Điều chỉnh khoảng trắng xung quanh nội dung */
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 75px;
+            border: 0.5px solid #5d5d5f;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
-        #errorPhone .close {
+        .payment-option img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .payment-option-text {
+            padding-left: 10px;
+            display: flex;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .payment-option-text p {
             margin: 0;
-            align-self: center;
-            /* Căn giữa nút theo chiều dọc */
+
         }
 
-        #errorPhone .alert {
-            padding: 0.5rem 1rem;
-            /* Điều chỉnh chiều cao và chiều rộng của cảnh báo */
-            flex: 1;
+
+        .payment-option:hover {
+            background-color: #fffcfc;
+            /* Màu nền khi hover */
+            border-color: #007bff;
+            /* Viền khi hover */
+            box-shadow: 0px 0px 15px rgba(9, 8, 8, 0.1);
+            /* Bóng đổ khi hover */
+
+        }
+
+        .selected {
+            /* Màu nền khi được chọn */
+            color: #020202;
+            border: 2px solid #007bff;
+            box-shadow: 0px 0px 15px rgba(58, 58, 58, 0.1);
+            transform: translateY(-2px);
+
+        }
+
+        .payment-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 
@@ -209,49 +248,51 @@
         <div class="payment-left">
             <div class="payment-method">
                 <strong>Lựa chọn phương thức thanh toán: </strong>
-                {{-- <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Chọn phương thức
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:void(0)">Thanh toán khi nhận hàng</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)">Ví VNPAY</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)">Ví MOMO</a></li>
-                    </ul>
-                </div>
- --}}
-
-                <select name="payment" id="payment">
-                    <option value="" selected>Chọn phương thức</option>
-                    <option value="COD">Thanh toán khi nhận hàng</option>
-                    <option value="VNPAY">Ví VNPAY</option>
-                    <option value="MOMO">Ví MOMO</option>
-                </select>
-                {{-- &nbsp;
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="payment" id="payment1" autocomplete="off"
-                        value="COD" checked>
-                    <label class="btn btn-outline-primary" for="payment1">Thanh toán khi nhận hàng</label>
-                    <br>
-                    <input type="radio" class="btn-check" name="payment" id="payment2" autocomplete="off"
-                        value="VNPAY">
-                    <label class="btn btn-outline-primary" for="payment2">Ví VNPAY</label>
-                    <br>
-                    <input type="radio" class="btn-check" name="payment" id="payment3" autocomplete="off"
-                        value="MOMO">
-                    <label class="btn btn-outline-primary" for="payment3">Ví MOMO</label>
-                </div> --}}
-
 
                 <br>
+                <div class="row" style="padding-top: 10px; padding-bottom: 10px">
+                    <div class="col-md-4">
+                        <div class="payment-option" onclick="selectPaymentMethod('MOMO')">
+                            <div class="payment-option-img">
+                                <img src="{{ asset('assets/momo.svg') }}" alt="MOMO" class="img-fluid">
+                            </div>
+                            <div class="payment-option-text">
+                                <p>Thanh toán qua MoMo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="payment-option" onclick="selectPaymentMethod('VNPAY')">
+                            <div class="payment-option-img">
+                                <img src="{{ asset('assets/VNPAY-QR-1.png') }}" alt="VNPAY" class="img-fluid">
+                            </div>
+                            <div class="payment-option-text">
+                                <p>Thanh toán qua VNPAY-QR</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="payment-option" onclick="selectPaymentMethod('COD')">
+                            <div class="payment-option-img">
+                                <img src="{{ asset('assets/cod-logo.png') }}" alt="COD" class="img-fluid">
+                            </div>
+
+                            <div class="payment-option-text">
+                                <p>COD - Thanh toán khi nhận hàng</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="payment-note">
                 <strong>Lưu ý:</strong><br>
                 <ul>
                     <li>Thành tiền đã bao gồm VAT, phí đóng gói, phí vận chuyển và các chi phí khác vui lòng xem <a
-                            href="" class="cyan-link txt-bold">chính sách vận chuyển</a>.</li>
-                    <li>Nếu có nhu cầu đổi trả hàng, vui lòng xem <a href="" class="cyan-link txt-bold">chính
+                            href="{{ route('deliverypolicy') }}" class="cyan-link txt-bold">chính sách vận
+                            chuyển</a>.</li>
+                    <li>Nếu có nhu cầu đổi trả hàng, vui lòng xem <a href="{{ route('returnpolicy') }}"
+                            class="cyan-link txt-bold">chính
                             sách đổi trả hàng</a> hoặc liên hệ hotline để được hướng dẫn chi tiết.</li>
                 </ul>
             </div>
@@ -305,9 +346,27 @@
     var discountPrice = 0;
     var discountValidCode = '';
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
+    var payment = "";
+
+    function selectPaymentMethod(method) {
+        // Lấy tất cả các phần tử có class 'payment-option'
+        var paymentOptions = document.querySelectorAll('.payment-option');
+        payment = method;
+        // Bỏ chọn tất cả các phương thức thanh toán
+        paymentOptions.forEach(function(option) {
+            option.classList.remove('selected');
+        });
+
+        // Chọn phương thức thanh toán được click
+        var selectedOption = document.querySelector('.payment-option[onclick="selectPaymentMethod(\'' + method +
+            '\')"]');
+        selectedOption.classList.add('selected');
+    }
 
     $(document).ready(function() {
         // Initially hide the discount block and error message
+
+
         $('#errorAlertPaymentMethod').hide();
         $('.discount-detail').hide();
         $('#errorAlert').hide();
@@ -315,6 +374,14 @@
         $('#errorPhone').hide();
         $('#btn-apply-voucher').click(function() {
             var voucher = $('#discount-voucher').val();
+
+            if (voucher == '') {
+                $('#giamgia').html(`0 &#8363;`);
+                $('#thanhtien').html(`${totalPrice} &#8363;`);
+                $('.discount-detail').hide();
+                return;
+            }
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -405,19 +472,15 @@
     });
 
     document.getElementById('btn-finish').addEventListener('click', function() {
-        var payment = document.getElementById('payment').value;
         // var payment = document.querySelector('input[name="payment"]:checked').value;
         if (payment === '') {
             $('#errorAlertPaymentMethod').show();
             return;
         }
         if (checkOrderInfo()) {
-            var payment = document.getElementById('payment').value;
             var address = document.getElementById('orderAddress').innerText;
             var phone = document.getElementById('orderPhone').innerText;
             var name = document.getElementById('orderName').innerText;
-
-            // var payment = document.querySelector('input[name="payment"]:checked').value;
 
             var payment_status = 'unpaid';
 
@@ -431,14 +494,14 @@
                 paymentStatus: payment_status,
             };
 
-            if (payment === 'VNPAY') {
+            if (payment == 'VNPAY') {
                 storeOrderAndPayment(requestData, function(orderID) {
                     VnPay_Payment(orderID, totalPrice);
                 }, function(error) {
                     console.error('Có lỗi xảy ra:', error);
                     // Xử lý lỗi nếu cần
                 });
-            } else if (payment === 'MOMO') {
+            } else if (payment == 'MOMO') {
                 storeOrderAndPayment(requestData, function(orderID) {
                     console.log(orderID);
                     Momo_Payment(orderID, totalPrice);
@@ -539,7 +602,7 @@
     var editDeliveryContent = document.querySelector('.edit-delivery-content');
     var deliveryContent = document.querySelector('.delivery-content');
     var editLink = document.querySelector('.cyan-link');
-    var saveButton = document.querySelector('.btn-save');
+    var saveButton = document.querySelector('#btn-save');
     var provinceID = 0;
 
     // Ẩn phần tử chỉnh sửa khi trang được tải
@@ -589,6 +652,8 @@
                     districts.options[districts.options.length] = new Option(k.Name, k.Id);
                 }
             }
+
+
         };
 
         districts.onchange = function() {
@@ -606,15 +671,19 @@
     }
 
     function checkOrderInfo() {
-        var selectedCity = citis.options[citis.selectedIndex].text;
-        var selectedDistrict = districts.options[districts.selectedIndex].text;
-        var selectedWard = wards.options[wards.selectedIndex].text;
-        var phone = document.getElementById("phone").value;
+
+        var address = document.getElementById('orderAddress').innerText;
+        var phone = document.getElementById('orderPhone').innerText;
+        var name = document.getElementById('orderName').innerText;
+
+        // var selectedCity = citis.options[citis.selectedIndex].text;
+        // var selectedDistrict = districts.options[districts.selectedIndex].text;
+        // var selectedWard = wards.options[wards.selectedIndex].text;
+        // var phone = document.getElementById("phone").value;
         // Lấy giá trị từ textarea
         var deliveryAddress = document.getElementById("address").value;
 
-        if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||
-            selectedWard === 'Chọn phường xã' || phone.length !== 10) {
+        if (address === '' || phone.length !== 10) {
             return false;
         } else {
             return true;
@@ -633,6 +702,10 @@
         if (phone.length < 10 && phone.length > 0) {
             $('#errorPhone').show();
             return;
+        }
+
+        if (phone.length == 10) {
+            document.getElementById("orderPhone").innerText = phone;
         }
 
         if (deliveryAddress === '' || selectedCity === 'Chọn tỉnh thành' || selectedDistrict === 'Chọn quận huyện' ||

@@ -22,14 +22,14 @@
     <div class="product-img-container grid-image">
         <div class="small-image-container">
             <div class="small-image">
-                <img src="{{ asset($thisProduct->productImage) }}" alt="" width="150" height="150">
+                <img src="{{ asset($thisProduct->productSideImage1) }}" alt="" width="150" height="150">
             </div>
             <div class="small-image">
-                <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg"
+                <img src="{{ asset($thisProduct->productSideImage2) }}"
                     alt="" width="150" height="150">
             </div>
             <div class="small-image">
-                <img src="https://media.hcdn.vn/wysiwyg/HaNguyen1/sua-chong-nang-anessa-duong-da-kiem-dau-bao-ve-hoan-hao-1.jpg"
+                <img src="{{ asset($thisProduct->productSideImage3) }}"
                     alt="" width="150" height="150">
             </div>
         </div>
