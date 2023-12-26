@@ -63,7 +63,6 @@ class OrderController extends Controller
         $order->paymentStatus = $paymentStatus;
         $order->created_at = now('Asia/Ho_Chi_Minh');
         $order->updated_at = now('Asia/Ho_Chi_Minh');
-        dd($order);
         return $order;
     }
     protected function createOderDetail()
