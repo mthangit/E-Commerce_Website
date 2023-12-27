@@ -56,7 +56,7 @@ class OrderController extends Controller
         } else {
             $order->shippingFee = 30000;
         }
-        $order->paymentMethod = $paymentMethod;
+        $order->paymentMethod = "COD";
         $order->orderCreatedDate = now('Asia/Ho_Chi_Minh');
         $order->orderAddress = $orderAddress;
         $order->orderPhone = $orderPhone;

@@ -25,25 +25,76 @@
                             class="cyan-link heavy-link">{{ $category->categoryName }}</a></div>
                 @endforeach
             </div>
-            <br>
         </div>
+        <br>
         <div class="sidebar-filter">
-            <div class="side-bar-title">
+            <div class="side-bar-title" style="margin-bottom: 5px">
                 <h2 class="">BỘ LỌC TÌM KIẾM</h2>
             </div>
             <div class="brand-filter">
-                <h3 class="">Tên thương hiệu</h3>
-                <br>
-                <div class="brand-choose">
+                <h4> Thương hiệu </h4>
+                <div class="brand-choose form-check">
                     @foreach ($brands as $brand)
-                        <input {{ in_array($brand->brandID, $brandsArray) ? 'checked' : '' }} class="brand-label"
-                            type="checkbox" name="brand-checked" id="brand-{{ $brand->brandID }}"
-                            value="{{ $brand->brandID }}">
-                        <label for="brand-{{ $brand->brandID }}">{{ $brand->brandName }}</label><br>
+                        <input {{ in_array($brand->brandID, $brandsArray) ? 'checked' : '' }}
+                            class="brand-label form-check-input" type="checkbox" name="brand-checked"
+                            id="brand-{{ $brand->brandID }}" value="{{ $brand->brandName }}">
+                        <label class="form-check-label"
+                            for="brand-{{ $brand->brandID }}">{{ $brand->brandName }}</label><br>
                     @endforeach
                 </div>
-                <br>
             </div>
+            <div class="price-range">
+                <h4> Khoảng giá </h4>
+                <div class="form-check">
+                    <input {{ in_array('duoi300', $pricerange) ? 'checked' : '' }} class="form-check-input price-label"
+                        type="checkbox" value="duoi300" id="duoi300">
+                    <label class="form-check-label larger-text" for="duoi300">
+                        Dưới 300.000 đ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input {{ in_array('300-500', $pricerange) ? 'checked' : '' }} class="form-check-input price-label"
+                        type="checkbox" value="300-500" id="300-500">
+                    <label class="form-check-label larger-text" for="300-500">
+                        Từ 300.000 đ - 500.000 đ
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input {{ in_array('500-700', $pricerange) ? 'checked' : '' }} class="form-check-input price-label"
+                        type="checkbox" value="500-700" id="500-700">
+                    <label class="form-check-label larger-text" for="500-700">
+                        Từ 500.000 đ - 700.000 đ
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input {{ in_array('700-1000', $pricerange) ? 'checked' : '' }}
+                        class="form-check-input price-label" type="checkbox" value="700-1000" id="700-1000">
+                    <label class="form-check-label larger-text" for="700-1000">
+                        Từ 700.000 đ - 1.000.000 đ
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input {{ in_array('1000-2000', $pricerange) ? 'checked' : '' }}
+                        class="form-check-input price-label" type="checkbox" value="1000-2000" id="1000-2000">
+                    <label class="form-check-label larger-text" for="1000-2000">
+                        Từ 1.000.000 đ - 2.000.000 đ
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input {{ in_array('tren2trieu', $pricerange) ? 'checked' : '' }}
+                        class="form-check-input price-label" type="checkbox" value="tren2trieu" id="tren2trieu">
+                    <label class="form-check-label larger-text" for="tren2trieu">
+                        Trên 2.000.000 đ
+                    </label>
+                </div>
+                <br>
+                {{--                    </form> --}}
+            </div>
+
         </div>
     </div>
     <div class="product-list">
@@ -55,9 +106,12 @@
                 <div class="product-list-filter-content right">
                     <label for="">Sắp xếp theo: </label>
                     <select id="sort-select" name="">
-                        <option value="Increase">Giá thấp đến cao</option>
-                        <option value="Decrease">Giá cao đến thấp</option>
-                        <option value="Alphabet">A - Z</option>
+                        <option value="Default" @if ($sortValue == 'Default') selected @endif>Gợi ý mua</option>
+                        <option value="asc" @if ($sortValue == 'asc') selected @endif>Giá thấp đến cao
+                        </option>
+                        <option value="desc" @if ($sortValue == 'desc') selected @endif>Giá cao đến thấp
+                        </option>
+                        <option value="a-z" @if ($sortValue == 'a-z') selected @endif>A - Z</option>
                     </select>
                 </div>
             </div>
@@ -112,61 +166,45 @@
 
 @include('user.layouts.template_footer')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Bắt sự kiện khi giá trị của dropdown chọn thay đổi
-        document.getElementById('sort-select').addEventListener('change', function() {
-            // Lấy giá trị được chọn
-            var selectedValue = this.value;
-
-            // Sắp xếp lại các sản phẩm trên trang hiện tại
-            sortProducts(selectedValue);
-        });
-
-        // Hàm sắp xếp lại sản phẩm trên trang hiện tại
-        function sortProducts(sortBy) {
-            var productList = document.querySelector('.product-list-content');
-            var products = Array.from(productList.getElementsByClassName('preview-product'));
-
-            products.sort(function(a, b) {
-                if (sortBy === 'Increase' || sortBy === 'Decrease') {
-                    var aPrice = parseFloat(a.querySelector('.discount-price').textContent.replace('₫',
-                        '').replace(',', ''));
-                    var bPrice = parseFloat(b.querySelector('.discount-price').textContent.replace('₫',
-                        '').replace(',', ''));
-
-                    return sortBy === 'Increase' ? aPrice - bPrice : bPrice - aPrice;
-                } else if (sortBy === 'Alphabet') {
-                    var aValue = a.querySelector('.product-name').textContent.toLowerCase();
-                    var bValue = b.querySelector('.product-name').textContent.toLowerCase();
-                    return aValue.localeCompare(bValue);
-                }
-            });
-
-            // Xóa các sản phẩm hiện tại
-            productList.innerHTML = '';
-
-            // Thêm lại sản phẩm đã được sắp xếp
-            products.forEach(function(product) {
-                productList.appendChild(product);
-            });
-        }
-    });
-
     $(".brand-label").change(function() {
         applyFilters();
     });
 
+    $(".price-label").change(function() {
+        applyFilters();
+    });
+
+    $("#sort-select").change(function() {
+        applyFilters();
+    });
+
     function applyFilters() {
+        var sortValue = $("#sort-select").val();
+
         var brandIDs = [];
         $(".brand-label:checked").each(function() {
             brandIDs.push($(this).val());
         });
 
+        var priceRanges = [];
+        $(".price-label:checked").each(function() {
+            priceRanges.push($(this).val());
+        });
+
+
         var url = "{{ url()->current() }}?"
         if (brandIDs.length > 0) {
             url += "&brand=" + brandIDs.toString();
         }
-        window.location.href = url;
 
+        if (priceRanges.length > 0) {
+            url += "&price=" + priceRanges.toString();
+        }
+
+        if (sortValue != "Default") {
+            url += "&sort=" + sortValue;
+        }
+
+        window.location.href = url;
     }
 </script>

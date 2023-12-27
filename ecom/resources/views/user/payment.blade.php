@@ -22,7 +22,7 @@
 
     <div class="delivery-info-header payment-block-header">
         <div class="left">
-            <h4 class="txt-cyan txt-18">Thông tin nhận hàng</h4>
+            <h4 class="txt-cyan txt-18">THÔNG TIN NHẬN HÀNG</h4>
         </div>
         <div class="right">
             <a href="" class="cyan-link" style="color: rgb(128,128,128);">Chỉnh sửa</a>
@@ -40,41 +40,64 @@
     <div class="edit-delivery-content ">
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
             <br>
-            <select class="form-select form-select-sm mb-3 form-control" id="city" aria-label=".form-select-sm">
-                <option value="" selected>Chọn tỉnh thành</option>
-            </select>
-
-            <select class="form-select form-select-sm mb-3 form-control" id="district" aria-label=".form-select-sm">
-                <option value="" selected>Chọn quận huyện</option>
-            </select>
-            <select class="form-select form-select-sm mb-3 form-control" id="ward" aria-label=".form-select-sm">
-                <option value="" selected>Chọn phường xã</option>
-            </select>
+            <div class="col-md-4">
+                <h6 class="txt-black-italy txt-15">Tỉnh/Thành phố</h6>
+                <select class="form-select form-select-sm mb-3 form-control" id="city"
+                    aria-label=".form-select-sm">
+                    <option value="" selected>Chọn tỉnh thành</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <h6 class="txt-black-italy txt-15">Quận/huyện</h6>
+                <select class="form-select form-select-sm mb-3  form-control" id="district"
+                    aria-label=".form-select-sm">
+                    <option value="" selected>Chọn quận huyện</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <h6 class="txt-black-italy txt-15">Phường/xã</h6>
+                <select class="form-select form-select-sm mb-3 form-control" id="ward"
+                    aria-label=".form-select-sm">
+                    <option value="" selected>Chọn phường xã</option>
+                </select>
+            </div>
             <br>
         </div>
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input class="form-control" type="text" name="address" id="address"
-                placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            <div class="col-md-8">
+                <h6 class="txt-black-italy txt-15">Số nhà, tên đường, tên ấp</h6>
+                <input class="form-control" type="text" name="address" id="address"
+                    placeholder="Nhập số nhà, tên đường" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            </div>
+            <div class="col-md-4">
+                <div id="errorPhone" class="alert alert-warning alert-dismissible fade show small-alert" role="alert"
+                    disabled>
+                    <strong>Error!</strong> Sai định dạng số điện thoại.
+                    <button type="button" class="btn-close btn-lg" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <h6 class="txt-black-italy txt-15">Số điện thoại</h6>
+                <input class="form-control" type="text" name="phone" id="phone"
+                    placeholder="Nhập số điện thoại" style="width: 100%; margin-bottom: 10px; margin-right: 10px">
+            </div>
         </div>
-        <div id="errorPhone" class="alert alert-warning alert-dismissible fade show" role="alert" disabled>
-            <strong>Error!</strong> Sai định dạng số điện thoại.
-            <button type="button" class="btn-close btn-lg" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="col-md-3">
+            <div class="address-edit d-flex justify-content-between w-100">
+                <button class="btn btn-primary" id="btn-save"> Lưu lại</button>
+            </div>
         </div>
 
-        <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
-            <input class="form-control" type="text" name="phone" id="phone" placeholder="Nhập số điện thoại"
-                style="width: 100%; margin-bottom: 10px; margin-right: 10px">
-        </div>
-        <div class="address-edit d-flex justify-content-between w-100">
-            <button class="btn btn-primary" id="btn-save"> Lưu lại</button>
-        </div>
     </div>
 
     <br>
 
     <style>
+        .small-alert {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+        }
+
         /* Đặt các select thành kiểu inline-block */
         .edit-delivery-content select {
             display: flex;
@@ -119,7 +142,6 @@
             /* Viền khi hover */
             box-shadow: 0px 0px 15px rgba(9, 8, 8, 0.1);
             /* Bóng đổ khi hover */
-
         }
 
         .selected {
@@ -135,6 +157,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .txt-black-italy {
+            font-style: italic;
+            color: black
         }
     </style>
 
@@ -218,14 +245,16 @@
                 <td>
                     <ul>
                         <li>
-                            Sử dụng mã giảm phí vận chuyển (tối đa 10.000 &#8363;) cho đơn hàng từ 0Đ khi mua hàng trên
+                            Sử dụng mã giảm phí vận chuyển (tối đa 10.000 &#8363;) cho đơn hàng từ 0Đ khi mua hàng
+                            trên
                             PING Cosmetics.
                         </li>
                         <li>
                             Áp dụng tất cả các hình thức thanh toán.
                         </li>
                         <li>
-                            Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết
+                            Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi
+                            hết
                             hạn ưu đãi, tuỳ điều kiện nào đến trước.
                         </li>
                     </ul>
@@ -701,6 +730,7 @@
 
         if (phone.length < 10 && phone.length > 0) {
             $('#errorPhone').show();
+            alert('Số điện thoại không hợp lệ');
             return;
         }
 
