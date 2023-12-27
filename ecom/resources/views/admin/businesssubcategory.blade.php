@@ -58,36 +58,6 @@ PING - Product
                         });
                     </script>
 
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Lựa chọn sản phẩm</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="productID" name="productID" aria-label="Default select example">
-                                <option value="" disabled selected>Lựa chọn sản phẩm</option>
-                                @foreach ($products as $product)
-                                <option class="product" data-subcategory="{{ $product->productSubCategoryID }}" value="{{ $product->productID }}">{{ $product->productName }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <script>
-                        document.getElementById('productSubCategoryID').addEventListener('change', function() {
-                            var selectedSubCategoryID = this.value;
-
-                            // Ẩn tất cả các option trong select product
-                            var products = document.querySelectorAll('.product');
-                            products.forEach(function(product) {
-                                product.style.display = 'none';
-                            });
-
-                            // Hiển thị chỉ những option thuộc subcategory đã chọn
-                            var filteredProducts = document.querySelectorAll('.product[data-subcategory="' + selectedSubCategoryID + '"]');
-                            filteredProducts.forEach(function(product) {
-                                product.style.display = '';
-                            });
-                        });
-                    </script>
-
 
                     <!-- Add start date and end date fields -->
                     <div class="row mb-3">
@@ -138,7 +108,7 @@ PING - Product
         event.preventDefault(); // Prevent the default form submission
 
         // Dynamically set the form action to the fetchResults route
-        document.getElementById('checkProductForm').action = "{{ route('fetchResults') }}";
+        document.getElementById('checkProductForm').action = "{{ route('fetchSubcategoryResults') }}";
 
         var form = document.getElementById('checkProductForm');
         var formData = new FormData(form);

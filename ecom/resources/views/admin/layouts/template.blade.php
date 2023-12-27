@@ -332,97 +332,13 @@
                                     <a href="{{route('checkProduct')}}">Thông kê theo sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="form-layouts.html">Doanh số tuần</a>
+                                    <a href="{{route('checkSubcategory')}}">Thông kê sản phẩm theo danh mục</a>
                                 </li>
                                 <li>
                                     <a href="form-validation.html">Doanh số tháng</a>
                                 </li>
                                 <li>
                                     <a href="form-validation.html">Doanh số năm</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-file"></i>
-                                </span>
-                                <span class="title">Quản lý page</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="profile.html">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="invoice.html">Invoice</a>
-                                </li>
-                                <li>
-                                    <a href="members.html">Members</a>
-                                </li>
-                                <li>
-                                    <a href="pricing.html">Pricing</a>
-                                </li>
-                                <li>
-                                    <a href="setting.html">Setting</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>Blog</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="blog-grid.html">Blog Grid</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-list.html">Blog List</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-post.html">Blog Post</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-lock"></i>
-                                </span>
-                                <span class="title">Authentication</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="login-1.html">Login 1</a>
-                                </li>
-                                <li>
-                                    <a href="login-2.html">Login 2</a>
-                                </li>
-                                <li>
-                                    <a href="login-3.html">Login 3</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-1.html">Sign Up 1</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-2.html">Sign Up 2</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-3.html">Sign Up 3</a>
-                                </li>
-                                <li>
-                                    <a href="error-1.html">Error 1</a>
-                                </li>
-                                <li>
-                                    <a href="error-2.html">Error 2</a>
                                 </li>
                             </ul>
                         </li>

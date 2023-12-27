@@ -234,10 +234,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(BusinessController::class)->group(function () {
         Route::get('/check-product', [BusinessController::class, 'checkProduct'])->name('checkProduct');
+        Route::get('/check-subcategory', [BusinessController::class, 'checkSubcategory'])->name('checkSubcategory');
         Route::post('/fetch-subcategories', [BusinessController::class, 'fetchSubcategories'])->name('fetchSubcategories');
         Route::post('/fetch-products', [BusinessController::class, 'fetchProducts'])->name('fetchProducts');
         Route::post('/business-summary', [BusinessController::class, 'BusinessSummary'])->name('businesssummary');
         Route::post('/fetch-results', [BusinessController::class, 'fetchResults'])->name('fetchResults');
+        Route::post('/fetch-sub-results', [BusinessController::class, 'fetchSubcategoryResults'])->name('fetchSubcategoryResults');
+        Route::get('/admin/dashboard', [BusinessController::class, 'calculateTotalSales'])->name('admindashboard');
     });
 });
 
