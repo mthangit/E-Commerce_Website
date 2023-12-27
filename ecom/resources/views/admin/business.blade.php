@@ -114,34 +114,95 @@ PING - Product
         </div>
 
         <!-- Result Table -->
-        <table id="productTable" class="display">
-            <thead>
-                <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Thời gian</th>
-                    <th>Đã bán</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($results as $result)
-                <tr>
-                    <td>{{ $result->productName }}</td>
-                    <td>{{ $result->created_at }}</td>
-                    <td>{{ $result->productQuantity }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Kết quả</h5>
+            </div>
+            <div class="card-body">
+                <table class="table" id="resultTable">
+                    <thead>
+
+                    </thead>
+                    <tbody id="resultBody">
+                        <!-- Results will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-        $('#productTable').DataTable();
+    document.getElementById('btnKiemTra').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Dynamically set the form action to the fetchResults route
+        document.getElementById('checkProductForm').action = "{{ route('fetchResults') }}";
+
+        var form = document.getElementById('checkProductForm');
+        var formData = new FormData(form);
+
+        // Add AJAX request to fetch data from the backend
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Update the result table with the fetched data
+                updateResultTable(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
     });
+
+    function updateResultTable(data) {
+        var resultBody = document.getElementById('resultBody');
+
+        // Clear existing rows
+        resultBody.innerHTML = '';
+
+        // Create a new table element
+        var resultTable = document.createElement('table');
+        resultTable.className = 'table';
+        resultTable.id = 'resultTable';
+
+        var thead = document.createElement('thead');
+        thead.innerHTML = '<tr><th scope="col">Tên sản phẩm</th><th scope="col">Ngày tạo</th><th scope="col">Số lượng</th></tr>';
+        resultTable.appendChild(thead);
+
+        var tbody = document.createElement('tbody');
+        resultTable.appendChild(tbody);
+
+        // Append the new table to the result body
+        resultBody.appendChild(resultTable);
+
+        // Populate the new table with data
+        data.forEach(function(item) {
+            var row = tbody.insertRow(-1);
+            row.innerHTML = '<td>' + item.productName + '</td>' +
+                '<td>' + formatDate(item.created_at) + '</td>' +
+                '<td>' + item.productQuantity + '</td>';
+        });
+    }
+
+    function formatDate(dateString) {
+        var options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        };
+        var formattedDate = new Date(dateString).toLocaleString('en-US', options);
+        return formattedDate;
+    }
 </script>
 
 

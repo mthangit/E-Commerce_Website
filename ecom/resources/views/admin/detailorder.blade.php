@@ -119,7 +119,7 @@
                                         </option>
                                         <option value="completed"
                                             {{ $order->orderStatus == 'completed' ? 'selected' : '' }}>Completed</option>
-                                        <option value="cancelled"
+                                        <option value="canceled"
                                             {{ $order->orderStatus == 'canceled' ? 'selected' : '' }}>Cancel</option>
                                     </select>
                                 </div>

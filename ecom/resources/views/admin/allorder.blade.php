@@ -31,7 +31,7 @@ PING - Oder List
                         <a class="dropdown-item" href="{{ route('allorder', ['status' => 'all']) }}">Hiển thị Tất cả</a>
                         <a class="dropdown-item" href="{{ route('allorder', ['status' => 'pending']) }}">đang chờ</a>
                         <a class="dropdown-item" href="{{ route('allorder', ['status' => 'processing']) }}">processing</a>
-                        <a class="dropdown-item" href="{{ route('allorder', ['status' => 'cancelled']) }}">đã hủy</a>
+                        <a class="dropdown-item" href="{{ route('allorder', ['status' => 'canceled']) }}">đã hủy</a>
                         <a class="dropdown-item" href="{{ route('allorder', ['status' => 'completed']) }}">đã hoàn thành</a>
                     </div>
                 </div>

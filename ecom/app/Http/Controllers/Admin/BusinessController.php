@@ -25,21 +25,27 @@ class BusinessController extends Controller
     // Function to fetch subcategories based on the selected category
     public function fetchResults(Request $request)
     {
-         // Your logic to fetch results goes here
-         $productCategoryID = $request->input('productCategoryID');
-         $productSubCategoryID = $request->input('productSubCategoryID');
-         $productID = $request->input('productID');
-         $startDate = $request->input('start_date');
-         $endDate = $request->input('end_date');
- 
-         $results = OrderDetail::select('products.productName', 'order_details.created_at', 'order_details.productQuantity')
-             ->join('products', 'order_details.productID', '=', 'products.productID')
-             ->where('products.productCategoryID', $productCategoryID)
-             ->where('products.productSubCategoryID', $productSubCategoryID)
-             ->where('products.productID', $productID)
-             ->whereBetween('order_details.created_at', [$startDate, $endDate])
-             ->get();
- 
-         return view('admin.business', compact('results'));
+        // Retrieve form data
+        $productCategoryID = $request->input('productCategoryID');
+        $productSubCategoryID = $request->input('productSubCategoryID');
+        $productID = $request->input('productID');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Add logic to query the database and fetch results based on the provided parameters
+        $results = OrderDetail::select('products.productName', 'order_details.created_at', 'order_details.productQuantity')
+        ->join('products', 'order_details.productID', '=', 'products.productID')
+        ->where('products.productCategoryID', $productCategoryID)
+        ->where('products.productSubCategoryID', $productSubCategoryID)
+        ->where('products.productID', $productID)
+        ->where('order_details.orderDetailStatus', '<>', 'canceled') // Exclude 'canceled' status
+        ->where(function ($query) use ($startDate, $endDate) {
+            $query->whereDate('order_details.created_at', '>=', $startDate)
+                  ->whereDate('order_details.created_at', '<=', $endDate);
+        })
+        ->get();
+    
+        // Return the results as JSON
+        return response()->json($results);
     }
 }

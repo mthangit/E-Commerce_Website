@@ -27,7 +27,7 @@ class OrderController extends Controller
         switch ($status) {
             case 'pending':
             case 'processing':
-            case 'cancelled':
+            case 'canceled':
             case 'completed':
                 $orders = Order::where('orderStatus', $status)
                     ->orderBy('orderID', 'desc')

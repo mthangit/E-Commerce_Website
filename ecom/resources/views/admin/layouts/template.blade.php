@@ -329,7 +329,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="form-elements.html">Doanh số ngày</a>
+                                    <a href="{{route('checkProduct')}}">Thông kê theo sản phẩm</a>
                                 </li>
                                 <li>
                                     <a href="form-layouts.html">Doanh số tuần</a>
