@@ -7,6 +7,8 @@
     <title>@yield('page_title')</title>
 
     <!-- page css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('dashboard/assets/images/logo/colored-logo.png') }}">

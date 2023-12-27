@@ -20,12 +20,29 @@ class OrderController extends Controller
     {
         $this->purchaseHistoryController = $purchaseHistoryController;
     }
-    public function Index()
+    public function Index(Request $request)
     {
-        // $products = Product::latest()->get();
-        $orders = Order::orderby('orderID', 'desc')->paginate(20); // 20 sản phẩm mỗi trang
+        $status = $request->input('status', 'all');
+
+        switch ($status) {
+            case 'pending':
+            case 'processing':
+            case 'cancelled':
+            case 'completed':
+                $orders = Order::where('orderStatus', $status)
+                    ->orderBy('orderID', 'desc')
+                    ->paginate(20);
+                break;
+
+            case 'all':
+            default:
+                $orders = Order::orderBy('orderID', 'desc')->paginate(20);
+                break;
+        }
+
         $customerinfos = CustomerInfo::latest()->get();
-        return view('admin.allorder', compact('orders', 'customerinfos'));
+
+        return view('admin.allorder', compact('orders', 'customerinfos', 'status'));
     }
     public function DetailOrder($orderID)
     {
@@ -58,5 +75,29 @@ class OrderController extends Controller
         //   $this->purchaseHistoryController->storePurchaseHistory($orderID, $request->totalPrice, $request->paymentMethod);
 
         return redirect()->route('detailorder', $orderID)->with('message', 'Cập nhật thành công');
+    }
+
+    public function SearchOrder(Request $request)
+    {
+        $customerinfos = CustomerInfo::latest()->get();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+
+            // Validate the dates if needed
+            $request->validate([
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+            ]);
+
+            $orders = Order::whereDate('orderCreatedDate', '>=', $startDate)
+                ->whereDate('orderCreatedDate', '<=', $endDate)
+                ->paginate(10);
+
+            return view('admin.allorder', compact('orders', 'customerinfos'));
+        }
+
+        // Handle other cases or provide a default behavior
     }
 }
