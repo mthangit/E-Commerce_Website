@@ -7,7 +7,7 @@
     <title>Đăng nhập | PING Cosmetics</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('dashboard/assets/images/logo/colored-logo.png') }}">
     <!-- Include Tailwind CSS styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"> --}}
     <!-- Your custom styles -->
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>

@@ -169,7 +169,7 @@ if ($order->orderStatus == 'completed') {
                             @else
                                 <tr>
                                     <th colspan="3" class="text-right">Mã giảm giá
-                                        ({{ formatCurrency($discount->discountCode) }}):</th>
+                                        ({{ $discount->discountCode }}):</th>
                                     <td>
                                         @if ($discount->discountType == 'percent')
                                             {{ $discount->discountAmount }}%

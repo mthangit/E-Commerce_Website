@@ -31,7 +31,7 @@ class OrderController extends Controller
         $order = new Order();
         $discount = Discount::where('discountCode', $discountValidCode)->first();
         $discountPrice = 0;
-
+        $shippingFee = 0;
         if ($discount) {
             if ($discount->discountType == 'percent') {
                 $discountPrice = $totalPrice * $discount->discountAmount / 100;
@@ -49,13 +49,15 @@ class OrderController extends Controller
         $order->orderID = time() . "";
         $order->customerID = CustomerInfo::where('userID', Auth::user()->id)->first()->customerID;
         $order->orderCustomerName = $orderCustomerName;
-        $order->grandPrice = $totalPrice - $discountPrice;
         $order->totalPrice = $totalPrice;
         if ($totalPrice > 250000) {
             $order->shippingFee = 0;
+            $shippingFee = 0;
         } else {
             $order->shippingFee = 30000;
+            $shippingFee = 30000;
         }
+        $order->grandPrice = $totalPrice + $shippingFee - $discountPrice;
         $order->paymentMethod = "COD";
         $order->orderCreatedDate = now('Asia/Ho_Chi_Minh');
         $order->orderAddress = $orderAddress;
