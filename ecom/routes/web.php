@@ -88,7 +88,7 @@ Route::controller(UserProductController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'Index')->name('cart');
     Route::post('add-to-cart', 'AddToCart')->name('add to cart');
-    Route::get('/cart/delete/{rowID}', 'DeleteCart')->name('delete cart');
+    Route::post('/cart/delete', 'DeleteCart')->name('delete.cart');
     Route::post('/cart/update', 'UpdateCart')->name('update cart');
 });
 

@@ -145,6 +145,7 @@ class PaymentController extends Controller
         $vnp_Amount = $request->vnp_Amount;
         if ($vnp_ResponseCode == "00") {
             $paymentStatus = 'paid';
+            $this->OrderController->UpdatePaymentMethod($request->orderId, "VNPAY");
             $this->PurchaseHistoryController->storePurchaseHistory($vnp_TxnRef, $vnp_Amount/100, 'VNPAY');
             $this->OrderController->UpdatePaymentStatusPaid($vnp_TxnRef, $paymentStatus);
             orderEmail($vnp_TxnRef);
@@ -254,6 +255,7 @@ class PaymentController extends Controller
     {
         if ($request->resultCode == '0') {
             $paymentStatus = 'paid';
+            $this->OrderController->UpdatePaymentMethod($request->orderId, "MOMO");
             $this->PurchaseHistoryController->storePurchaseHistory($request->orderId, $request->amount, 'MOMO');
             $this->OrderController->UpdatePaymentStatusPaid($request->orderId, $paymentStatus);
             orderEmail($request->orderId);
