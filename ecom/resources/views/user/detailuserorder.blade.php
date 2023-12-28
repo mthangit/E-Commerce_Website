@@ -40,7 +40,7 @@ if ($order->orderStatus == 'completed') {
 <section class="content-header">
     <div class="container-fluid my-2">
         <div class="col-md-6">
-            <a href="{{ route('detailuseraccount', Auth::user()->id) }}" class="btn btn-primary">Back</a>
+            <a href="{{ route('detailuseraccount') }}" class="btn btn-primary">Back</a>
         </div>
         <div class="row align-items-center justify-content-between mb-2 text-center">
             <div class="col-md-6 mx-auto">
