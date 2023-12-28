@@ -31,6 +31,8 @@ class DiscountController extends Controller
         return view('admin.alldiscount', compact('discounts'));
     }
 
+    
+
     public function AddDiscount()
     {
         return view('admin.adddiscount');
