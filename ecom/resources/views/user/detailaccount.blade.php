@@ -89,7 +89,7 @@
                         </a>
                         <div class="text">
                             @auth
-                                <a href="{{ route('detailuseraccount')}}"
+                                <a href="{{ route('detailuseraccount') }}"
                                     class="white-anchor heavy-link">{{ Auth::user()->name }}</a>
                                 <br>
                                 <a href="{{ route('logout') }}" class="white-anchor heavy-link">Đăng xuất</a>
@@ -260,8 +260,7 @@
                                     <div class="media align-items-center">
                                         <div class="avatar avatar-image  m-h-10 m-r-15"
                                             style="height: 80px; width: 80px">
-                                            <img src="https://www.cnet.com/a/img/resize/fa38a5b9ea31b11e369c328cc63de0968985b4fd/hub/2023/02/16/e90ef303-aaf9-42cd-8943-88b5b6998563/social-crop-tom-holland-spidey.jpg?auto=webp&fit=crop&height=900&width=1200"
-                                                alt="">
+                                            <img src="{{ asset('assets/user.png') }}" alt="">
                                         </div>
                                         <div class="m-l-20 m-r-20">
                                             <h5 class="m-b-5 font-size-18">{{ $customers->customerName }}</h5>
