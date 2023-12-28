@@ -93,6 +93,10 @@
     <br>
 
     <style>
+        #errorInfo {
+            display: none;
+        }
+
         .small-alert {
             padding: 0.75rem 1.25rem;
             font-size: 0.9rem;
@@ -394,12 +398,11 @@
 
     $(document).ready(function() {
         // Initially hide the discount block and error message
-
+        $('#errorInfo').hide();
 
         $('#errorAlertPaymentMethod').hide();
         $('.discount-detail').hide();
         $('#errorAlert').hide();
-        $('#errorInfo').hide();
         $('#errorPhone').hide();
         $('#btn-apply-voucher').click(function() {
             var voucher = $('#discount-voucher').val();
@@ -710,6 +713,13 @@
         // var selectedWard = wards.options[wards.selectedIndex].text;
         // var phone = document.getElementById("phone").value;
         // Lấy giá trị từ textarea
+
+        // check if phone number is contain letter
+        var phoneRegex = /[a-zA-Z]/g;
+        if (phoneRegex.test(phone)) {
+            return false;
+        }
+
         var deliveryAddress = document.getElementById("address").value;
 
         if (address === '' || phone.length !== 10) {

@@ -16,6 +16,6 @@ class OrderDetail extends Model
         'productName',
         'productPrice',
         'productQuantity',
-        'productTotalPrice',
-    ];
+        'productTotalPrice'
+        ];
 }
