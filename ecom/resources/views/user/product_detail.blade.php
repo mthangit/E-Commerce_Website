@@ -107,69 +107,29 @@
     <div class="product-review-customer-detail">
         <div class="review-product-average">
             <span>Đánh giá trung bình </span>
-            <i class="fa-solid fa-star checked"></i>
-            <i class="fa-solid fa-star checked"></i>
-            <i class="fa-solid fa-star checked"></i>
-            <i class="fa-solid fa-star checked"></i>
-            <i class="fa-solid fa-star"></i>
-            <hr>
-            <div class="row">
-                <div class="side-star">
-                    <div>5 sao</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-5"></div>
+            @for ($i = 1; $i <= 5; $i++) @if ($i <=$averageRating) <i class="fa-solid fa-star checked"></i>
+                @else
+                <i class="fa-solid fa-star"></i>
+                @endif
+                @endfor
+                <hr>
+
+                <!-- Display rating distribution -->
+                <div class="row">
+                    @foreach($ratingDistribution as $distribution)
+                    <div class="side-star">
+                        <div>{{ $distribution['rating'] }} sao</div>
                     </div>
-                </div>
-                <div class="side-star txt-right">
-                    <div>150</div>
-                </div>
-                <div class="side-star">
-                    <div>4 sao</div>
-                </div>
-                <div class="middle">
+                    <div class="middle">
                     <div class="bar-container">
-                        <div class="bar-4"></div>
-                    </div>
-                </div>
-                <div class="side-star txt-right">
-                    <div>63</div>
-                </div>
-                <div class="side-star">
-                    <div>3 sao</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-3"></div>
-                    </div>
-                </div>
-                <div class="side-star txt-right">
-                    <div>15</div>
-                </div>
-                <div class="side-star">
-                    <div>2 sao</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-2"></div>
-                    </div>
-                </div>
-                <div class="side-star txt-right">
-                    <div>6</div>
-                </div>
-                <div class="side-star">
-                    <div>1 sao</div>
-                </div>
-                <div class="middle">
-                    <div class="bar-container">
-                        <div class="bar-1"></div>
-                    </div>
-                </div>
-                <div class="side-star txt-right">
-                    <div>20</div>
-                </div>
+                <div class="bar bar-{{ $distribution['rating'] }}" style="width: {{ $distribution['count'] * 1 }}%"></div>
             </div>
+                    </div>
+                    <div class="side-star txt-right">
+                        <div>{{ $distribution['count'] }}</div>
+                    </div>
+                    @endforeach
+                </div>
         </div>
         <div class="col-md-8">
             <div class="row">
@@ -178,10 +138,18 @@
                     <input type="hidden" class="form-control" id="productID" name="productID" value="{{ $thisProduct->productID }}" />
                     <br> <br>
                     <h3 class="h4 pb-3">Để lại đánh giá</h3>
+                    @auth
                     <div class="form-group col-md-6 mb-3" style="display: none;">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="userName" id="name" placeholder="Name" readonly value="{{ Auth::user()->name }}">
-                    </div>
+                    </div> 
+                    @endauth
+                    @guest
+                    <div class="form-group col-md-6 mb-3" style="display: none;">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="userName" id="name" placeholder="Name" readonly value="">
+                    </div> 
+                    @endguest
             </div>
             <div class="form-group mb-3">
                 <label for="rating">Đánh giá</label>
@@ -263,7 +231,7 @@
     </style>
     <br>
     <span>Đánh giá nổi bật</span>
-    @foreach($ratings as $rating)
+    @foreach($latestRatings as $rating)
     <div class="review-detail">
         <div class="rating-star">
             @for ($i = 1; $i <= 5; $i++) @if ($i <=$rating->rating)

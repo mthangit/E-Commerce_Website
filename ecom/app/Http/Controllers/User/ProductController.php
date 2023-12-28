@@ -14,12 +14,28 @@ class ProductController extends Controller
     {
         $product = Product::where('productSlug', $request->productSlug)->first();
         $ratings = ProductRating::where('productID', $product->productID)->get();
+        $latestRatings = ProductRating::where('productID', $product->productID)
+    ->orderBy('created_at', 'desc') // Sắp xếp theo thời gian tạo mới nhất đến cũ nhất
+    ->take(5) // Giới hạn kết quả lấy về là 5 bản ghi
+    ->get();
         // Fetch similar products based on subcategoryID
         $similarProducts = Product::where('productSubCategoryID', $product->productSubCategoryID)
             ->inRandomOrder() // You can adjust the order as needed
             ->take(4)
             ->get();
-        return view('user.product_detail', ['thisProduct' => $product, 'ratings' => $ratings, 'similarProducts' => $similarProducts]);
+
+        // Calculate average rating
+    $averageRating = $ratings->avg('rating');
+
+    // Calculate rating distribution
+    $ratingDistribution = $ratings->groupBy('rating')->map(function ($item, $key) {
+        return [
+            'rating' => $key,
+            'count' => $item->count(),
+        ];
+    })->sortByDesc('rating')->values();
+
+        return view('user.product_detail', ['thisProduct' => $product, 'ratings' => $ratings, 'similarProducts' => $similarProducts, 'averageRating' => $averageRating, 'ratingDistribution' => $ratingDistribution, 'latestRatings' => $latestRatings]);
     }
 
     public function ProductListByKeyword(Request $request)
