@@ -162,7 +162,7 @@ PING - Tài khoản user
                                             @elseif($order->orderStatus == 'cancel')
                                             <div class="d-flex align-items-center">
                                                 <div class="badge badge-danger badge-dot m-r-10"></div>
-                                                <div>Cancelled</div>
+                                                <div>Canceled</div>
                                             </div>
                                             @else
                                             <div>Unknown Status</div>

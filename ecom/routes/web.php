@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -37,12 +38,12 @@ use App\Http\Controllers\User\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/test', function () {
     orderEmail(1703256121);
 });
 
 Route::post('/thankyou-email', function () {
-
 });
 
 Route::get('/', function () {
@@ -92,10 +93,10 @@ Route::controller(CartController::class)->group(function () {
 });
 
 Route::controller(UserAccountController::class)->group(function () {
-   Route::get('/user/detail-account', 'DetailAccount')->name('detailuseraccount');
-   Route::get('/user/detail-order/{orderID}', 'DetailOrder')->name('detailuserorder');
-   Route::post('/user/update-account', 'UpdateAccount')->name('updateaccount');
-   Route::post('/update-address', 'UpdateAddress');
+    Route::get('/user/detail-account', 'DetailAccount')->name('detailuseraccount');
+    Route::get('/user/detail-order/{orderID}', 'DetailOrder')->name('detailuserorder');
+    Route::post('/user/update-account', 'UpdateAccount')->name('updateaccount');
+    Route::post('/update-address', 'UpdateAddress');
 });
 
 Route::controller(UserOrderController::class)->group(function () {
@@ -228,6 +229,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/all-order', 'Index')->name('allorder');
         Route::get('/admin/detail-order/{orderID}', 'DetailOrder')->name('detailorder');
         Route::post('/admin/update-order-status', 'UpdateOrderStatus')->name('updateorderstatus');
+        Route::get('/admin/search-order', 'SearchOrder')->name('searchorder');
+    });
+
+    Route::controller(BusinessController::class)->group(function () {
+        Route::get('/check-product', [BusinessController::class, 'checkProduct'])->name('checkProduct');
+        Route::get('/check-subcategory', [BusinessController::class, 'checkSubcategory'])->name('checkSubcategory');
+        Route::post('/fetch-subcategories', [BusinessController::class, 'fetchSubcategories'])->name('fetchSubcategories');
+        Route::post('/fetch-products', [BusinessController::class, 'fetchProducts'])->name('fetchProducts');
+        Route::post('/business-summary', [BusinessController::class, 'BusinessSummary'])->name('businesssummary');
+        Route::post('/fetch-results', [BusinessController::class, 'fetchResults'])->name('fetchResults');
+        Route::post('/fetch-sub-results', [BusinessController::class, 'fetchSubcategoryResults'])->name('fetchSubcategoryResults');
+        Route::get('/admin/dashboard', [BusinessController::class, 'calculateTotalSales'])->name('admindashboard');
     });
 });
 
