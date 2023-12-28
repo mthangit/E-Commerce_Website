@@ -25,6 +25,7 @@ use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\DiscountController as UserDiscountController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
+use App\Http\Controllers\User\ProductRatingController  as UserProductRatingController;
 use App\Http\Controllers\User\PaymentController;
 
 
@@ -84,6 +85,11 @@ Route::controller(UserProductController::class)->group(function () {
     Route::get('/search/result', 'ProductListByKeyword')->name('search product');
     Route::post('/sortProducts', 'SortProducts')->name('sort products');
 });
+
+Route::controller(UserProductRatingController::class)->group(function () {
+    Route::post('/storerating', 'store')->name('storerating');
+});
+
 
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'Index')->name('cart');

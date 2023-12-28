@@ -5,18 +5,27 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\ProductRating;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function ProductDetail(Request $request){
+    public function ProductDetail(Request $request)
+    {
         $product = Product::where('productSlug', $request->productSlug)->first();
-        return view('user.product_detail', ['thisProduct' => $product]);
+        $ratings = ProductRating::where('productID', $product->productID)->get();
+        // Fetch similar products based on subcategoryID
+        $similarProducts = Product::where('productSubCategoryID', $product->productSubCategoryID)
+            ->inRandomOrder() // You can adjust the order as needed
+            ->take(4)
+            ->get();
+        return view('user.product_detail', ['thisProduct' => $product, 'ratings' => $ratings, 'similarProducts' => $similarProducts]);
     }
 
-    public function ProductListByKeyword(Request $request){
+    public function ProductListByKeyword(Request $request)
+    {
         $keyword = $request->input('keyword');
-        $products = Product::where('productName', 'like', '%'.$keyword.'%');
+        $products = Product::where('productName', 'like', '%' . $keyword . '%');
 
         $brandsArray = [];
         if (!empty($request->get('brand'))) {
@@ -73,8 +82,4 @@ class ProductController extends Controller
             }
         });
     }
-
-
-
-
 }
