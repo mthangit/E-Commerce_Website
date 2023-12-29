@@ -82,12 +82,12 @@
                                     readonly />
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái sản phẩm</label>
-                            <div class="switch m-r-10">
-                                <input type="checkbox" id="isActive" name="isActive" checked="">
-                                <label for="isActive"></label>
-                            </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái danh mục con</label>
+                        <div class="switch m-r-10">
+                            <input type="checkbox" id="isActive" name="isActive" {{ $subCategoryInfo->isActive ? 'checked' : '' }}>
+                            <label for="isActive"></label>
                         </div>
 
 
