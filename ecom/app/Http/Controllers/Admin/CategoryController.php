@@ -49,8 +49,8 @@ class CategoryController extends Controller
             'categoryName' => $request->categoryName,
             'categorySlug' => strtolower(str_replace(' ', '-', $request->categoryName)),
             'categoryDescription' => $request->categoryDescription,
-            'categoryCreatedDate' => $request->categoryCreatedDate,
-            'categoryModifiedDate' => $request->categoryModifiedDate, // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
+            'categoryCreatedDate' => now('Asia/Ho_Chi_Minh'),
+            'categoryModifiedDate' => now('Asia/Ho_Chi_Minh'), // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
             'isActive' => $isActive,
         ]);
 
@@ -97,10 +97,10 @@ class CategoryController extends Controller
     public function DeleteCategory($categoryID)
     {
         $category = Category::findOrFail($categoryID);
-    
+
         // Thay đổi trạng thái isActive về 0
         $category->update(['isActive' => 0]);
-    
+
         return redirect()->route('allcategory')->with('message', 'Đã thực hiện thành công');;
     }
 }

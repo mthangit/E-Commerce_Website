@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Subcategory;
-use App\Models\Category;    
-use Illuminate\Http\Request;         
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
@@ -31,7 +31,7 @@ class SubCategoryController extends Controller
         return view('admin.allsubcategory', compact('subcategories'));
     }
     public function AddSubCategory()
-    {   
+    {
         $categories = Category::latest()->get();
         return view('admin.addsubcategory',compact('categories'));
     }
@@ -42,7 +42,7 @@ class SubCategoryController extends Controller
             'subCategoryName' => 'required|unique:subcategories'
         ]);
 
-        
+
         $category_ID = $request->categoryID;
 
         $category_Name = Category::where('categoryID',$category_ID)->value('categoryName');
@@ -51,8 +51,8 @@ class SubCategoryController extends Controller
             'subCategoryName' => $request->subCategoryName,
             'subCategorySlug' => strtolower(str_replace(' ', '-', $request->subCategoryName)),
             'subCategoryDescription' => $request->subCategoryDescription,
-            'subCategoryCreatedDate' => $request->subCategoryCreatedDate,
-            'subCategoryModifiedDate' => $request->subCategoryModifiedDate, // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
+            'subCategoryCreatedDate' => now('Asia/Ho_Chi_Minh'),
+            'subCategoryModifiedDate' => now('Asia/Ho_Chi_Minh'), // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
             'categoryID' => $category_ID,
             'categoryName' => $category_Name,
             'isActive' => $isActive,
@@ -64,13 +64,13 @@ class SubCategoryController extends Controller
     }
 
     public function EditSubCategory($subCategoryID)
-    {   
+    {
         $subCategoryInfo = Subcategory::findOrFail($subCategoryID);
         $categories = Category::latest()->get();
         return view('admin.editsubcategory', compact('subCategoryInfo','categories'));
     }
     public function UpdateSubCategory(Request $request)
-    {   
+    {
         $subCategoryID = $request->subCategoryID;
         $request->validate([
             'subCategoryName' => 'required|unique:subcategories,subcategoryName,' . $subCategoryID . ',subCategoryID'
@@ -94,7 +94,7 @@ class SubCategoryController extends Controller
     }
 
     public function DeleteSubCategory($subCategoryID)
-    {   
+    {
         $categoryID = Subcategory::where('subCategoryID',$subCategoryID)->value('categoryID');
 
       //  Subcategory::findOrFail($subCategoryID)->delete();

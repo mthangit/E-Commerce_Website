@@ -331,6 +331,7 @@
             <div class="payment-summary">
                 <div class="first-summary">
                     <span class="left">Tạm tính</span>
+                    <span id = "tempTotal" hidden>{{ $totalPrice }}</span>
                     <span class="right" id="totalPrice">{{ formatCurrency($totalPrice) }} &#8363;</span>
                 </div>
                 <br>
@@ -353,6 +354,7 @@
                 <hr>
                 <div class="final-total-money">
                     <span class="txt-orange txt-bold txt-18 left">Thành tiền</span>
+
                     <span class="txt-orange txt-bold txt-18 right"name="totalPrice"
                         id="thanhtien">{{ formatCurrency($totalPrice + $shippingFee) }} &#8363;</span>
                 </div><br>
@@ -375,8 +377,10 @@
 <script>
     var discountPrice = 0;
     var discountValidCode = '';
-    var totalPrice = parseInt(document.getElementById('totalPrice').innerText) * 1000;
+    var totalPrice = parseInt(document.getElementById('tempTotal').innerText);
     var payment = "";
+    var officialTotalPrice = totalPrice;
+    var grandPrice = officialTotalPrice;
 
     var formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -413,7 +417,7 @@
 
             if (voucher == '') {
                 $('#giamgia').html(`0 &#8363;`);
-                $('#thanhtien').html(`${formatter.format(totalPrice)}`);
+                $('#thanhtien').html(`${format.formatter(totalPrice)}`);
                 $('.discount-detail').hide();
                 return;
             }
@@ -469,9 +473,11 @@
                         // Update the thanhtien
                         $('#thanhtien').html(
                             `${formatter.format(totalPrice - discountPrice)}`);
+
                         // Show the discount detail section
                         $('.discount-detail').show();
                         $('#errorAlert').hide();
+                        grandPrice = totalPrice - discountPrice;
                     } else {
                         $('#giamgia').html(`0 &#8363;`);
                         $('#thanhtien').html(`${formatter.format(totalPrice)}`);
@@ -510,7 +516,6 @@
 
     document.getElementById('btn-finish').addEventListener('click', function() {
         // var payment = document.querySelector('input[name="payment"]:checked').value;
-        var thanhtien = parseInt(document.getElementById('thanhtien').innerText) * 1000;
         if (payment === '') {
             $('#errorAlertPaymentMethod').show();
             return;
@@ -523,7 +528,7 @@
             var payment_status = 'unpaid';
 
             var requestData = {
-                totalPrice: (totalPrice),
+                totalPrice: (officialTotalPrice),
                 paymentMethod: payment,
                 discountValidCode: discountValidCode,
                 orderCustomerName: name,
@@ -534,7 +539,7 @@
 
             if (payment == 'VNPAY') {
                 storeOrderAndPayment(requestData, function(orderID) {
-                    VnPay_Payment(orderID, thanhtien);
+                    VnPay_Payment(orderID, grandPrice);
                 }, function(error) {
                     console.error('Có lỗi xảy ra:', error);
                     // Xử lý lỗi nếu cần
@@ -542,7 +547,7 @@
             } else if (payment == 'MOMO') {
                 storeOrderAndPayment(requestData, function(orderID) {
                     console.log(orderID);
-                    Momo_Payment(orderID, thanhtien);
+                    Momo_Payment(orderID, grandPrice);
                 }, function(error) {
                     console.error('Có lỗi xảy ra:', error);
                     // Xử lý lỗi nếu cần
@@ -573,6 +578,7 @@
                 totalPrice: totalPrice,
             },
             success: function(response) {
+                // alert('Đã chuyển sang trang thanh toán VNPAY');
                 // console.log(response);
                 window.location.href = response.data;
             },
