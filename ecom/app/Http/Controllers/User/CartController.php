@@ -10,22 +10,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function AddToCart(Request $request){
+    public function AddToCart(Request $request)
+    {
         $product = Product::find($request->productID);
         $quantity = $request->quantity;
-        if($product == null){
+        if ($product == null) {
             return $this->reponse()->json([
                 'status' => false,
                 'message' => 'Sản phẩm không tồn tại'
             ]);
         }
-        if(Cart::count() > 0){
+        if (Cart::count() > 0) {
             // check if product exist in cart then increase qty and plus the price else add new product
             $cart = Cart::content();
-            foreach($cart as $item){
-                if($item->id == $product->productID){
+            foreach ($cart as $item) {
+                if ($item->id == $product->productID) {
                     $quantityItem = $item->qty + $quantity;
-                    if($product->isFlashSale == 1){
+                    if ($product->isFlashSale == 1) {
                         $price = $product->productDiscountPrice;
                     } else {
                         $price = $product->productOriginalPrice;
@@ -33,9 +34,10 @@ class CartController extends Controller
                     Cart::update($item->rowId, ['qty' => $quantityItem, 'price' => $price]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
+                    notify()->success('Laravel Notify is awesome!');
                     break;
                 } else {
-                    if($product->isFlashSale == 1){
+                    if ($product->isFlashSale == 1) {
                         $price = $product->productDiscountPrice;
                     } else {
                         $price = $product->productOriginalPrice;
@@ -49,10 +51,11 @@ class CartController extends Controller
                     ]);
                     $status = true;
                     $message = 'Thêm sản phẩm vào giỏ hàng thành công';
+
                 }
             }
         } else {
-            if($product->isFlashSale == 1){
+            if ($product->isFlashSale == 1) {
                 $price = $product->productDiscountPrice;
             } else {
                 $price = $product->productOriginalPrice;
@@ -79,19 +82,38 @@ class CartController extends Controller
         return view('user.cart', ['products' => $data]);
     }
 
-    public function DeleteCart($rowID)
+    public function DeleteCart(Request $request)
     {
+        $rowID = $request->rowID;
         Cart::remove($rowID);
-        return redirect()->back();
-    }
 
+        $totalPriceCart = Cart::subtotal();
+
+        //convert $totalPriceCart from string to int
+        $totalPriceCart = intval(str_replace(',', '', $totalPriceCart));
+
+        return response()->json([
+            'status' => true,
+            'totalPriceCart' => $totalPriceCart,
+        ]);
+    }
     public function UpdateCart(Request $request)
     {
         $rowID = $request->rowID;
         $quantity = $request->qty;
         Cart::update($rowID, $quantity);
+
+        $totalPriceProduct = Cart::get($rowID)->price * $quantity;
+
+        $totalPriceCart = Cart::subtotal();
+
+        //convert $totalPriceCart from string to int
+        $totalPriceCart = intval(str_replace(',', '', $totalPriceCart));
+
         return response()->json([
             'status' => true,
+            'totalPriceProduct' => $totalPriceProduct,
+            'totalPriceCart' => $totalPriceCart,
         ]);
     }
 }
