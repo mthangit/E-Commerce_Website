@@ -5,16 +5,41 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\ProductRating;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function ProductDetail(Request $request){
+    public function ProductDetail(Request $request)
+    {
         $product = Product::where('productSlug', $request->productSlug)->first();
-        return view('user.product_detail', ['thisProduct' => $product]);
+        $ratings = ProductRating::where('productID', $product->productID)->get();
+        $latestRatings = ProductRating::where('productID', $product->productID)
+    ->orderBy('created_at', 'desc') // Sắp xếp theo thời gian tạo mới nhất đến cũ nhất
+    ->take(5) // Giới hạn kết quả lấy về là 5 bản ghi
+    ->get();
+        // Fetch similar products based on subcategoryID
+        $similarProducts = Product::where('productSubCategoryID', $product->productSubCategoryID)
+            ->inRandomOrder() // You can adjust the order as needed
+            ->take(4)
+            ->get();
+
+        // Calculate average rating
+    $averageRating = $ratings->avg('rating');
+
+    // Calculate rating distribution
+    $ratingDistribution = $ratings->groupBy('rating')->map(function ($item, $key) {
+        return [
+            'rating' => $key,
+            'count' => $item->count(),
+        ];
+    })->sortByDesc('rating')->values();
+
+        return view('user.product_detail', ['thisProduct' => $product, 'ratings' => $ratings, 'similarProducts' => $similarProducts, 'averageRating' => $averageRating, 'ratingDistribution' => $ratingDistribution, 'latestRatings' => $latestRatings]);
     }
 
-    public function ProductListByKeyword(Request $request){
+    public function ProductListByKeyword(Request $request)
+    {
         $keyword = $request->input('keyword');
         $products = Product::where('productName', 'like', '%'.$keyword.'%')->where('isActive', 1)->where('productInStock', '>', 0);
 
@@ -73,8 +98,4 @@ class ProductController extends Controller
             }
         });
     }
-
-
-
-
 }
