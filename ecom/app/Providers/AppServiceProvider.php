@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // using functions from helper.php
+use App\Models\Blog;
 use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -43,6 +44,12 @@ class AppServiceProvider extends ServiceProvider
         // get all products from low to high price
         $suggestedProducts = Product::where('isActive', 1)->where('productInStock', '>', 0)->orderBy('productDiscountPrice', 'asc')->take(15)->get();
         view()->share('suggestedProducts', $suggestedProducts);
+
+        $blogs = get4blog();
+        view()->share('blogs', $blogs);
+
+        $allblogs = Blog::all();
+        view()->share('allblogs', $allblogs);
 
     }
 }

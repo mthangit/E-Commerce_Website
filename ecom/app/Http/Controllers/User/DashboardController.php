@@ -39,6 +39,7 @@ class DashboardController extends Controller
     }
     public function Blog()
     {
+        
         return view('user.blog');
     }
 }
