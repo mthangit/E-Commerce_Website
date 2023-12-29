@@ -33,9 +33,6 @@
                 id="orderPhone">{{ $info->customerPhone }}</span></p>
         <h4 class="txt-cyan txt-18">Địa chỉ nhận hàng</h4>
         <p id="orderAddress">{{ $info->customerAddress }}</p>
-        <label for="delivery-note">Ghi chú <span style="font-style: italic;">(nếu có): </span></label>
-        <textarea name="delivery-note" id="delivery-note" style="width: 100%; margin-top: 10px; height: 50px"
-            placeholder="Nhập ghi chú"></textarea>
     </div>
     <div class="edit-delivery-content ">
         <div class="address-edit" style="display: flex; justify-content: space-between; width: 100%">
