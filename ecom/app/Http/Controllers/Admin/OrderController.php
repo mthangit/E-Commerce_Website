@@ -80,27 +80,24 @@ class OrderController extends Controller
     public function SearchOrder(Request $request)
     {
         $customerinfos = CustomerInfo::latest()->get();
+    $query = Order::query();
 
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $startDate = $request->input('start_date');
-            $endDate = $request->input('end_date');
+    if ($request->has('start_date') && $request->has('end_date')) {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-            // Validate the dates if needed
-            $request->validate([
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
-            ]);
-
-            // $orders = Order::whereDate('orderCreatedDate', '>=', $startDate)
-            //     ->whereDate('orderCreatedDate', '<=', $endDate)
-            //     ->paginate(10);
-
-            // dd ($orders) and the number of order in orders
-            $orders = Order::whereBetween('orderCreatedDate', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
-                ->paginate(10);
-            return view('admin.allorder', compact('orders', 'customerinfos'));
-        }
-
-        // Handle other cases or provide a default behavior
+        $query->whereBetween('orderCreatedDate', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
     }
+
+    if ($request->has('min_price') && $request->has('max_price')) {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        $query->whereBetween('grandPrice', [$minPrice, $maxPrice]);
+    }
+
+    $orders = $query->paginate(10);
+
+    return view('admin.allorder', compact('orders', 'customerinfos'));
+}
 }
