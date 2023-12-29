@@ -31,6 +31,8 @@ class DiscountController extends Controller
         return view('admin.alldiscount', compact('discounts'));
     }
 
+    
+
     public function AddDiscount()
     {
         return view('admin.adddiscount');
@@ -53,6 +55,8 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 
@@ -75,6 +79,8 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 

@@ -11,9 +11,9 @@ class BlogController extends Controller
 {
     public function Index()
     {
-      
-        $blogs =Blog::latest()->paginate(10);
-        return view('admin.allblog', compact('blogs')); 
+
+        $blogs = Blog::latest()->paginate(10);
+        return view('admin.allblog', compact('blogs'));
     }
 
     public function SearchBlog(Request $request)
@@ -39,14 +39,13 @@ class BlogController extends Controller
 
         Blog::insert([
             'blogTitle' => $request->blogTitle,
-         //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
-            'blogCreatedDate' => $request->blogCreatedDate,
-            'blogModifiedDate' => $request->blogModifiedDate,
+            'blogCreatedDate' => now('Asia/Ho_Chi_Minh')
         ]);
 
-        return redirect()->route('allblog')->with('message', 'Thêm danh mục thành công');
+        return redirect()->route('allblog')->with('message', 'Thêm blog thành công');
 
 
 
@@ -75,22 +74,22 @@ class BlogController extends Controller
 
         blog::findOrFail($blogID)->update([
             'blogTitle' => $request->blogTitle,
-         //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
-            'blogCreatedDate' => $request->blogCreatedDate,
-            'blogModifiedDate' => $request->blogModifiedDate,
+            'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
         ]);
 
-        return redirect()->route('allblog')->with('message', 'Cập nhật danh mục thành công');
+        return redirect()->route('allblog')->with('message', 'Cập nhật blog thành công');
     }
 
     public function DeleteBlog($blogID)
     {
         $blog = blog::findOrFail($blogID);
         $blog->delete();
-    
-        return redirect()->route('allblog')->with('message', 'Đã thực hiện thành công');;
+
+        return redirect()->route('allblog')->with('message', 'Đã thực hiện thành công');
+        ;
     }
 }
 

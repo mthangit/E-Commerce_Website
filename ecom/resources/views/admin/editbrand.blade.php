@@ -44,7 +44,7 @@ PING - Edit Brand
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái thương hiệu</label>
                         <div class="switch m-r-10">
-                            <input type="checkbox" id="isActive" name="isActive" checked="">
+                            <input type="checkbox" id="isActive" name="isActive" {{ $brandInfo->isActive ? 'checked' : '' }}>
                             <label for="isActive"></label>
                         </div>
                     </div>

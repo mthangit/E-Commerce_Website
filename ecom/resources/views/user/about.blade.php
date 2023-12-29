@@ -1,7 +1,7 @@
 @include('user.layouts.template_header_logged')
 <div class="page-navigation">
     <ul class="breadcrumb">
-        <li><a href="">Trang chủ</a></li>
+        <li><a href="/">Trang chủ</a></li>
         <li>Về chúng tôi</li>
     </ul>
 </div>

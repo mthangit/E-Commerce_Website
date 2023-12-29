@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="signup-wrapper">
         <div class="signup">
             <div class="txt-divider">Đăng ký</div>
@@ -56,6 +56,10 @@
             </form> -->
         </div>
     </div>
+    <footer style="background-color: white; color: var(--cyan);">
+        <div class="footer-copyright txt-center" style="font-weight: 400;">Copyright by PING Cosmetics - Based in Ho Chi Minh City</div>
+        <div class="footer-hotline txt-center">Hotline: 012345678</div>
+    </footer>
 
     <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
     <script src="js/signup-script.js"></script>

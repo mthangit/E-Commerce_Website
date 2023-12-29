@@ -7,8 +7,8 @@ PING - product
 <div class="container-xxl flex-grow-1 container-p-y">
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Sản phẩm</h4>
   <div class="card">
-    <h5 class="card-header">Thông tin danh mục sản phẩm có sẵn</h5>
-    @if(session()->has('message'))
+    <h5 class="card-header">Danh sách sản phẩm</h5>
+    @if (session()->has('message'))
     <div class="alert alert-success">
       {{ session()->get('message') }}
     </div>
@@ -23,9 +23,12 @@ PING - product
             Lọc theo Trạng thái
           </button>
           <div class="dropdown-menu" aria-labelledby="filterDropdown">
-            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'all']) }}">Hiển thị Tất cả</a>
-            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'available']) }}">Chỉ hiển thị Available</a>
-            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
+            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'all']) }}">Hiển thị Tất
+              cả</a>
+            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'available']) }}">Chỉ hiển
+              thị Available</a>
+            <a class="dropdown-item" href="{{ route('allproduct', ['status' => 'unavailable']) }}">Chỉ hiển
+              thị Unavailable</a>
           </div>
         </div>
         <button class="btn btn-outline-secondary" type="button" id="addProduct">Thêm sản phẩm</button>
@@ -42,13 +45,14 @@ PING - product
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">
-          @foreach($products as $product)
+          @foreach ($products as $product)
           <tr>
             <td>{{ $product->productID }} </td>
             <td>{{ $product->productName }}</td>
             <td>{{ $product->productSubCategoryName }}</td>
-            <td><img style="height:100px" src="{{asset($product->productImage)}}" alt=""></td>
-            <td>@if($product->isActive == 1)
+            <td><img style="height:100px" src="{{ asset($product->productImage) }}" alt=""></td>
+            <td>
+              @if ($product->isActive == 1)
               <div class="d-flex align-items-center">
                 <div class="badge badge-success badge-dot m-r-10"></div>
                 <div>Available</div>
@@ -61,9 +65,9 @@ PING - product
               @endif
             </td>
             <td>
-              <a href="{{route('editproduct', $product->productID)}}" class="btn btn-primary">Sửa</a>
-              @if($product->isActive == 1)
-              <a href="{{route('deleteproduct', $product->productID)}}" class="btn btn-danger">Xóa</a>
+              <a href="{{ route('editproduct', $product->productID) }}" class="btn btn-primary">Sửa</a>
+              @if ($product->isActive == 1)
+              <a href="{{ route('deleteproduct', $product->productID) }}" class="btn btn-danger btn-delete" data-url="{{ route('deleteproduct', $product->productID) }}">Xóa</a>
               @else
               <button class="btn btn-warning" disabled>Xóa</button>
               @endif
@@ -82,8 +86,7 @@ PING - product
 <script>
   $(document).ready(function() {
     $("#searchButton").click(function() {
-      var searchValue = $("#searchInput").val();
-      window.location.href = "{{ route('searchproduct') }}?q=" + searchValue;
+      applyFilter();
     });
 
     $("#resetButton").click(function() {
@@ -97,6 +100,24 @@ PING - product
       window.location.href = "{{ route('addproduct') }}";
     });
 
+    function applyFilter() {
+      var searchValue = $("#searchInput").val();
+      window.location.href = "{{ route('allproduct') }}?search=" + searchValue + "&status=all";
+    }
+
   });
+
+  $(document).ready(function() {
+        $(".btn-delete").click(function(e) {
+            e.preventDefault();
+            var deleteUrl = $(this).attr('data-url');
+            
+            // Sử dụng hộp thoại xác nhận
+            if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+                // Nếu người dùng đồng ý, chuyển hướng đến URL xóa
+                window.location.href = deleteUrl;
+            }
+        });
+    });
 </script>
 @endsection

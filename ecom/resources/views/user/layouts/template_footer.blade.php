@@ -39,5 +39,6 @@
     <script src="https://kit.fontawesome.com/6594d9651c.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="{{asset("js/script.js")}}"></script>
+    {{-- <script src="{{asset("js/app.min.js")}}"></script> --}}
 </body>
 </html>
