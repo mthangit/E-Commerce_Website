@@ -273,4 +273,12 @@ class ProductController extends Controller
         ]);
         return redirect()->route('allproduct')->with('message', 'Cập nhật danh mục thành công');
     }
+
+    public function SearchProduct(Request $request)
+    {
+        $searchQuery = $request->input('q');
+        $products = Product::where('productName', 'like', '%' . $searchQuery . '%')->paginate(10);
+
+        return view('admin.allproduct', compact('products'));
+    }
 }

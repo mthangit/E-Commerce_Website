@@ -167,7 +167,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/edit-product/{productID}', 'EditProduct')->name('editproduct');
         Route::post('/admin/update-product', 'UpdateProduct')->name('updateproduct');
         Route::get('/admin/delete-product/{productID}', 'DeleteCategory')->name('deleteproduct');
-        Route::get('/admin/search-product', 'SearchCategory')->name('searchproduct');
+        Route::get('/admin/search-product', 'SearchProduct')->name('searchproduct');
 
         Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
         Route::get('/admin/edit-product-img/{productID}', 'EditProductImg')->name('editproductimg');
