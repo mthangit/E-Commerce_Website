@@ -56,8 +56,6 @@ class ProductController extends Controller
             'productBrandID' => 'required',
             'productCategoryID' => 'required',
             'productSubCategoryID' => 'required',
-            'productCreatedDate' => 'required',
-            'productModifiedDate' => 'required',
             'productOriginalPrice' => 'required',
             'productDiscountPrice' => 'required',
             'productInfo' => 'required',
@@ -66,7 +64,7 @@ class ProductController extends Controller
             'productSideImage1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'productSideImage2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'productSideImage3' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'productInStock' => 'required',
+            'productInStock' => 'required'
         ]);
 
         $image = $request->file('productImage');
@@ -101,7 +99,6 @@ class ProductController extends Controller
         $brand_Name = Brand::where('brandID', $brand_ID)->value('brandName');
 
 
-        $isFlashSale = $request->has('isFlashSale') ? 1 : 0;
         $isActive = $request->has('isActive') ? 1 : 0;
 
         Product::insert([
@@ -121,9 +118,9 @@ class ProductController extends Controller
             'productSideImage1' => $imgurl1,
             'productSideImage2' => $imgurl2,
             'productSideImage3' => $imgurl3,
-            'productCreatedDate' => now('Asia/Ho_Chi_Minh'),
             'productInStock' => $request->productInStock,
-            'isFlashSale' => $isFlashSale,
+            'productCreatedDate' => now('Asia/Ho_Chi_Minh'), // 'Asia/Ho_Chi_Minh
+            'isFlashSale' => 1,
             'isActive' => $isActive,
         ]);
 
@@ -191,8 +188,7 @@ class ProductController extends Controller
             'productDiscountPrice' => $request->productDiscountPrice,
             'productInfo' => $request->productInfo,
             'productBarcode' => $request->productBarcode,
-            'productCreatedDate' => $request->productCreatedDate,
-            'productModifiedDate' => $request->productModifiedDate,
+            'productModifiedDate' => now('Asia/Ho_Chi_Minh'),
             'productInStock' => $request->productInStock,
             'isFlashSale' => $isFlashSale,
             'isActive' => $isActive,
@@ -307,10 +303,10 @@ class ProductController extends Controller
     public function DeleteProduct($categoryID)
     {
         $product = Product::findOrFail($categoryID);
-    
+
         // Thay đổi trạng thái isActive về 0
         $product->update(['isActive' => 0]);
-    
+
         return redirect()->route('allproduct')->with('message', 'Đã thực hiện thành công');;
     }
 }

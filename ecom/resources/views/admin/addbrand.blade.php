@@ -31,7 +31,7 @@ PING - Brand
           </div>
 
           <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái sản phẩm</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái thương hiệu</label>
             <div class="switch m-r-10">
               <input type="checkbox" id="isActive" name="isActive" checked="">
               <label for="isActive"></label>

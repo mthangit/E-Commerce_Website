@@ -106,10 +106,8 @@ PING - discount
     $("#addDiscount").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
       $("#addDiscount").val('');
-      window.location.href = 'http://localhost:8000/admin/add-discount';
+      window.location.href = '{{route('adddiscount')}}';
     });
-
-
   });
 
   $(document).ready(function() {

@@ -124,7 +124,7 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Số lượng</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="productInStock" name="productInStock" value="{{ $product_info->productInStock }}" />
+                            <input type="number" class="form-control" id="productInStock" name="productInStock" value="{{ $product_info->productInStock }}" oninput="validateInput(this)"/>
                         </div>
                     </div>
 
@@ -227,13 +227,6 @@ PING - EDIT PRODUCT
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái SALE</label>
-                        <div class="switch m-r-10">
-                            <input type="checkbox" id="isFlashSale" name="isFlashSale" {{ $product_info->isFlashSale ? 'checked' : '' }}>
-                            <label for="isFlashSale"></label>
-                        </div>
-                    </div>
 
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái sản phẩm</label>
@@ -255,5 +248,13 @@ PING - EDIT PRODUCT
 @endsection
 
 @section('customJS')
-<script></script>
+<script>
+        function validateInput(input) {
+        const value = input.value;
+        if (value < 1) {
+            input.value = 1;
+        }
+    }
+
+</script>
 @endsection
