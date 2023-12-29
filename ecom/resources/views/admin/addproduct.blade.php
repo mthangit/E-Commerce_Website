@@ -156,23 +156,7 @@
                                 id="productSideImage3" />
                         </div>
                     </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày bắt đầu</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="date" value="2023-01-11" id="productCreatedDate"
-                                name="productCreatedDate" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày hết hạn</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="date" value="2023-12-30" id="productModifiedDate"
-                                name="productModifiedDate" />
-                        </div>
-                    </div>
-
+                    
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái SALE</label>
                         <div class="switch m-r-10">
@@ -212,6 +196,6 @@
     }
 
     // using ajax to send data to server
-    
+
 
 </script>

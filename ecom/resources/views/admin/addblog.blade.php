@@ -38,22 +38,6 @@ PING - THÊM BLOG
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày bắt đầu</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="date" value="2023-01-11" id="blogCreatedDate" name="blogCreatedDate" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="basic-default-name">Ngày hết hạn</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="date" value="2023-12-30" id="blogModifiedDate" name="blogModifiedDate" />
-                        </div>
-                    </div>
-
-
-
                     <div class="row justify-content-end">
                         <div class="col-sm-10">
                             <button type="submit" class="btn btn-primary">Thêm bài đăng</button>

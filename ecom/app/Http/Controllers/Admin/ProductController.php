@@ -11,11 +11,32 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function Index()
+    public function Index(Request $request)
     {
+        $search = $request->get("search");
+        $status = $request->input('status', 'available');
 
+        $products = Product::latest();
+
+        if (empty($status)) {
+            $products = Product::latest();
+        } else {
+            if ($status === 'available') {
+                $products = Product::where('isActive', 1)->latest();
+            } elseif ($status === 'unavailable') {
+                $products = Product::where('isActive', 0)->latest();
+            } else {
+                $products = Product::latest();
+            }
+        }
+
+        if (!empty($search)) {
+            $products = $products->where('productName', 'like', '%' . $search . '%');
+        }
+
+        $products = $products->paginate(20);
         // $products = Product::latest()->get();
-        $products = Product::paginate(20); // 10 sản phẩm mỗi trang
+        ; // 10 sản phẩm mỗi trang
         return view('admin.allproduct', compact('products'));
     }
 
@@ -43,8 +64,8 @@ class ProductController extends Controller
             'productBarcode' => 'required',
             'productImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'productSideImage1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-          'productSideImage2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-           'productSideImage3' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'productSideImage2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'productSideImage3' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'productInStock' => 'required',
         ]);
 
@@ -53,20 +74,20 @@ class ProductController extends Controller
         $request->productImage->move(public_path('upload'), $imgname);
         $imgurl = 'upload/' . $imgname;
 
-         $image1 = $request->file('productSideImage1');
-         $imgname1 = hexdec(uniqid()) . '.' . $image1->getClientOriginalExtension();
-         $request->productSideImage1->move(public_path('upload'), $imgname1);
-         $imgurl1 = 'upload/' . $imgname1;
+        $image1 = $request->file('productSideImage1');
+        $imgname1 = hexdec(uniqid()) . '.' . $image1->getClientOriginalExtension();
+        $request->productSideImage1->move(public_path('upload'), $imgname1);
+        $imgurl1 = 'upload/' . $imgname1;
 
-         $image2 = $request->file('productSideImage2');
-         $imgname2 = hexdec(uniqid()) . '.' . $image2->getClientOriginalExtension();
-         $request->productSideImage2->move(public_path('upload'), $imgname2);
-         $imgurl2 = 'upload/' . $imgname2;
+        $image2 = $request->file('productSideImage2');
+        $imgname2 = hexdec(uniqid()) . '.' . $image2->getClientOriginalExtension();
+        $request->productSideImage2->move(public_path('upload'), $imgname2);
+        $imgurl2 = 'upload/' . $imgname2;
 
-         $image3 = $request->file('productSideImage3');
-     $imgname3 = hexdec(uniqid()) . '.' . $image3->getClientOriginalExtension();
-         $request->productSideImage3->move(public_path('upload'), $imgname3);
-         $imgurl3 = 'upload/' . $imgname3;
+        $image3 = $request->file('productSideImage3');
+        $imgname3 = hexdec(uniqid()) . '.' . $image3->getClientOriginalExtension();
+        $request->productSideImage3->move(public_path('upload'), $imgname3);
+        $imgurl3 = 'upload/' . $imgname3;
 
 
 
@@ -96,12 +117,11 @@ class ProductController extends Controller
             'productDiscountPrice' => $request->productDiscountPrice,
             'productInfo' => $request->productInfo,
             'productBarcode' => $request->productBarcode,
-               'productImage' => $imgurl,
-              'productSideImage1' => $imgurl1,
-           'productSideImage2' => $imgurl2,
-       'productSideImage3' => $imgurl3,
-           'productCreatedDate' => $request->productCreatedDate,
-            'productModifiedDate' => $request->productModifiedDate,
+            'productImage' => $imgurl,
+            'productSideImage1' => $imgurl1,
+            'productSideImage2' => $imgurl2,
+            'productSideImage3' => $imgurl3,
+            'productCreatedDate' => now('Asia/Ho_Chi_Minh'),
             'productInStock' => $request->productInStock,
             'isFlashSale' => $isFlashSale,
             'isActive' => $isActive,
@@ -114,7 +134,7 @@ class ProductController extends Controller
     {
         $product_info = Product::findOrFail($productID);
         $brands = Brand::latest()->get();
-      //  $products = Product::latest()->get();
+        //  $products = Product::latest()->get();
         return view('admin.editproduct', compact('product_info', 'brands'));
     }
     public function UpdateProduct(Request $request)
@@ -140,43 +160,43 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($productID);
 
-    // Check if an image is provided
-    // if ($request->hasFile('productImage')) {
+        // Check if an image is provided
+        // if ($request->hasFile('productImage')) {
 
 
-    //     // Tiến hành tải lên ảnh mới
-    //     $image = $request->file('productImage');
-    //     $imgname = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-    //     $request->productImage->move(public_path('upload'), $imgname);
-    //     $imgurl = 'upload/' . $imgname;
+        //     // Tiến hành tải lên ảnh mới
+        //     $image = $request->file('productImage');
+        //     $imgname = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        //     $request->productImage->move(public_path('upload'), $imgname);
+        //     $imgurl = 'upload/' . $imgname;
 
-    //     // Cập nhật thông tin sản phẩm với ảnh mới
-    //     $product->update([
-    //         'productImage' => $imgurl,
-    //     ]);
-    // }
+        //     // Cập nhật thông tin sản phẩm với ảnh mới
+        //     $product->update([
+        //         'productImage' => $imgurl,
+        //     ]);
+        // }
 
-    // Check if the user wants to delete the image
+        // Check if the user wants to delete the image
 
-    $product->update([
-        'productName' => $request->productName,
-        'productSlug' => strtolower(str_replace(' ', '-', $request->productName)),
-        'productBrandName' => $request->productBrandName,
-        'productCategoryID' => $category_ID,
-        'productCategoryName' => $category_Name,
-        'productSubCategoryID' => $subcategory_ID,
-        'productSubCategoryName' => $subcategory_Name,
-        'productBrandID' => $request->productBrandID,
-        'productOriginalPrice' => $request->productOriginalPrice,
-        'productDiscountPrice' => $request->productDiscountPrice,
-        'productInfo' => $request->productInfo,
-        'productBarcode' => $request->productBarcode,
-        'productCreatedDate' => $request->productCreatedDate,
-        'productModifiedDate' => $request->productModifiedDate,
-        'productInStock' => $request->productInStock,
-        'isFlashSale' => $isFlashSale,
-        'isActive' => $isActive,
-    ]);
+        $product->update([
+            'productName' => $request->productName,
+            'productSlug' => strtolower(str_replace(' ', '-', $request->productName)),
+            'productBrandName' => $request->productBrandName,
+            'productCategoryID' => $category_ID,
+            'productCategoryName' => $category_Name,
+            'productSubCategoryID' => $subcategory_ID,
+            'productSubCategoryName' => $subcategory_Name,
+            'productBrandID' => $request->productBrandID,
+            'productOriginalPrice' => $request->productOriginalPrice,
+            'productDiscountPrice' => $request->productDiscountPrice,
+            'productInfo' => $request->productInfo,
+            'productBarcode' => $request->productBarcode,
+            'productCreatedDate' => $request->productCreatedDate,
+            'productModifiedDate' => $request->productModifiedDate,
+            'productInStock' => $request->productInStock,
+            'isFlashSale' => $isFlashSale,
+            'isActive' => $isActive,
+        ]);
 
         return redirect()->route('allproduct')->with('message', 'Cập nhật danh mục thành công');
     }
@@ -187,7 +207,8 @@ class ProductController extends Controller
         return view('admin.editproductimg', compact('product_info'));
     }
 
-    public function UpdateProductImg( Request $request){
+    public function UpdateProductImg(Request $request)
+    {
         $request->validate([
             'productImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -210,7 +231,8 @@ class ProductController extends Controller
         return view('admin.editproductsideimgone', compact('product_info'));
     }
 
-    public function UpdateProductSideImgOne( Request $request){
+    public function UpdateProductSideImgOne(Request $request)
+    {
         $request->validate([
             'productSideImageOne' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -233,7 +255,8 @@ class ProductController extends Controller
         return view('admin.editproductsideimgtwo', compact('product_info'));
     }
 
-    public function UpdateProductSideImgTwo( Request $request){
+    public function UpdateProductSideImgTwo(Request $request)
+    {
         $request->validate([
             'productSideImageTwo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -256,7 +279,7 @@ class ProductController extends Controller
         return view('admin.editproductsideimgthree', compact('product_info'));
     }
 
-    public function UpdateProductSideImgThree( Request $request)
+    public function UpdateProductSideImgThree(Request $request)
     {
         $request->validate([
             'productSideImageThree' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
