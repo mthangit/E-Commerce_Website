@@ -304,4 +304,13 @@ class ProductController extends Controller
 
         return view('admin.allproduct', compact('products'));
     }
+    public function DeleteProduct($categoryID)
+    {
+        $product = Product::findOrFail($categoryID);
+    
+        // Thay đổi trạng thái isActive về 0
+        $product->update(['isActive' => 0]);
+    
+        return redirect()->route('allproduct')->with('message', 'Đã thực hiện thành công');;
+    }
 }
