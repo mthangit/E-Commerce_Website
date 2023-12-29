@@ -27,6 +27,8 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
 use App\Http\Controllers\User\ProductRatingController  as UserProductRatingController;
 use App\Http\Controllers\User\PaymentController;
+use App\Http\Controllers\User\BlogController as UserBlogController;
+
 
 
 /*
@@ -39,10 +41,6 @@ use App\Http\Controllers\User\PaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/test', function () {
-    orderEmail(1703256121);
-});
 
 Route::post('/thankyou-email', function () {
 });
@@ -70,6 +68,10 @@ Route::controller(UserDashboardController::class)->group(function () {
     Route::get('/delivery-policy', 'DeliveryPolicy')->name('deliverypolicy');
     Route::get('/return-policy', 'ReturnPolicy')->name('returnpolicy');
     Route::get('/blog', 'Blog')->name('blog');
+});
+
+Route::controller(UserBlogController::class)->group(function () {
+    Route::get('/blog-detail/{blogSlug}', 'BlogDetail')->name('blog.detail');
 });
 
 Route::controller(UserCategoryController::class)->group(function () {

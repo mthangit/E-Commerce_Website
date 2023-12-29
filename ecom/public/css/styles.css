@@ -1698,18 +1698,6 @@ td {
     }
 }
 
-.media.blog-media>a:before {
-    position: absolute;
-    content: "";
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    opacity: 0;
-    transform: scale(0);
-    transition: transform 0.3s ease, opacity 0.3s;
-    background: rgba(12, 198, 82, 0.7);
-}
 
 .media.blog-media>a img {
     width: 100%;

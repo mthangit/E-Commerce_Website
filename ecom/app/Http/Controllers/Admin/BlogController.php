@@ -12,7 +12,7 @@ class BlogController extends Controller
     public function Index()
     {
 
-        $blogs =Blog::latest()->paginate(10);
+        $blogs = Blog::latest()->paginate(10);
         return view('admin.allblog', compact('blogs'));
     }
 
@@ -39,10 +39,10 @@ class BlogController extends Controller
 
         Blog::insert([
             'blogTitle' => $request->blogTitle,
-         //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
-            'blogCreatedDate' => now('Asia/Ho_Chi_Minh'),
+            'blogCreatedDate' => now('Asia/Ho_Chi_Minh')
         ]);
 
         return redirect()->route('allblog')->with('message', 'Thêm blog thành công');
@@ -74,7 +74,7 @@ class BlogController extends Controller
 
         blog::findOrFail($blogID)->update([
             'blogTitle' => $request->blogTitle,
-         //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
             'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
@@ -88,7 +88,8 @@ class BlogController extends Controller
         $blog = blog::findOrFail($blogID);
         $blog->delete();
 
-        return redirect()->route('allblog')->with('message', 'Đã thực hiện thành công');;
+        return redirect()->route('allblog')->with('message', 'Đã thực hiện thành công');
+        ;
     }
 }
 

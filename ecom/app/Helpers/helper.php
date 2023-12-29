@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Mail\OrderEmail;
@@ -96,4 +97,8 @@ if (!function_exists('formatCurrency')) {
     {
         return number_format($amount, 0, ',', '.');
     }
+}
+
+function get4blog(){
+    return Blog::get()->take(4);
 }
