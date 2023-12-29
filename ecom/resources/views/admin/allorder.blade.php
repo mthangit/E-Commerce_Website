@@ -20,6 +20,8 @@ PING - Oder List
                 <!-- Date Range Filter -->
                 <input type="date" class="form-control" placeholder="Start Date" id="startDate">
                 <input type="date" class="form-control" placeholder="End Date" id="endDate">
+                <input type="number" class="form-control" placeholder="Min Price" id="minPrice">
+                <input type="number" class="form-control" placeholder="Max Price" id="maxPrice">
 
                 <button class="btn btn-outline-secondary" type="button" id="filterButton">Filter</button>
                 <button class="btn btn-outline-secondary" type="button" id="resetButton">Reset</button>
@@ -120,11 +122,24 @@ PING - Oder List
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#filterButton').click(function() {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            window.location.href = "{{ route('searchorder') }}?status=date_range&start_date=" + startDate + "&end_date=" + endDate;
-        });
+    $('#filterButton').click(function() {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        var minPrice = $('#minPrice').val();
+        var maxPrice = $('#maxPrice').val();
+
+        var url = "{{ route('searchorder') }}?status=date_range";
+
+        if (startDate && endDate) {
+            url += "&start_date=" + startDate + "&end_date=" + endDate;
+        }
+
+        if (minPrice && maxPrice) {
+            url += "&min_price=" + minPrice + "&max_price=" + maxPrice;
+        }
+
+        window.location.href = url;
     });
+});
 </script>
 @endsection
