@@ -55,6 +55,8 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 
@@ -77,6 +79,8 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 

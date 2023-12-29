@@ -61,9 +61,9 @@ PING - Category
               @endif
             </td>
             <td>
-              <a href="{{route('editsubcategory', $subcategory->subCategoryID)}}" class="btn btn-primary">Sửa</a>
+              <a href="{{ route('editsubcategory', $subcategory->subCategoryID) }}" class="btn btn-primary">Sửa</a>
               @if($subcategory->isActive == 1)
-              <a href="{{route('deletesubcategory', $subcategory->subCategoryID)}}" class="btn btn-danger">Xóa</a>
+              <a href="{{ route('deletesubcategory', $subcategory->subCategoryID) }}" class="btn btn-danger delete-subcategory">Xóa</a>
               @else
               <button class="btn btn-warning" disabled>Xóa</button>
               @endif
@@ -94,6 +94,19 @@ PING - Category
 
     $("#addSubCategory").click(function() {
       window.location.href = "{{ route('addsubcategory') }}";
+    });
+  });
+
+  $(document).ready(function() {
+    $('.delete-subcategory').on('click', function(e) {
+      e.preventDefault();
+      var deleteUrl = $(this).attr('href');
+
+      // Hiển thị hộp thoại xác nhận
+      if (confirm('Bạn có chắc chắn muốn xóa không?')) {
+        // Nếu người dùng đồng ý, chuyển hướng đến URL xóa
+        window.location.href = deleteUrl;
+      }
     });
   });
 </script>
