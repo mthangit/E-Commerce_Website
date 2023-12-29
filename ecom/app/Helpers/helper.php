@@ -59,7 +59,7 @@ function orderEmail($orderID)
     $order = Order::where('orderID', $orderID)->with('items')->first();
     $orderDetails = OrderDetail::where('orderID', $orderID)->get();
     $customerInfo = CustomerInfo::where('customerID', $order->customerID)->first();
-
+    
     $mailData = [
         'subject' => 'PING Shop đã tiếp nhận đơn hàng ' . $orderID . ' của bạn',
         'order' => $order,

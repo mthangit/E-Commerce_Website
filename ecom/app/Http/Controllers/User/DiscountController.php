@@ -13,7 +13,7 @@ class DiscountController extends Controller
         $discountCode = $request->input('discountCode');
 
         // Find the discount with the given code
-        $discount = Discount::where('discountCode', $discountCode)->where('isActive', 1)->where('discountQuantity', '>', 0)->first();
+        $discount = Discount::where('discountCode', $discountCode)->where('isActive', 1)->where('discountQuantity', '>', 0)->where('discountEnd', '>', now('Asia_Ho_Chi_Minh'))->first();
 
         if ($discount) {
             // If the discount exists, return its details

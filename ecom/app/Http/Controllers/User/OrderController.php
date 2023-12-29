@@ -163,14 +163,13 @@ class OrderController extends Controller
 
         // update product quantity
         $productlist = OrderDetail::where('orderID', $orderID)->get();
-        foreach( $productlist as $orderdetail ){
+        foreach ($productlist as $orderdetail) {
             $product = Product::find($orderdetail->productID);
             $quantity = $orderdetail->productQuantity;
             $product->productInStock += $quantity;
             $product->productSoldQuantity -= $quantity;
             $product->save();
         }
-
         return response()->json(['status' => true]);
     }
 

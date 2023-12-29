@@ -284,7 +284,8 @@
                                             <div class="form-group col-md-6">
                                                 <label class="font-weight-semibold" for="customerEmail">Email:</label>
                                                 <input type="text" class="form-control" id="customerEmail"
-                                                    name="customerEmail" value="{{ $customers->customerEmail }}">
+                                                    name="customerEmail" value="{{ $customers->customerEmail }}"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -326,7 +327,7 @@
                             </div>
                             <div class="card1">
                                 <div class="card-header">
-                                    <h4 class="card-title">Address Details</h4>
+                                    <h4 class="card-title">Địa chỉ</h4>
 
                                     <a href="" class="cyan-link" style="color: rgb(128,128,128);">Chỉnh
                                         sửa</a>
@@ -336,36 +337,36 @@
                                         <div class="address-edit"
                                             style="display: flex; justify-content: space-between; width: 100%">
                                             <br>
-                                            <select class="form-select form-select-sm mb-3" id="city"
-                                                aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3 form-control"
+                                                id="city" aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn tỉnh thành</option>
                                             </select>
 
-                                            <select class="form-select form-select-sm mb-3" id="district"
-                                                aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3 form-control"
+                                                id="district" aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn quận huyện</option>
                                             </select>
-                                            <select class="form-select form-select-sm mb-3" id="ward"
-                                                aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm mb-3 form-control"
+                                                id="ward" aria-label=".form-select-sm">
                                                 <option value="" selected>Chọn phường xã</option>
                                             </select>
                                             <br>
                                         </div>
                                         <div class="address-edit"
                                             style="display: flex; justify-content: space-between; width: 100%">
-                                            <input type="text" name="address" id="address"
+                                            <input type="text" name="address" id="address" class="form-control"
                                                 placeholder="Nhập số nhà, tên đường"
                                                 style="width: 100%; margin-bottom: 10px; margin-right: 10px">
                                         </div>
                                         <div class="address-edit"
                                             style="display: flex; justify-content: space-between; width: 100%">
-                                            <button class="btn-save" id="save-button"> Lưu lại</button>
+                                            <button class="btn-save btn-primary" id="save-button"> Lưu lại</button>
                                         </div>
                                     </div>
                                     <div class="delivery-content">
                                         <div class="form-group col-md-12">
-                                            <label class="font-weight-semibold" for="customerAddress">Full
-                                                Address:</label>
+                                            <label class="font-weight-semibold" for="customerAddress">Địa chỉ chi
+                                                tiết:</label>
                                             <input type="text" class="form-control" id="customerAddress"
                                                 name="customerAddress" value="{{ $customers->customerAddress }}"
                                                 readonly>

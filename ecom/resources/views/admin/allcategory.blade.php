@@ -35,8 +35,6 @@ PING - Category
           <tr>
             <th>ID</th>
             <th>Tên danh mục</th>
-            <th>Số danh mục con</th>
-            <th>Số sản phẩm</th>
             <th>Trạng thái</th>
             <th>Hành động</th>
           </tr>
@@ -46,8 +44,6 @@ PING - Category
           <tr>
             <td>{{ $category->categoryID }} </td>
             <td>{{ $category->categoryName }}</td>
-            <td>{{ $category->subCategoryCount }}</td>
-            <td>{{ $category->productCount }}</td>
             <td>@if($category->isActive == 1)
               <div class="d-flex align-items-center">
                 <div class="badge badge-success badge-dot m-r-10"></div>

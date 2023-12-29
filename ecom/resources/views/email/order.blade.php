@@ -99,13 +99,18 @@
     </style>
 </head>
 
+
+
 <body>
     <div class="container">
         <h1>Chi tiết đơn hàng</h1>
-        <p><strong>Tên người đặt hàng:</strong> {{ $mailData['order']->orderCustomerName }}</p>
-        <p><strong>Địa chỉ:</strong>{{ $mailData['order']->orderAddress }} </p>
+        <p><strong>Tên người đặt hàng :</strong> {{ $mailData['order']->orderCustomerName }}</p>
+        <p><strong>Địa chỉ:</strong> {{ $mailData['order']->orderAddress }} </p>
         <p><strong>Số điện thoại:</strong> {{ $mailData['order']->orderPhone }}</p>
         <p><strong>Mã đơn hàng:</strong> {{ $mailData['order']->orderID }}</p>
+        <p><strong>Mã giảm giá:</strong> {{ $mailData['order']->discountCode }}</p>
+        <p><strong>Giảm giá:</strong> {{ formatCurrency($mailData['order']->discountPrice) }}</p>
+        <p><strong>Phí vận chuyển:</strong> {{ formatCurrency($mailData['order']->shippingFee) }}</p>
         <p><strong>Tổng tiền:</strong> {{ formatCurrency($mailData['order']->grandPrice) }}</p>
         <p><strong>Phương thức thanh toán:</strong> <span class="method">{{ $mailData['order']->paymentMethod }}</span>
         </p>

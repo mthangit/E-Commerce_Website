@@ -56,14 +56,6 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="productCount">Product Count</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="productCount" name="productCount"
-                                    value="{{ $subCategoryInfo->productCount }}" readonly />
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="subCategoryCreateDate">SubCategory Created
                                 Date</label>
                             <div class="col-sm-10">
