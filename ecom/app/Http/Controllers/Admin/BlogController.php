@@ -74,7 +74,7 @@ class BlogController extends Controller
 
         blog::findOrFail($blogID)->update([
             'blogTitle' => $request->blogTitle,
-            //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
             'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
