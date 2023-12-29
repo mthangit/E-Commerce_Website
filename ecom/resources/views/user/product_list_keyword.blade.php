@@ -149,7 +149,7 @@
         <div class="pagination-container">
             <nav>
                 <div class="pagination">
-                    {{ $list_products->links() }}
+                    {{ $list_products->appends(['keyword' => $keyword, 'brand' => $brandsArray, 'price' => $pricerange, 'sort' => $sortValue])->links() }}
                 </div>
             </nav>
         </div>
@@ -187,6 +187,7 @@
 
 
         var url = "{{ url()->current() }}?"
+        url += "keyword={{ $keyword }}";
         if (brandIDs.length > 0) {
             url += "&brand=" + brandIDs.toString();
         }

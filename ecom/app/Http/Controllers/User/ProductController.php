@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function ProductListByKeyword(Request $request){
         $keyword = $request->input('keyword');
-        $products = Product::where('productName', 'like', '%'.$keyword.'%');
+        $products = Product::where('productName', 'like', '%'.$keyword.'%')->where('isActive', 1)->where('productInStock', '>', 0);
 
         $brandsArray = [];
         if (!empty($request->get('brand'))) {

@@ -91,10 +91,13 @@ class OrderController extends Controller
                 'end_date' => 'required|date',
             ]);
 
-            $orders = Order::whereDate('orderCreatedDate', '>=', $startDate)
-                ->whereDate('orderCreatedDate', '<=', $endDate)
-                ->paginate(10);
+            // $orders = Order::whereDate('orderCreatedDate', '>=', $startDate)
+            //     ->whereDate('orderCreatedDate', '<=', $endDate)
+            //     ->paginate(10);
 
+            // dd ($orders) and the number of order in orders
+            $orders = Order::whereBetween('orderCreatedDate', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+                ->paginate(10);
             return view('admin.allorder', compact('orders', 'customerinfos'));
         }
 
