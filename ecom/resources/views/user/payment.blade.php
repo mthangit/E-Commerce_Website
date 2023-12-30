@@ -380,8 +380,8 @@
     var totalPrice = parseInt(document.getElementById('tempTotal').innerText);
     var payment = "";
     var officialTotalPrice = totalPrice;
-    var grandPrice = officialTotalPrice;
     var shippingFee = {{ $shippingFee }};
+    var grandPrice = officialTotalPrice + shippingFee;
 
     var formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -474,7 +474,8 @@
                         $('#giamgia').html(`${ formatter.format(discountPrice)}`);
                         // Update the thanhtien
                         $('#thanhtien').html(
-                            `${formatter.format(totalPrice - discountPrice + shippingFee)}`);
+                            `${formatter.format(totalPrice - discountPrice + shippingFee)}`
+                            );
 
                         // Show the discount detail section
                         $('.discount-detail').show();
@@ -482,9 +483,11 @@
                         grandPrice = totalPrice - discountPrice;
                     } else {
                         $('#giamgia').html(`0 &#8363;`);
-                        $('#thanhtien').html(`${formatter.format(totalPrice + shippingFee)}`);
+                        $('#thanhtien').html(
+                            `${formatter.format(totalPrice + shippingFee)}`);
                         $('.discount-detail').hide();
                         $('#errorAlert').show();
+                        grandPrice = totalPrice;
                     }
                 },
                 error: function(error) {
@@ -518,6 +521,8 @@
 
     document.getElementById('btn-finish').addEventListener('click', function() {
         // var payment = document.querySelector('input[name="payment"]:checked').value;
+        alert(grandPrice);
+
         if (payment === '') {
             $('#errorAlertPaymentMethod').show();
             return;
