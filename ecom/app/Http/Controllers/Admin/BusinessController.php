@@ -31,6 +31,14 @@ class BusinessController extends Controller
 
         return view('admin.businesssubcategory', compact('categories', 'subcategories', 'products'));
     }
+    public function checkSale()
+    {
+        $categories = Category::latest()->get();
+        $subcategories = Subcategory::latest()->get();
+        $products = Product::latest()->get();
+
+        return view('admin.businessstatic', compact('categories', 'subcategories', 'products'));
+    }
 
     // Function to fetch subcategories based on the selected category
     public function fetchResults(Request $request)
@@ -92,21 +100,41 @@ class BusinessController extends Controller
         $totalCustomers = CustomerInfo::count();
 
         $currentMonth = Carbon::now()->format('m');
-    $previousMonth = Carbon::now()->subMonth()->format('m');
+        $previousMonth = Carbon::now()->subMonth()->format('m');
 
-    // Calculate the total sales value for the current month
-    $currentMonthSales = Order::whereMonth('created_at', $currentMonth)
-        ->where('orderStatus', '<>', 'canceled')
-        ->sum('grandPrice');
+        // Calculate the total sales value for the current month
+        $currentMonthSales = Order::whereMonth('created_at', $currentMonth)
+            ->where('orderStatus', '<>', 'canceled')
+            ->sum('grandPrice');
 
-    // Calculate the total sales value for the previous month
-    $previousMonthSales = Order::whereMonth('created_at', $previousMonth)
-        ->where('orderStatus', '<>', 'canceled')
-        ->sum('grandPrice');
+        // Calculate the total sales value for the previous month
+        $previousMonthSales = Order::whereMonth('created_at', $previousMonth)
+            ->where('orderStatus', '<>', 'canceled')
+            ->sum('grandPrice');
 
-    // Calculate the month-over-month growth percentage
-    $growthPercentage = ($currentMonthSales - $previousMonthSales) / ($previousMonthSales ?: 1) * 100;
+        // Calculate the month-over-month growth percentage
+        $growthPercentage = ($currentMonthSales - $previousMonthSales) / ($previousMonthSales ?: 1) * 100;
 
         return view('admin.dashboard', compact('totalSales', 'totalOrders', 'totalCustomers', 'growthPercentage'));
+    }
+
+    public function fetchSalesResults(Request $request)
+    {
+        // Retrieve form data
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Add logic to query the database and fetch results based on the provided parameters
+        $totalSales = OrderDetail::where('orderDetailStatus', '<>', 'canceled') // Exclude 'canceled' status
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereDate('created_at', '>=', $startDate)
+                    ->whereDate('created_at', '<=', $endDate);
+            })
+            ->sum('productTotalPrice');
+
+        // Return the total sales amount as JSON
+        return response()->json([
+            'totalSales' => $totalSales,
+        ]);
     }
 }

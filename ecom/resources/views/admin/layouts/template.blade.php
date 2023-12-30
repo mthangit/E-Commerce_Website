@@ -224,10 +224,7 @@
                                     <a href="{{ route('checkSubcategory') }}">Thông kê sản phẩm theo danh mục</a>
                                 </li>
                                 <li>
-                                    <a href="">Doanh số tháng</a>
-                                </li>
-                                <li>
-                                    <a href="">Doanh số năm</a>
+                                    <a href="{{ route('checkSale') }}">Doanh số bán hàng</a>
                                 </li>
                             </ul>
                         </li>
