@@ -13,10 +13,9 @@
     <div class="row ">
         @foreach ($allblogs as $blog)
             <div class="col-md-6">
-                <div class="media blog-media">
+                <div class="media blog-media" style="max-width:500px; height:auto">
                     <a href="{{ route('blog.detail', ['blogSlug' => $blog->blogSlug]) }}"><img class="d-flex"
-                            src="https://static.wixstatic.com/media/ec65fd_9a8603b8da2f43d7bf490bb0e27783ad~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,usm_0.66_1.00_0.01/ec65fd_9a8603b8da2f43d7bf490bb0e27783ad~mv2.png"
-                            alt="" width="250px" height="250px"></a>
+                            src="{{ asset($blog->blogImage) }}" alt="" width="250px" height="250px"></a>
                     <div class="media-body">
                         <a href="{{ route('blog.detail', ['blogSlug' => $blog->blogSlug]) }}">
                             <h5 class="mt-0 txt-cyan">{{ $blog->blogTitle }}</h5>
