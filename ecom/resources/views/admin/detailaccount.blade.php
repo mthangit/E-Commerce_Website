@@ -36,21 +36,21 @@ PING - Tài khoản user
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="font-weight-semibold" for="userName">User Name:</label>
-                                <input type="text" class="form-control" id="userName" placeholder="User Name" value="{{$customers->customerName}}">
+                                <input type="text" class="form-control" id="userName" placeholder="User Name" value="{{$customers->customerName}}" readonly>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="font-weight-semibold" for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" placeholder="email" value="{{$customers->customerEmail}}">
+                                <input type="text" class="form-control" id="email" placeholder="email" value="{{$customers->customerEmail}}" readonly>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label class="font-weight-semibold" for="phoneNumber">Phone Number:</label>
-                                <input type="text" class="form-control" id="phoneNumber" value="{{$customers->customerPhone}}">
+                                <input type="text" class="form-control" id="phoneNumber" value="{{$customers->customerPhone}}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="font-weight-semibold" for="dob">Date of Birth:</label>
-                                <input type="text" class="form-control" id="dob" value="{{$customers->customerBirthDay}}">
+                                <input type="text" class="form-control" id="dob" value="{{$customers->customerBirthDay}}" readonly>
                             </div>
                         </div>
                     </form>
@@ -91,15 +91,15 @@ PING - Tài khoản user
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="font-weight-semibold" for="fullAddress">Full Address:</label>
-                                <input type="text" class="form-control" id="fullAddress" value="{{$customers->customerAddress}}">
+                                <input type="text" class="form-control" id="fullAddress" value="{{$customers->customerAddress}}" readonly>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="font-weight-semibold" for="stateCity">Bank Account:</label>
-                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankAccount}}">
+                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankAccount}}" readonly>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="font-weight-semibold" for="stateCity">Bank Name:</label>
-                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankName}}">
+                                <input type="text" class="form-control" id="stateCity" value="{{$customers->customerBankName}}" readonly>
                             </div>
                         </div>
                     </form>

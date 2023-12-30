@@ -7,7 +7,7 @@
                 width="600">
         </div>
         <div class="col text-center" style="margin-top: auto; margin-bottom: auto;">
-            <p class="txt-cyan h1 txt-uppercase" style="font-weight: 800;">Đặt hàng thành công!</p>
+            <p class="txt-cyan h1 txt-uppercase" style="font-weight: 800; font-family: Arial;">Mua hàng thành công!</p>
             <hr style="width: 50%; margin: 20px auto;">
             <p class="txt-18">Mã đơn hàng của bạn là: <strong class="txt-cyan h5"> {{ $order->orderID }}</strong></p>
             <p class="txt-18">Tổng tiền: <strong class="txt-cyan h5"> {{ formatCurrency($order->grandPrice) }}
@@ -20,9 +20,9 @@
             } else {
                 $paymentMethod = $order->paymentMethod;
             }
-
+            
             // $isError = request()->get('error');
-
+            
             ?>
 
             <p class="txt-18">Phương thức thanh toán: <strong class="txt-cyan h5">
@@ -31,7 +31,8 @@
                 <button class="btn btn-outline-primary"><a href="{{ route('userdashboard') }}">
                         Trang chủ
                     </a></button> |
-                <button class="btn btn-danger"><a href="{{ route('detailuserorder', $order->orderID) }}"> Xem chi tiết đơn hàng </a></button>
+                <button class="btn btn-danger"><a href="{{ route('detailuserorder', $order->orderID) }}"> Xem chi tiết
+                        đơn hàng </a></button>
             </div>
 
         </div>

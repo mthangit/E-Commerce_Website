@@ -521,7 +521,6 @@
 
     document.getElementById('btn-finish').addEventListener('click', function() {
         // var payment = document.querySelector('input[name="payment"]:checked').value;
-        alert(grandPrice);
 
         if (payment === '') {
             $('#errorAlertPaymentMethod').show();
