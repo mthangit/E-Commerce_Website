@@ -1,5 +1,5 @@
 @include('user.layouts.template_header_logged')
-@notifyCss
+
 <div class="page-navigation">
     <ul class="breadcrumb">
         @auth
@@ -17,7 +17,6 @@
         <li>{{ $thisProduct->productName }}</li>
     </ul>
 </div>
-
 <div class="product-view grid-product-view">
     <div class="product-img-container grid-image">
         <div class="small-image-container">
@@ -312,15 +311,34 @@
 </div>
 
 @include('user.layouts.template_footer')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.all.min.js"></script>
 
 <script>
     $('#addToCartBtn').click(function() {
         var quantity = document.getElementById('quantityPick').value;
         addToCart({{ $thisProduct->productID }}, quantity);
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Đã thêm vào giỏ hàng',
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+
     });
     $('#buy-now').click(function() {
         var quantity = document.getElementById('quantityPick').value;
         addToCart({{ $thisProduct->productID }}, quantity);
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Đã thêm vào giỏ hàng',
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+
         window.location.href = "{{ route('cart') }}";
     });
 
@@ -337,10 +355,8 @@
             },
             datatype: "JSON",
             success: function(response) {
-                if (response.status == 200) {
-                    alert(response.message);
-                } else {
-                    alert(response.message);
+                if (response.status == 200) {} else {
+                    // alert(response.message);
                 }
             }
         });
