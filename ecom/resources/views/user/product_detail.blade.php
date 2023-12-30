@@ -335,7 +335,7 @@
             icon: 'success',
             title: 'Đã thêm vào giỏ hàng',
             showConfirmButton: false,
-            timer: 1500
+            timer: 500
         });
 
 

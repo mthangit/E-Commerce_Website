@@ -30,6 +30,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $account = Auth::user();
+
         if ($account->hasRole('user')) {
             if ($request->session()->get('redirectToPayment')) {
                 // Redirect to the payment page
