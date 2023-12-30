@@ -110,13 +110,6 @@ if ($order->orderStatus == 'completed') {
                                     Hủy đơn hàng
                             </div>
                             <br>
-                        @elseif($order->orderStatus == 'completed')
-                            <div class="text-left">
-                                <button type="button" class="btn btn-warning" data-toggle="modal"
-                                    data-target="#cancelOrderModal" id="btn-return">
-                                    Trả đơn hàng
-                            </div>
-                            <br>
                         @endif
                     </div>
                     <style>

@@ -223,6 +223,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/delete-blog/{blogID}', 'DeleteBlog')->name('deleteblog');
         Route::get('/admin/search-blog', 'SearchBlog')->name('searchblog');
         Route::post('/admin/update-blog', 'UpdateBlog')->name('updateblog');
+        Route::post('/admin/update-blog-img', 'UpdateBlogImg')->name('updateblogimg');
+        Route::get('/admin/edit-blog-img/{blogID}', 'EditBlogImg')->name('editblogimg');
     });
 
 

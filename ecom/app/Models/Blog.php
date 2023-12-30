@@ -17,5 +17,6 @@ class Blog extends Model
         'blogCreatedDate',
         'blogModifiedDate',
         'blogSlug',
+        'blogImage',
     ];
 }
