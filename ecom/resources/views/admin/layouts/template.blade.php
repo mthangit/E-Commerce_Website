@@ -20,6 +20,9 @@
 
     <link href="https://fonts.cdnfonts.com/css/be-vietnam-pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.min.css
+" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
