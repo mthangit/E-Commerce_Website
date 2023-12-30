@@ -330,14 +330,14 @@
     $('#buy-now').click(function() {
         var quantity = document.getElementById('quantityPick').value;
         addToCart({{ $thisProduct->productID }}, quantity);
+        let timerInterval;
         Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Đã thêm vào giỏ hàng',
             showConfirmButton: false,
-            timer: 500
+            timer: 1500,
         });
-
 
         window.location.href = "{{ route('cart') }}";
     });
