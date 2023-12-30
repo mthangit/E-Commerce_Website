@@ -176,7 +176,7 @@
                     <div class="blog-ping width-common relative">
                         <a href="{{route('blog.detail', ['blogSlug' => $blog->blogSlug])}}" class="blog-home relative">
                             <div class="blog-img">
-                                <img src="https://media.hasaki.vn/hsk/sua-tam-thai-lan%20(1).png" alt=""
+                                <img src="{{asset($blog->blogImage)}}" alt=""
                                     height="280" width="350">
                             </div>
                             <div class="width-common blog-content">

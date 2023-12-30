@@ -12,22 +12,23 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="blog-detail-item">
-                    <div class="blog-img">
-                        <img class="img-full" src="https://static.independent.co.uk/2023/02/10/16/sulfate%20free%20shampoo%20indybest.png?width=1200" alt="Blog Image">
+                    <div class="blog-img" >
+                        <img class="" src="{{ asset($blog->blogImage) }}" alt="Blog Image">
                     </div>
                     <div class="blog-content text-start pb-0">
                         <div class="blog-meta text-dim-gray pb-3">
                             <ul>
-                                <li class="date"><i class="fa fa-calendar-o me-2"></i>Ngày đăng: {{$blog->blogCreatedDate}}</li>
+                                <li class="date"><i class="fa fa-calendar-o me-2"></i>Ngày đăng:
+                                    {{ $blog->blogCreatedDate }}</li>
                             </ul>
                         </div>
-                        <h5 class="txt-center txt-cyan section-txt-title txt-bold">{{$blog->blogTitle}}</h5>
+                        <h5 class="txt-center txt-cyan section-txt-title txt-bold">{{ $blog->blogTitle }}</h5>
                         <p style="text-align: justify; text-indent: 20px; line-height: 30px; padding: 20px;">
                             {{ $blog->blogContent }}
                         </p>
                     </div>
                     <div class="blog-return" style="margin-bottom: 50px;">
-                        <a href="{{route('blog')}}" class="txt-cyan orange-link">Quay về</a>
+                        <a href="{{ route('blog') }}" class="txt-cyan orange-link">Quay về</a>
                     </div>
                 </div>
             </div>
