@@ -34,18 +34,27 @@ class BlogController extends Controller
         //        'blogTitle' => 'required|unique:blogs'
         //   ]);
         $validator = Validator::make($request->all(), [
-            'blogTitle' => 'required|unique:blogs'
+            'blogTitle' => 'required|unique:blogs',
+            'blogImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
+
+        $image = $request->file('blogImage');
+        $imgname = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $request->blogImage->move(public_path('upload'), $imgname);
+        $imgurl = 'upload/' . $imgname;
 
         Blog::insert([
             'blogTitle' => $request->blogTitle,
             'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
-            'blogCreatedDate' => now('Asia/Ho_Chi_Minh')
+            'blogImage' => $imgurl,
+            'blogCreatedDate' => now('Asia/Ho_Chi_Minh'),
+            'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
         ]);
 
-        return redirect()->route('allblog')->with('message', 'Thêm blog thành công');
+        return redirect()->route('allblog')->with('message', 'Thêm danh mục thành công');
 
 
 
@@ -74,14 +83,40 @@ class BlogController extends Controller
 
         blog::findOrFail($blogID)->update([
             'blogTitle' => $request->blogTitle,
-            'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
+            //   'blogslug' => strtolower(str_replace(' ', '-', $request->blogTitle)),
             'blogIntro' => $request->blogIntro,
             'blogContent' => $request->blogContent,
             'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
         ]);
 
+        return redirect()->route('allblog')->with('message', 'Cập nhật danh mục thành công');
+    }
+
+    public function EditBlogImg($blogID)
+    {
+        $blog_info = Blog::findOrFail($blogID);
+        return view('admin.editblogimg', compact('blog_info'));
+    }
+
+    public function UpdateBlogImg(Request $request)
+    {
+        $request->validate([
+            'blogImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+        ]);
+        $blogID = $request->blogID;
+        $image = $request->file('blogImage');
+        $imgname = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $request->blogImage->move(public_path('upload'), $imgname);
+        $imgurl = 'upload/' . $imgname;
+
+        Blog::findOrFail($blogID)->update([
+            'blogImage' => $imgurl,
+            'blogModifiedDate' => now('Asia/Ho_Chi_Minh'),
+        ]);
         return redirect()->route('allblog')->with('message', 'Cập nhật blog thành công');
     }
+
 
     public function DeleteBlog($blogID)
     {

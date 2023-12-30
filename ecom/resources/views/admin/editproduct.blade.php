@@ -95,7 +95,7 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập giá gốc sản phẩm</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="productOriginalPrice" name="productOriginalPrice" value="{{ $product_info->productOriginalPrice }}" />
+                            <input type="number" class="form-control" id="productOriginalPrice" name="productOriginalPrice" value="{{ $product_info->productOriginalPrice }}" oninput="validateInput(this)" />
                         </div>
                     </div>
 
@@ -103,7 +103,7 @@ PING - EDIT PRODUCT
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Nhập giá khuyến mãi sản
                             phẩm</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="productDiscountPrice" name="productDiscountPrice" value="{{ $product_info->productDiscountPrice }}" />
+                            <input type="number" class="form-control" id="productDiscountPrice" name="productDiscountPrice" value="{{ $product_info->productDiscountPrice }}" oninput="validateInput(this)"/>
                         </div>
                     </div>
 
@@ -131,7 +131,7 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Số lượng đã bán</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="productInStock" name="productInStock" value="{{ $product_info->productSoldQuantity }}" readonly />
+                            <input type="number" class="form-control" id="" name="" value="{{ $product_info->productSoldQuantity }}" readonly />
                         </div>
                     </div>
 
@@ -139,7 +139,6 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" name="productImage" id="productImage" />
                             @if ($product_info->productImage)
                             <img style="height:100px" src="{{ asset($product_info->productImage) }}" alt="">
                             <button type="button" class="btn btn-primary" onclick="updateImage()">cập nhật
@@ -158,7 +157,6 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 1</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" name="productSideImageOne" id="productSideImageOne" />
                             @if ($product_info->productImage)
                             <img style="height:100px" src="{{ asset($product_info->productSideImage1) }}" alt="">
                             <button type="button" class="btn btn-primary" onclick="updateImageOne()">cập nhật
@@ -177,7 +175,6 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 2</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" name="productSideImageTwo" id="productSideImageTwo" />
                             @if ($product_info->productSideImage1)
                             <img style="height:100px" src="{{ asset($product_info->productSideImage2) }}" alt="">
                             <button type="button" class="btn btn-primary" onclick="updateImageTwo()">cập nhật
@@ -196,7 +193,6 @@ PING - EDIT PRODUCT
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình 3</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="file" name="productSideImageThree" id="productSideImageThree" />
                             @if ($product_info->productImage)
                             <img style="height:100px" src="{{ asset($product_info->productSideImage3) }}" alt="">
                             <button type="button" class="btn btn-primary" onclick="updateImageThree()">cập nhật
@@ -213,21 +209,18 @@ PING - EDIT PRODUCT
                     </script>
 
                     <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="categoryCreatedDate">Category Created Date</label>
+                        <label class="col-sm-2 col-form-label" for="categoryCreatedDate">Ngày tạo</label>
                         <div class="col-sm-10">
                             <input type="datetime-local" class="form-control" id="productCreatedDate" name="productCreatedDate" value="{{ $product_info->productCreatedDate }}" readonly />
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="categoryModifiedDate">Category Modified
-                            Date</label>
+                        <label class="col-sm-2 col-form-label" for="categoryModifiedDate">Ngày cập nhật</label>
                         <div class="col-sm-10">
                             <input type="datetime-local" class="form-control" id="productModifiedDate" name="productModifiedDate" value="{{ $product_info->productModifiedDate }}" readonly />
                         </div>
                     </div>
-
-
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái sản phẩm</label>
                         <div class="switch m-r-10">
