@@ -96,17 +96,26 @@
             text-align: center;
             color: #333;
         }
+
+        .txt-cyan {
+            color: #0097B2;
+        }
     </style>
 </head>
 
+
+
 <body>
     <div class="container">
-        <h1>Chi tiết đơn hàng</h1>
-        <p><strong>Tên người đặt hàng:</strong> {{ $mailData['order']->orderCustomerName }}</p>
-        <p><strong>Địa chỉ:</strong>{{ $mailData['order']->orderAddress }} </p>
+        <h1 class="txt-cyan" style="font-weight: 600;">Chi tiết đơn hàng</h1>
+        <p><strong>Tên người đặt hàng :</strong> {{ $mailData['order']->orderCustomerName }}</p>
+        <p><strong>Địa chỉ:</strong> {{ $mailData['order']->orderAddress }} </p>
         <p><strong>Số điện thoại:</strong> {{ $mailData['order']->orderPhone }}</p>
         <p><strong>Mã đơn hàng:</strong> {{ $mailData['order']->orderID }}</p>
-        <p><strong>Tổng tiền:</strong> {{ formatCurrency($mailData['order']->grandPrice) }}</p>
+        <p><strong>Mã giảm giá:</strong> {{ $mailData['order']->discountCode }}</p>
+        <p><strong>Giảm giá:</strong> {{ formatCurrency($mailData['order']->discountPrice) }} VNĐ</p>
+        <p><strong>Phí vận chuyển:</strong> {{ formatCurrency($mailData['order']->shippingFee) }} VNĐ</p>
+        <p><strong>Tổng tiền:</strong> {{ formatCurrency($mailData['order']->grandPrice) }} VNĐ</p>
         <p><strong>Phương thức thanh toán:</strong> <span class="method">{{ $mailData['order']->paymentMethod }}</span>
         </p>
         {{-- <p><strong>Tình trạng thanh toán:</strong> <span class="status paid">Đã thanh toán</span></p> --}}

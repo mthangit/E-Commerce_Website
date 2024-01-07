@@ -380,7 +380,8 @@
     var totalPrice = parseInt(document.getElementById('tempTotal').innerText);
     var payment = "";
     var officialTotalPrice = totalPrice;
-    var grandPrice = officialTotalPrice;
+    var shippingFee = {{ $shippingFee }};
+    var grandPrice = officialTotalPrice + shippingFee;
 
     var formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -413,11 +414,12 @@
         $('#errorAlert').hide();
         $('#errorPhone').hide();
         $('#btn-apply-voucher').click(function() {
+
             var voucher = $('#discount-voucher').val();
 
             if (voucher == '') {
                 $('#giamgia').html(`0 &#8363;`);
-                $('#thanhtien').html(`${format.formatter(totalPrice)}`);
+                $('#thanhtien').html(`${formatter.format(totalPrice + shippingFee)}`);
                 $('.discount-detail').hide();
                 return;
             }
@@ -472,7 +474,8 @@
                         $('#giamgia').html(`${ formatter.format(discountPrice)}`);
                         // Update the thanhtien
                         $('#thanhtien').html(
-                            `${formatter.format(totalPrice - discountPrice)}`);
+                            `${formatter.format(totalPrice - discountPrice + shippingFee)}`
+                            );
 
                         // Show the discount detail section
                         $('.discount-detail').show();
@@ -480,9 +483,11 @@
                         grandPrice = totalPrice - discountPrice;
                     } else {
                         $('#giamgia').html(`0 &#8363;`);
-                        $('#thanhtien').html(`${formatter.format(totalPrice)}`);
+                        $('#thanhtien').html(
+                            `${formatter.format(totalPrice + shippingFee)}`);
                         $('.discount-detail').hide();
                         $('#errorAlert').show();
+                        grandPrice = totalPrice;
                     }
                 },
                 error: function(error) {
@@ -516,6 +521,7 @@
 
     document.getElementById('btn-finish').addEventListener('click', function() {
         // var payment = document.querySelector('input[name="payment"]:checked').value;
+
         if (payment === '') {
             $('#errorAlertPaymentMethod').show();
             return;
@@ -752,7 +758,6 @@
 
         if (phone.length < 10 && phone.length > 0) {
             $('#errorPhone').show();
-            alert('Số điện thoại không hợp lệ');
             return;
         }
 

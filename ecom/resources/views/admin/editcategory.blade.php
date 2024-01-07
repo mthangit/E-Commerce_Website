@@ -42,23 +42,7 @@
                                     name="categoryDescription" value="{{ $category_info->categoryDescription }}" />
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="subCategoryCount">Sub Category Count</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="subCategoryCount" name="subCategoryCount"
-                                    value="{{ $category_info->subCategoryCount }}" readonly />
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="productCount">Product Count</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="productCount" name="productCount"
-                                    value="{{ $category_info->productCount }}" readonly />
-                            </div>
-                        </div>
-
+                        
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="categoryCreatedDate">Category Created Date</label>
                             <div class="col-sm-10">

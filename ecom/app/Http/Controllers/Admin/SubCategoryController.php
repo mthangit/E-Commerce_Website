@@ -52,7 +52,6 @@ class SubCategoryController extends Controller
             'subCategorySlug' => strtolower(str_replace(' ', '-', $request->subCategoryName)),
             'subCategoryDescription' => $request->subCategoryDescription,
             'subCategoryCreatedDate' => now('Asia/Ho_Chi_Minh'),
-            'subCategoryModifiedDate' => now('Asia/Ho_Chi_Minh'), // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
             'categoryID' => $category_ID,
             'categoryName' => $category_Name,
             'isActive' => $isActive,
@@ -85,8 +84,7 @@ class SubCategoryController extends Controller
             'subCategoryDescription' => $request->subCategoryDescription,
             'categoryID' => $category_ID,
             'categoryName' => $category_Name,
-            'subCategoryCreatedDate' => $request->subCategoryCreatedDate,
-            'subCategoryModifiedDate' => $request->subCategoryModifiedDate, // Ban đầu, giả sử ngày tạo và ngày sửa giống nhau
+            'subCategoryModifiedDate' => now('Asia/Ho_Chi_Minh'),
             'isActive' => $isActive,
         ]);
 

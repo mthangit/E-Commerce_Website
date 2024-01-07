@@ -38,9 +38,31 @@
                                     <br>
                                     <b>ID đơn hàng: </b>{{ $order->orderID }}<br>
                                     <b>Tổng tiền: {{ formatCurrency($order->grandPrice) }} VND</b><br>
-                                    <b>Trạng thái đơn: </b> <span class="text-success">{{ $order->orderStatus }} -- lúc :
+
+                                    <?php
+                                    if ($order->orderStatus == 'pending') {
+                                        $status = 'warning';
+                                    } elseif ($order->orderStatus == 'processing') {
+                                        $status = 'primary';
+                                    } elseif ($order->orderStatus == 'completed') {
+                                        $status = 'success';
+                                    } else {
+                                        $status = 'danger';
+                                    }
+                                    ?>
+
+                                    <b>Trạng thái đơn: </b> <span
+                                        class="text-{{ $status }}">{{ $order->orderStatus }} -- lúc :
                                         {{ $order->orderCompletedDate }}</span>
                                     <br>
+
+
+                                    <b>Phương thức thanh toán: </b>{{ $order->paymentMethod }}<br>
+                                    @if ($order->paymentStatus == 'unpaid')
+                                        <b>Trạng thái thanh toán: </b><span class="text-danger">Chưa thanh toán</span><br>
+                                    @else
+                                        <b>Trạng thái thanh toán: </b><span class="text-success">Đã thanh toán</span><br>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -119,8 +141,8 @@
                                         </option>
                                         <option value="completed"
                                             {{ $order->orderStatus == 'completed' ? 'selected' : '' }}>Completed</option>
-                                        <option value="canceled"
-                                            {{ $order->orderStatus == 'canceled' ? 'selected' : '' }}>Cancel</option>
+                                        <option value="canceled" {{ $order->orderStatus == 'canceled' ? 'selected' : '' }}>
+                                            Cancel</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">Vào lúc
@@ -133,7 +155,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-body">
                             <h2 class="h4 mb-3">Send Inovice Email</h2>
                             <div class="mb-3">
@@ -146,7 +168,7 @@
                                 <button class="btn btn-primary">Send</button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

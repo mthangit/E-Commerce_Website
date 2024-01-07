@@ -174,10 +174,11 @@
             <div class="preview-blog grid-3-col">
                 @foreach ($blogs as $blog)
                     <div class="blog-ping width-common relative">
-                        <a href="{{route('blog.detail', ['blogSlug' => $blog->blogSlug])}}" class="blog-home relative">
+                        <a href="{{ route('blog.detail', ['blogSlug' => $blog->blogSlug]) }}"
+                            class="blog-home relative">
                             <div class="blog-img">
-                                <img src="https://media.hasaki.vn/hsk/sua-tam-thai-lan%20(1).png" alt=""
-                                    height="280" width="350">
+                                <img src="{{ asset($blog->blogImage) }}" alt="" height="280"
+                                    width="350">
                             </div>
                             <div class="width-common blog-content">
                                 <div class="blog-title">
@@ -201,3 +202,22 @@
     </div>
 </section>
 @include('user.layouts.template_footer')
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.all.min.js
+"></script>
+
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    $(document).ready(function() {});
+</script>

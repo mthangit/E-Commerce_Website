@@ -36,6 +36,26 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Chèn hình</label>
+                            <div class="col-sm-10">
+                                @if ($blog_info->blogImage)
+                                    <img style="height:100px" src="{{ asset($blog_info->blogImage) }}"
+                                        alt="">
+                                    <button type="button" class="btn btn-primary" onclick="updateImage()">cập nhật
+                                        ảnh</button>
+                                @endif
+                                <input type="hidden" name="deleteImage" id="deleteImageInput" value="0">
+                            </div>
+                        </div>
+
+                        <script>
+                            function updateImage() {
+                                window.location.href = "{{ route('editblogimg', $blog_info->blogID) }}";
+                            }
+                        </script>
+
+
+                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="blogDescription">Intro</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="blogIntro" name="blogIntro"

@@ -20,6 +20,9 @@
 
     <link href="https://fonts.cdnfonts.com/css/be-vietnam-pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.min.css
+" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -165,10 +168,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="">Tài khoản admin</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('allaccount') }}">Tài khoản user</a>
+                                    <a href="{{ route('allaccount') }}">Tài khoản khách hàng</a>
                                 </li>
                             </ul>
                         </li>
@@ -205,11 +205,6 @@
                             </ul>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('allshipping') }}">Chi phí ship</a>
-                                </li>
-                            </ul>
-                            <ul class="dropdown-menu">
-                                <li>
                                     <a href="{{ route('allbrand') }}">Quản lí thương hiệu</a>
                                 </li>
                             </ul>
@@ -232,13 +227,27 @@
                                     <a href="{{ route('checkSubcategory') }}">Thông kê sản phẩm theo danh mục</a>
                                 </li>
                                 <li>
-                                    <a href="form-validation.html">Doanh số tháng</a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">Doanh số năm</a>
+                                    <a href="{{ route('checkSale') }}">Doanh số bán hàng</a>
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-form"></i>
+                                </span>
+                                <span class="title">Chăm sóc khách hàng</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/chatify">Hỗ trợ khách hàng</a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>

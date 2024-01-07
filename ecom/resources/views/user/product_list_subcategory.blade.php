@@ -137,7 +137,7 @@ $thisCategory = $category;
                             <div class="product-img sale">
                                 <img src="{{ asset($product->productImage) }}" alt="" height="200"
                                     width="200">
-                                <span class="sale-percent">50%</span>
+                                <span class="sale-percent">{{ (1 - round($product->productDiscountPrice / $product->productOriginalPrice, 2)) * 100 . '%' }}</span>
                             </div>
                             <div class="product-info">
                                 <div class="width-common price-block">
