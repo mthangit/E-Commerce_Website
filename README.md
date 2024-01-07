@@ -28,12 +28,6 @@
 - Back-end: Laravel, MySQL.
 - File report: [Final Report.](Final_Project/Final_Report.pdf)
 - Source Code and Installation Instructions: [Source Code](https://github.com/nhquynhhh/IS207.O11)
-<p align='center'><img style="height: 800px" src="https://i.ibb.co/X7MvN7N/demo.png"></p>
+<p align='center'><img src="https://i.ibb.co/X7MvN7N/demo.png"></p>
 
 
-
-
-app_id = "172214zero"
-key = "19f5a735ca9a2569f97e"
-secret = "69212a7bb3cdd4b63e26"
-cluster = "ap1"
