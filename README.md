@@ -26,7 +26,6 @@
 ## ĐỒ ÁN CUỐI KÌ
 - Front-end: HTML, CSS, Javascript.
 - Back-end: Laravel, MySQL.
-- File report: [Final Report.](Final_Project/Final_Report.pdf)
 - Source Code and Installation Instructions: [Source Code](https://github.com/nhquynhhh/IS207.O11)
 <a href="https://ibb.co/X7MvN7N"><img src="https://i.ibb.co/y67bG6G/demo.png" alt="demo" border="0" /></a>
 
