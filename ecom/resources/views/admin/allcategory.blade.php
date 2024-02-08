@@ -5,7 +5,7 @@ PING - Category
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm cha</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -28,14 +28,13 @@ PING - Category
             <a class="dropdown-item" href="{{ route('allcategory', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
           </div>
         </div>
+        <button class="btn btn-outline-secondary" type="button" id="addCategory">Thêm danh mục</button>
       </div>
       <table class="table">
         <thead>
           <tr>
             <th>ID</th>
             <th>Tên danh mục</th>
-            <th>Số danh mục con</th>
-            <th>Số sản phẩm</th>
             <th>Trạng thái</th>
             <th>Hành động</th>
           </tr>
@@ -45,8 +44,6 @@ PING - Category
           <tr>
             <td>{{ $category->categoryID }} </td>
             <td>{{ $category->categoryName }}</td>
-            <td>{{ $category->subCategoryCount }}</td>
-            <td>{{ $category->productCount }}</td>
             <td>@if($category->isActive == 1)
               <div class="d-flex align-items-center">
                 <div class="badge badge-success badge-dot m-r-10"></div>
@@ -60,9 +57,9 @@ PING - Category
               @endif
             </td>
             <td>
-              <a href="{{route('editcategory', $category->categoryID)}}" class="btn btn-primary">Sửa</a>
+              <a href="{{ route('editcategory', $category->categoryID) }}" class="btn btn-primary">Sửa</a>
               @if($category->isActive == 1)
-              <a href="{{route('deletecategory', $category->categoryID)}}" class="btn btn-danger">Xóa</a>
+              <a href="{{ route('deletecategory', $category->categoryID) }}" class="btn btn-danger delete-category">Xóa</a>
               @else
               <button class="btn btn-warning" disabled>Xóa</button>
               @endif
@@ -90,6 +87,23 @@ PING - Category
       $("#searchInput").val('');
       window.location.href = "{{ route('allcategory') }}";
     })
+
+    $("#addCategory").click(function() {
+      window.location.href = "{{ route('addcategory') }}";
+    });
   });
+
+  $(document).ready(function() {
+            $('.delete-category').on('click', function(e) {
+                e.preventDefault();
+                var deleteUrl = $(this).attr('href');
+
+                // Hiển thị hộp thoại xác nhận
+                if (confirm('Bạn có chắc chắn muốn xóa không?')) {
+                    // Nếu người dùng đồng ý, chuyển hướng đến URL xóa
+                    window.location.href = deleteUrl;
+                }
+            });
+        });
 </script>
 @endsection

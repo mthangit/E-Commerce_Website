@@ -72,9 +72,9 @@ PING - discount
               @endif
             </td>
             <td>
-              <a href="{{route('editdiscount', $discount->discountID)}}" class="btn btn-primary">Sửa</a>
+              <a href="{{ route('editdiscount', $discount->discountID) }}" class="btn btn-primary">Sửa</a>
               @if($discount->isActive == 1)
-              <a href="{{route('deletediscount', $discount->discountID)}}" class="btn btn-danger">Xóa</a>
+              <a href="{{ route('deletediscount', $discount->discountID) }}" class="btn btn-danger delete-discount">Xóa</a>
               @else
               <button class="btn btn-warning" disabled>Xóa</button>
               @endif
@@ -106,10 +106,21 @@ PING - discount
     $("#addDiscount").click(function() {
       // Reset giá trị ô tìm kiếm và chuyển hướng trang về URL cụ thể
       $("#addDiscount").val('');
-      window.location.href = 'http://localhost:8000/admin/add-discount';
+      window.location.href = '{{route('adddiscount')}}';
     });
-
-    
   });
+
+  $(document).ready(function() {
+            $('.delete-discount').on('click', function(e) {
+                e.preventDefault();
+                var deleteUrl = $(this).attr('href');
+
+                // Hiển thị hộp thoại xác nhận
+                if (confirm('Bạn có chắc chắn muốn xóa không?')) {
+                    // Nếu người dùng đồng ý, chuyển hướng đến URL xóa
+                    window.location.href = deleteUrl;
+                }
+            });
+        });
 </script>
 @endsection

@@ -5,7 +5,7 @@ PING - Category
 @section('content')
 <!-- Contextual Classes -->
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span>Danh mục sản phẩm con</h4>
   <div class="card">
     <h5 class="card-header">Thông tin danh mục con sản phẩm có sẵn</h5>
     @if(session()->has('message'))
@@ -28,6 +28,7 @@ PING - Category
             <a class="dropdown-item" href="{{ route('allsubcategory', ['status' => 'unavailable']) }}">Chỉ hiển thị Unavailable</a>
           </div>
         </div>
+        <button class="btn btn-outline-secondary" type="button" id="addSubCategory">Thêm danh mục</button>
       </div>
       <table class="table">
         <thead>
@@ -35,7 +36,6 @@ PING - Category
             <th>ID</th>
             <th>Tên danh mục con</th>
             <th>Trực thuộc danh mục </th>
-            <th>Số sản phẩm</th>
             <th>Trạng thái</th>
             <th>Hành động</th>
           </tr>
@@ -46,7 +46,6 @@ PING - Category
             <td>{{$subcategory->subCategoryID}}</td>
             <td>{{$subcategory->subCategoryName}}</td>
             <td>{{$subcategory->categoryName}} </td>
-            <td>{{$subcategory->productCount}}</td>
             <td>@if($subcategory->isActive == 1)
               <div class="d-flex align-items-center">
                 <div class="badge badge-success badge-dot m-r-10"></div>
@@ -60,9 +59,9 @@ PING - Category
               @endif
             </td>
             <td>
-              <a href="{{route('editsubcategory', $subcategory->subCategoryID)}}" class="btn btn-primary">Sửa</a>
+              <a href="{{ route('editsubcategory', $subcategory->subCategoryID) }}" class="btn btn-primary">Sửa</a>
               @if($subcategory->isActive == 1)
-              <a href="{{route('deletesubcategory', $subcategory->subCategoryID)}}" class="btn btn-danger">Xóa</a>
+              <a href="{{ route('deletesubcategory', $subcategory->subCategoryID) }}" class="btn btn-danger delete-subcategory">Xóa</a>
               @else
               <button class="btn btn-warning" disabled>Xóa</button>
               @endif
@@ -90,6 +89,23 @@ PING - Category
       $("#searchInput").val('');
       window.location.href = 'http://localhost:8000/admin/search-subcategory';
     })
+
+    $("#addSubCategory").click(function() {
+      window.location.href = "{{ route('addsubcategory') }}";
+    });
+  });
+
+  $(document).ready(function() {
+    $('.delete-subcategory').on('click', function(e) {
+      e.preventDefault();
+      var deleteUrl = $(this).attr('href');
+
+      // Hiển thị hộp thoại xác nhận
+      if (confirm('Bạn có chắc chắn muốn xóa không?')) {
+        // Nếu người dùng đồng ý, chuyển hướng đến URL xóa
+        window.location.href = deleteUrl;
+      }
+    });
   });
 </script>
 @endsection

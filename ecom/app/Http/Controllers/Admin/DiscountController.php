@@ -31,6 +31,8 @@ class DiscountController extends Controller
         return view('admin.alldiscount', compact('discounts'));
     }
 
+
+
     public function AddDiscount()
     {
         return view('admin.adddiscount');
@@ -38,12 +40,6 @@ class DiscountController extends Controller
 
     public function StoreDiscount(Request $request)
     {
-        $request->validate([
-            'discountName' => 'required|unique:discounts',
-           // 'discountCode' => 'required|unique:discounts',
-
-        ]);
-
         $isActive = $request->has('isActive') ? 1 : 0;
 
         discount::insert([
@@ -53,19 +49,20 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 
-        return redirect()->route('alldiscount')->with('message', 'Thêm sản phẩm thành công');
+        return response()->json([
+            'status' => true,
+            'message' => 'Thêm thành công'
+        ]);
     }
 
     public function UpdateDiscount(Request $request)
     {
         $discountID = $request->discountID;
-
-        $request->validate([
-            'discountName' => 'required|unique:discounts,discountName,' . $discountID . ',discountID'
-        ]);
 
         $isActive = $request->has('isActive') ? 1 : 0;
         discount::findOrFail($discountID)->update([
@@ -75,10 +72,15 @@ class DiscountController extends Controller
             'discountType' => $request->discountType,
             'discountAmount' => $request->discountAmount,
             'discountQuantity' => $request->discountQuantity,
+            'discountStart' => $request->discountStart,
+            'discountEnd' => $request->discountEnd,
             'isActive' => $isActive,
         ]);
 
-        return redirect()->route('alldiscount')->with('message', 'Cập nhật thành công');
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật thành công'
+        ]);
     }
 
     public function EditDiscount($discountID)
